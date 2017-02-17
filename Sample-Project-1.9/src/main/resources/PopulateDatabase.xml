@@ -261,6 +261,22 @@
 				<ref bean="socialIdentity2"></ref>
 			</list>
 		</property>
+		<property name="properties">
+			<list>
+				<ref bean="property1"></ref>
+				<ref bean="property4"></ref>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+				<ref bean="request1"></ref>
+			</list>
+		</property>
+		<property name="commentsOnLessor">
+			<list>
+				<ref bean="commentOnLessor1"></ref>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="lessor2" class="domain.Lessor">
@@ -276,6 +292,19 @@
 			<list>
 			</list>
 		</property>
+		<property name="properties">
+			<list>
+				<ref bean="property2"></ref>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="commentsOnLessor">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="lessor3" class="domain.Lessor">
@@ -288,6 +317,19 @@
 		<property name="feeAmount" value="0.0"/>
 		<property name="userAccount" ref="userAccount4"/>
 		<property name="socialIdentities">
+			<list>
+			</list>
+		</property>
+		<property name="properties">
+			<list>
+				<ref bean="property3"></ref>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="commentsOnLessor">
 			<list>
 			</list>
 		</property>
@@ -307,6 +349,16 @@
 				<ref bean="socialIdentity3"></ref>
 			</list>
 		</property>
+		<property name="requests">
+			<list>
+				<ref bean="request1"></ref>
+			</list>
+		</property>
+		<property name="commentsOnTenant">
+			<list>
+				<ref bean="commentOnTenant1"></ref>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="tenant2" class="domain.Tenant">
@@ -320,6 +372,14 @@
 			<list>
 			</list>
 		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="commentsOnTenant">
+			<list>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="tenant3" class="domain.Tenant">
@@ -330,6 +390,14 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount7"/>
 		<property name="socialIdentities">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="commentsOnTenant">
 			<list>
 			</list>
 		</property>
@@ -397,6 +465,7 @@
 	
 	<bean id="attribute1" class="domain.Attribute">
 		<property name="name" value="Country" />
+		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
 				<ref bean="value1"></ref>
@@ -406,6 +475,7 @@
 	
 	<bean id="attribute2" class="domain.Attribute">
 		<property name="name" value="Province" />
+		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
 				<ref bean="value1"></ref>
@@ -415,6 +485,7 @@
 	
 	<bean id="attribute3" class="domain.Attribute">
 		<property name="name" value="State" />
+		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
 				<ref bean="value1"></ref>
@@ -424,6 +495,7 @@
 	
 	<bean id="attribute4" class="domain.Attribute">
 		<property name="name" value="City" />
+		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
 				<ref bean="value1"></ref>
@@ -433,6 +505,7 @@
 	
 	<bean id="attribute5" class="domain.Attribute">
 		<property name="name" value="Capacity" />
+		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
 				<ref bean="value1"></ref>
@@ -480,10 +553,6 @@
 		<property name="description" value="Finca Palmeras situada a las afueras de Sevilla, gran espacio, perfecta para las vacaciones" />
 		<property name="address" value="Sevilla 41013"/>
 		<property name="lessor" ref="lessor1"/>
-		<property name="finders">
-			<list>
-			</list>
-		</property>
 		<property name="audits">
 			<list>
 				<ref bean="audit1"></ref>
@@ -502,10 +571,6 @@
 		<property name="description" value="Piso en pleno centro de Madrid, muy bien situado para salir de fiesta" />
 		<property name="address" value="Madrid C/Madrid nº20"/>
 		<property name="lessor" ref="lessor2"/>
-		<property name="finders">
-			<list>
-			</list>
-		</property>
 		<property name="audits">
 			<list>
 			</list>
@@ -523,10 +588,6 @@
 		<property name="description" value="Casa familiar para unas buenas vacaciones en familia situada en Malaga" />
 		<property name="address" value="Malaga C/Malaga nº25"/>
 		<property name="lessor" ref="lessor3"/>
-		<property name="finders">
-			<list>
-			</list>
-		</property>
 		<property name="audits">
 			<list>
 			</list>
@@ -544,10 +605,6 @@
 		<property name="description" value="Piso de estudiantes situado en la ciudad de Salamanca, bueno bonito y barato" />
 		<property name="address" value="Salamanca C/Salamanca nº62"/>
 		<property name="lessor" ref="lessor1"/>
-		<property name="finders">
-			<list>
-			</list>
-		</property>
 		<property name="audits">
 			<list>
 			</list>
@@ -634,6 +691,26 @@
 		<property name="detail" value="true" />
 		<property name="amountDue" value="true" />
 		<property name="creditCard" ref="creditCard1" />
+	</bean>
+	
+	<!-- CommentOnLessor -->
+	
+	<bean id="commentOnLessor1" class="domain.CommentOnLessor">
+		<property name="title" value="Comentario sobre ti" />
+		<property name="postedMoment" value="05/05/2016 16:00" />
+		<property name="text" value="Me ha gustado" />
+		<property name="stars" value="4" />
+		<property name="lessor" ref="lessor1"/>
+	</bean>
+	
+	<!-- CommentOnTenant -->
+	
+	<bean id="commentOnTenant1" class="domain.CommentOnTenant">
+		<property name="title" value="Comentario sobre titi" />
+		<property name="postedMoment" value="08/05/2016 16:00" />
+		<property name="text" value="Me ha gustado un monton" />
+		<property name="stars" value="5" />
+		<property name="tenant" ref="tenant1"/>
 	</bean>
 	
 	
