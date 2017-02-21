@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -28,7 +29,7 @@ public class Invoice extends DomainEntity {
 
 	// Attributes ----------------------------
 
-	private Date	issudeMoment;
+	private Date	issuedMoment;
 	private Integer	vat;
 	private String	information;
 	private String	detail;
@@ -37,11 +38,11 @@ public class Invoice extends DomainEntity {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getIssudeMoment() {
-		return issudeMoment;
+	public Date getissuedMoment() {
+		return issuedMoment;
 	}
-	public void setIssudeMoment(Date issudeMoment) {
-		this.issudeMoment = issudeMoment;
+	public void setissuedMoment(Date issuedMoment) {
+		this.issuedMoment = issuedMoment;
 	}
 
 	public Integer getVat() {
@@ -79,6 +80,7 @@ public class Invoice extends DomainEntity {
 	// Relationships -------------------------------
 
 	private Tenant	tenant;
+	private Request	request;
 
 
 	@Valid
@@ -88,6 +90,15 @@ public class Invoice extends DomainEntity {
 	}
 	public void setTenant(Tenant tenant) {
 		this.tenant = tenant;
+	}
+
+	@Valid
+	@OneToOne(optional = false)
+	public Request getRequest() {
+		return request;
+	}
+	public void setRequest(Request request) {
+		this.request = request;
 	}
 
 }

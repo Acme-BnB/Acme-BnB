@@ -104,7 +104,8 @@ public class Request extends DomainEntity {
 		this.tenant = tenant;
 	}
 
-	@OneToOne(optional = false)
+	@Valid
+	@OneToOne(optional = true)
 	public Invoice getInvoice() {
 		return invoice;
 	}

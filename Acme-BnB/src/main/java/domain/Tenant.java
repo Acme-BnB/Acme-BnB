@@ -16,6 +16,11 @@ public class Tenant extends Commentator implements Commentable {
 
 	// Constructors -------------------------------
 
+	public Tenant() {
+		super();
+	}
+
+
 	// Attributes --------------------------------
 
 	// Relationships -----------------------------

@@ -52,7 +52,7 @@ public class Lessor extends Commentator implements Commentable {
 
 
 	@Valid
-	@OneToMany(mappedBy = "property")
+	@OneToMany(mappedBy = "lessor")
 	public Collection<Property> getProperties() {
 		return properties;
 	}

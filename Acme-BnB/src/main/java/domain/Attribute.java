@@ -37,15 +37,15 @@ public class Attribute extends DomainEntity {
 
 	// Relationships --------------------------
 
-	private Collection<Value>	value;
+	private Collection<Value>	values;
 
 
 	@Valid
 	@OneToMany(mappedBy = "attribute")
-	public Collection<Value> getValue() {
-		return value;
+	public Collection<Value> getValues() {
+		return values;
 	}
-	public void setValue(Collection<Value> value) {
-		this.value = value;
+	public void setValues(Collection<Value> values) {
+		this.values = values;
 	}
 }
