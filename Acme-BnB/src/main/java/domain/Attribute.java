@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -12,34 +13,39 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Attribute extends DomainEntity{
+public class Attribute extends DomainEntity {
+
 	// Constructors ----------------------------
-	public Attribute(){
+	public Attribute() {
 		super();
 	}
-	
+
+
 	// Attributes -----------------------------
-	
-	private String name;
-	
+
+	private String	name;
+
+
 	@NotBlank
-	public String getName(){
+	public String getName() {
 		return name;
 	}
-	public void setName(String name){
+	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+
 	// Relationships --------------------------
-	
-	private Collection<Property> properties;
-	
+
+	private Collection<Value>	value;
+
+
 	@Valid
-	@OneToMany(mappedBy="attribute")
-	public Collection<Property> getProperties(){
-		return properties;
+	@OneToMany(mappedBy = "attribute")
+	public Collection<Value> getValue() {
+		return value;
 	}
-	public void setProperties(Collection<Property> properties){
-		this.properties=properties;
+	public void setValue(Collection<Value> value) {
+		this.value = value;
 	}
 }
