@@ -6,11 +6,8 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -78,27 +75,5 @@ public class Invoice extends DomainEntity {
 
 
 	// Relationships -------------------------------
-
-	private Tenant	tenant;
-	private Request	request;
-
-
-	@Valid
-	@ManyToOne(optional = false)
-	public Tenant getTenant() {
-		return tenant;
-	}
-	public void setTenant(Tenant tenant) {
-		this.tenant = tenant;
-	}
-
-	@Valid
-	@OneToOne(optional = false)
-	public Request getRequest() {
-		return request;
-	}
-	public void setRequest(Request request) {
-		this.request = request;
-	}
 
 }
