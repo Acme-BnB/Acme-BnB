@@ -206,12 +206,7 @@
 	
 	<!-- Comment -->
 	
-	<bean id="comment1" class="domain.Comment">
-		<property name="title" value="comment1"/>
-		<property name="postedMoment" value="05/05/2016"/>
-		<property name="text" value="Me ha gustado"/>
-		<property name="stars" value="2"/>
-	</bean>
+	
 
 	
 
@@ -237,11 +232,7 @@
 				<ref bean="property4"></ref>
 			</list>
 		</property>
-		<property name="comments">
-			<list>
-				<ref bean="comment1"></ref>
-			</list>
-		</property>
+		
 	</bean>
 
 	<bean id="lessor2" class="domain.Lessor">
@@ -262,11 +253,7 @@
 				<ref bean="property2"></ref>
 			</list>
 		</property>
-		<property name="comments">
-			<list>
-				<ref bean="comment1"></ref>
-			</list>
-		</property>
+		
 	</bean>
 
 	<bean id="lessor3" class="domain.Lessor">
@@ -287,13 +274,44 @@
 				<ref bean="property3"></ref>
 			</list>
 		</property>
-		<property name="comments">
+		
+	</bean>
+		<!-- Finder -->
+	
+	<bean id="finder1" class="domain.Finder">
+		<property name="destinationCity" value="Sevilla" />
+		<property name="minPrice" value="10" />	
+		<property name="maxPrice" value="20" />
+		<property name="keyword" value="finca" />
+		<property name="properties">
 			<list>
-				<ref bean="comment1"></ref>
+			<ref bean="property1"/>
 			</list>
 		</property>
 	</bean>
-
+	
+	<bean id="finder2" class="domain.Finder">
+		<property name="destinationCity" value="Sevilla" />
+		<property name="minPrice" value="" />	
+		<property name="maxPrice" value="" />
+		<property name="keyword" value="casa" />
+		<property name="properties">
+			<list>
+				<ref bean="property3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="finder3" class="domain.Finder">
+		<property name="destinationCity" value="Madrid" />
+		<property name="minPrice" value="10" />	
+		<property name="maxPrice" value="100" />
+		<property name="keyword" value="" />
+		<property name="properties">
+			<list>
+			</list>
+		</property>
+	</bean>
 	<!-- TENANT -->
 
 	<bean id="tenant1" class="domain.Tenant">
@@ -303,11 +321,7 @@
 		<property name="phone" value="+34 956222333"/>
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount5"/>
-		<property name="invoices">
-			<list>
-				<ref bean="invoice1"></ref>
-			</list>
-		</property>
+		<property name="finder" ref="finder1"/>
 		<property name="socialIdentities">
 			<list>
 				<ref bean="socialIdentity3"></ref>
@@ -316,13 +330,11 @@
 		<property name="requests">
 			<list>
 				<ref bean="request1"></ref>
+				<ref bean="request2"></ref>
+				<ref bean="request4"></ref>
 			</list>
 		</property>
-		<property name="comments">
-			<list>
-				<ref bean="comment1"></ref>
-			</list>
-		</property>
+		
 	</bean>
 
 	<bean id="tenant2" class="domain.Tenant">
@@ -332,19 +344,17 @@
 		<property name="phone" value="+34 914326555"/>
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount6"/>
+		<property name="finder" ref="finder2"/>
 		<property name="socialIdentities">
 			<list>
 			</list>
 		</property>
 		<property name="requests">
 			<list>
+				<ref bean="request3"></ref>
 			</list>
 		</property>
-		<property name="comments">
-			<list>
-				<ref bean="comment1"></ref>
-			</list>
-		</property>
+		
 	</bean>
 
 	<bean id="tenant3" class="domain.Tenant">
@@ -354,6 +364,7 @@
 		<property name="phone" value="+34 672543111"/>
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount7"/>
+		<property name="finder" ref="finder3"/>
 		<property name="socialIdentities">
 			<list>
 			</list>
@@ -362,11 +373,7 @@
 			<list>
 			</list>
 		</property>
-		<property name="comments">
-			<list>
-				<ref bean="comment1"></ref>
-			</list>
-		</property>
+		
 	</bean>
 
 	<!-- AUDITOR -->
@@ -514,6 +521,12 @@
 		<property name="description" value="Finca Palmeras situada a las afueras de Sevilla, gran espacio, perfecta para las vacaciones" />
 		<property name="address" value="Sevilla 41013"/>
 		<property name="lessor" ref="lessor1"/>
+		<property name="requests">
+			<list>
+				<ref bean="request1"/>
+				<ref bean="request2"/>
+			</list>
+		</property>
 		<property name="audits">
 			<list>
 				<ref bean="audit1"></ref>
@@ -522,6 +535,8 @@
 		<property name="values">
 			<list>
 				<ref bean="value1"></ref>
+				<ref bean="value2"></ref>
+				<ref bean="value5"></ref>
 			</list>
 		</property>
 	</bean>
@@ -532,12 +547,19 @@
 		<property name="description" value="Piso en pleno centro de Madrid, muy bien situado para salir de fiesta" />
 		<property name="address" value="Madrid C/Madrid nº20"/>
 		<property name="lessor" ref="lessor2"/>
+		<property name="requests">
+			<list>
+				<ref bean="request3"/>
+				
+			</list>
+		</property>
 		<property name="audits">
 			<list>
 			</list>
 		</property>
 		<property name="values">
 			<list>
+			<ref bean="value3"/>
 			</list>
 		</property>
 	</bean>
@@ -549,12 +571,18 @@
 		<property name="description" value="Casa familiar para unas buenas vacaciones en familia situada en Malaga" />
 		<property name="address" value="Malaga C/Malaga nº25"/>
 		<property name="lessor" ref="lessor3"/>
+		<property name="requests">
+			<list>
+				<ref bean="request4"/>
+			</list>
+		</property>
 		<property name="audits">
 			<list>
 			</list>
 		</property>
 		<property name="values">
 			<list>
+			<ref bean="value4"/>
 			</list>
 		</property>
 	</bean>
@@ -593,13 +621,13 @@
 	<bean id="value3" class="domain.Value">
 		<property name="text" value="Sevilla" />
 		<property name="attribute" ref="attribute3"/>
-		<property name="property" ref="property1"/>
+		<property name="property" ref="property2"/>
 	</bean>
 	
 	<bean id="value4" class="domain.Value">
 		<property name="text" value="Sevilla" />
 		<property name="attribute" ref="attribute4"/>
-		<property name="property" ref="property1"/>
+		<property name="property" ref="property3"/>
 	</bean>
 	
 	<bean id="value5" class="domain.Value">
@@ -620,53 +648,42 @@
 		<property name="status" value="PENDING"/>
 		<property name="invoice" ref="invoice1"/>
 		<property name="property" ref="property1"/>
+		<property name="tenant" ref="tenant1"/>
 	</bean>
 	
-	<!-- Finder -->
-	
-	<bean id="finder1" class="domain.Finder">
-		<property name="destinationCity" value="Sevilla" />
-		<property name="minPrice" value="10" />	
-		<property name="maxPrice" value="20" />
-		<property name="keyword" value="finca" />
-		<property name="properties">
-			<list>
-			</list>
-		</property>
+	<bean id="request2" class="domain.Request">
+		<property name="checkIn" value="08/08/2016 16:00" />
+		<property name="checkOut" value="09/08/2016 16:00" />	
+		<property name="smoker" value="true" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="invoice" ref="invoice2"/>
+		<property name="property" ref="property1"/>
+		<property name="tenant" ref="tenant1"/>
 	</bean>
 	
-	<bean id="finder2" class="domain.Finder">
-		<property name="destinationCity" value="Sevilla" />
-		<property name="minPrice" value="" />	
-		<property name="maxPrice" value="" />
-		<property name="keyword" value="casa" />
-		<property name="properties">
-			<list>
-			</list>
-		</property>
+	<bean id="request3" class="domain.Request">
+		<property name="checkIn" value="08/08/2016 16:00" />
+		<property name="checkOut" value="09/08/2016 16:00" />	
+		<property name="smoker" value="true" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="invoice" ref="invoice3"/>
+		<property name="property" ref="property2"/>
+		<property name="tenant" ref="tenant2"/>
 	</bean>
 	
-	<bean id="finder3" class="domain.Finder">
-		<property name="destinationCity" value="Sevilla" />
-		<property name="minPrice" value="10" />	
-		<property name="maxPrice" value="100" />
-		<property name="keyword" value="" />
-		<property name="properties">
-			<list>
-			</list>
-		</property>
+	<bean id="request4" class="domain.Request">
+		<property name="checkIn" value="08/08/2016 16:00" />
+		<property name="checkOut" value="09/08/2016 16:00" />	
+		<property name="smoker" value="true" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="invoice" ref="invoice4"/>
+		<property name="property" ref="property3"/>
+		<property name="tenant" ref="tenant1"/>
 	</bean>
-	
-	<bean id="finder4" class="domain.Finder">
-		<property name="destinationCity" value="Salamanca" />
-		<property name="minPrice" value="20" />	
-		<property name="maxPrice" value="50" />
-		<property name="keyword" value="piso" />
-		<property name="properties">
-			<list>
-			</list>
-		</property>
-	</bean>
+
 	
 	<!-- Audit -->
 	
@@ -682,14 +699,39 @@
 	<!-- Invoice -->
 	
 	<bean id="invoice1" class="domain.Invoice">
-		<property name="issuedMoment" value="05/05/2016" />
+		<property name="issuedMoment" value="08/05/2016 10:56" />
+		<property name="vat" value="50" />	
+		<property name="information" value="Factura 30" />
+		<property name="detail" value="Tienes que pagar 100 euros" />
+		<property name="amountDue" value="40.0" />
+		<property name="request" ref="request1" />
+	</bean>
+	
+	<bean id="invoice2" class="domain.Invoice">
+		<property name="issuedMoment" value="05/05/2016 10:56" />
 		<property name="vat" value="50" />	
 		<property name="information" value="Factura 28" />
 		<property name="detail" value="Tienes que pagar 40 euros" />
 		<property name="amountDue" value="40.0" />
-		<property name="tenant" ref="tenant1" />
-		<property name="request" ref="request1" />
+		<property name="request" ref="request2" />
 	</bean>
 	
+	<bean id="invoice3" class="domain.Invoice">
+		<property name="issuedMoment" value="05/05/2016 10:56" />
+		<property name="vat" value="50" />	
+		<property name="information" value="Factura 28" />
+		<property name="detail" value="Tienes que pagar 40 euros" />
+		<property name="amountDue" value="40.0" />
+		<property name="request" ref="request3" />
+	</bean>
+	
+	<bean id="invoice4" class="domain.Invoice">
+		<property name="issuedMoment" value="05/05/2016 10:56" />
+		<property name="vat" value="50" />	
+		<property name="information" value="Factura 65" />
+		<property name="detail" value="Tienes que pagar 50 euros" />
+		<property name="amountDue" value="40.0" />
+		<property name="request" ref="request4" />
+	</bean>
 	
 </beans>

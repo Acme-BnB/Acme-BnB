@@ -26,7 +26,6 @@ public class Tenant extends Commentator implements Commentable {
 	// Relationships -----------------------------
 
 	private Collection<Request>	requests;
-	private Collection<Invoice>	invoices;
 	private Finder				finder;
 
 
@@ -37,15 +36,6 @@ public class Tenant extends Commentator implements Commentable {
 	}
 	public void setRequests(Collection<Request> requests) {
 		this.requests = requests;
-	}
-
-	@Valid
-	@OneToMany(mappedBy = "tenant")
-	public Collection<Invoice> getInvoices() {
-		return invoices;
-	}
-	public void setInvoices(Collection<Invoice> invoices) {
-		this.invoices = invoices;
 	}
 
 	@Valid

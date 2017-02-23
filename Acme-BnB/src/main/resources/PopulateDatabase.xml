@@ -322,11 +322,6 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount5"/>
 		<property name="finder" ref="finder1"/>
-		<property name="invoices">
-			<list>
-				<ref bean="invoice1"></ref>
-			</list>
-		</property>
 		<property name="socialIdentities">
 			<list>
 				<ref bean="socialIdentity3"></ref>
@@ -709,7 +704,6 @@
 		<property name="information" value="Factura 30" />
 		<property name="detail" value="Tienes que pagar 100 euros" />
 		<property name="amountDue" value="40.0" />
-		<property name="tenant" ref="tenant1" />
 		<property name="request" ref="request1" />
 	</bean>
 	
@@ -719,7 +713,6 @@
 		<property name="information" value="Factura 28" />
 		<property name="detail" value="Tienes que pagar 40 euros" />
 		<property name="amountDue" value="40.0" />
-		<property name="tenant" ref="tenant1" />
 		<property name="request" ref="request2" />
 	</bean>
 	
@@ -729,7 +722,6 @@
 		<property name="information" value="Factura 28" />
 		<property name="detail" value="Tienes que pagar 40 euros" />
 		<property name="amountDue" value="40.0" />
-		<property name="tenant" ref="tenant2" />
 		<property name="request" ref="request3" />
 	</bean>
 	
@@ -739,7 +731,6 @@
 		<property name="information" value="Factura 65" />
 		<property name="detail" value="Tienes que pagar 50 euros" />
 		<property name="amountDue" value="40.0" />
-		<property name="tenant" ref="tenant1" />
 		<property name="request" ref="request4" />
 	</bean>
 	
