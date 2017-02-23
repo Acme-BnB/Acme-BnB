@@ -202,48 +202,18 @@
 				<ref bean="socialIdentity1"></ref>
 			</list>
 		</property>
-		<property name="attributes">
-			<list>
-				<ref bean="attribute1"></ref>
-				<ref bean="attribute2"></ref>
-				<ref bean="attribute3"></ref>
-				<ref bean="attribute4"></ref>
-				<ref bean="attribute5"></ref>
-			</list>
-		</property>
 	</bean>
-
-	<!-- Social Identity -->
 	
-	<bean id="socialIdentity1" class="domain.SocialIdentity">
-		<property name="nick" value="bestadmin1"/>
-		<property name="socialNetwork" value="Twitter"/>
-		<property name="profileURL" value="http://twitter.com"/>
-		<property name="actor" ref="admin"/>
+	<!-- Comment -->
+	
+	<bean id="comment1" class="domain.Comment">
+		<property name="title" value="comment1"/>
+		<property name="postedMoment" value="05/05/2016"/>
+		<property name="text" value="Me ha gustado"/>
+		<property name="stars" value="2"/>
 	</bean>
 
-	<bean id="socialIdentity2" class="domain.SocialIdentity">
-		<property name="nick" value="wildlessor"/>
-		<property name="socialNetwork" value="Twitter"/>
-		<property name="profileURL" value="http://twitter.com"/>
-		<property name="actor" ref="lessor1"/>
-	</bean>
-
-
-	<bean id="socialIdentity3" class="domain.SocialIdentity">
-		<property name="nick" value="nicetenant22"/>
-		<property name="socialNetwork" value="Facebook"/>
-		<property name="profileURL" value="http://facebook.com"/>
-		<property name="actor" ref="tenant1"/>
-	</bean>
-
-
-	<bean id="socialIdentity4" class="domain.SocialIdentity">
-		<property name="nick" value="classicauditor"/>
-		<property name="socialNetwork" value="Facebook"/>
-		<property name="profileURL" value="http://facebook.com"/>
-		<property name="actor" ref="auditor1"/>
-	</bean>
+	
 
 	<!-- Lessor -->
 
@@ -267,14 +237,9 @@
 				<ref bean="property4"></ref>
 			</list>
 		</property>
-		<property name="requests">
+		<property name="comments">
 			<list>
-				<ref bean="request1"></ref>
-			</list>
-		</property>
-		<property name="commentsOnLessor">
-			<list>
-				<ref bean="commentOnLessor1"></ref>
+				<ref bean="comment1"></ref>
 			</list>
 		</property>
 	</bean>
@@ -297,12 +262,9 @@
 				<ref bean="property2"></ref>
 			</list>
 		</property>
-		<property name="requests">
+		<property name="comments">
 			<list>
-			</list>
-		</property>
-		<property name="commentsOnLessor">
-			<list>
+				<ref bean="comment1"></ref>
 			</list>
 		</property>
 	</bean>
@@ -325,12 +287,9 @@
 				<ref bean="property3"></ref>
 			</list>
 		</property>
-		<property name="requests">
+		<property name="comments">
 			<list>
-			</list>
-		</property>
-		<property name="commentsOnLessor">
-			<list>
+				<ref bean="comment1"></ref>
 			</list>
 		</property>
 	</bean>
@@ -344,6 +303,11 @@
 		<property name="phone" value="+34 956222333"/>
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount5"/>
+		<property name="invoices">
+			<list>
+				<ref bean="invoice1"></ref>
+			</list>
+		</property>
 		<property name="socialIdentities">
 			<list>
 				<ref bean="socialIdentity3"></ref>
@@ -354,9 +318,9 @@
 				<ref bean="request1"></ref>
 			</list>
 		</property>
-		<property name="commentsOnTenant">
+		<property name="comments">
 			<list>
-				<ref bean="commentOnTenant1"></ref>
+				<ref bean="comment1"></ref>
 			</list>
 		</property>
 	</bean>
@@ -376,8 +340,9 @@
 			<list>
 			</list>
 		</property>
-		<property name="commentsOnTenant">
+		<property name="comments">
 			<list>
+				<ref bean="comment1"></ref>
 			</list>
 		</property>
 	</bean>
@@ -397,8 +362,9 @@
 			<list>
 			</list>
 		</property>
-		<property name="commentsOnTenant">
+		<property name="comments">
 			<list>
+				<ref bean="comment1"></ref>
 			</list>
 		</property>
 	</bean>
@@ -461,11 +427,42 @@
 		</property>
 	</bean>
 	
+	<!-- Social Identity -->
+	
+	<bean id="socialIdentity1" class="domain.SocialIdentity">
+		<property name="nick" value="bestadmin1"/>
+		<property name="socialNetwork" value="Twitter"/>
+		<property name="profileURL" value="http://twitter.com"/>
+		<property name="actor" ref="admin"/>
+	</bean>
+
+	<bean id="socialIdentity2" class="domain.SocialIdentity">
+		<property name="nick" value="wildlessor"/>
+		<property name="socialNetwork" value="Twitter"/>
+		<property name="profileURL" value="http://twitter.com"/>
+		<property name="actor" ref="lessor1"/>
+	</bean>
+
+
+	<bean id="socialIdentity3" class="domain.SocialIdentity">
+		<property name="nick" value="nicetenant22"/>
+		<property name="socialNetwork" value="Facebook"/>
+		<property name="profileURL" value="http://facebook.com"/>
+		<property name="actor" ref="tenant1"/>
+	</bean>
+
+
+	<bean id="socialIdentity4" class="domain.SocialIdentity">
+		<property name="nick" value="classicauditor"/>
+		<property name="socialNetwork" value="Facebook"/>
+		<property name="profileURL" value="http://facebook.com"/>
+		<property name="actor" ref="auditor1"/>
+	</bean>
+	
 	<!-- Attribute -->
 	
 	<bean id="attribute1" class="domain.Attribute">
 		<property name="name" value="Country" />
-		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
 				<ref bean="value1"></ref>
@@ -475,76 +472,40 @@
 	
 	<bean id="attribute2" class="domain.Attribute">
 		<property name="name" value="Province" />
-		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
-				<ref bean="value1"></ref>
+				<ref bean="value2"></ref>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="attribute3" class="domain.Attribute">
 		<property name="name" value="State" />
-		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
-				<ref bean="value1"></ref>
+				<ref bean="value3"></ref>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="attribute4" class="domain.Attribute">
 		<property name="name" value="City" />
-		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
-				<ref bean="value1"></ref>
+				<ref bean="value4"></ref>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="attribute5" class="domain.Attribute">
 		<property name="name" value="Capacity" />
-		<property name="administrator" ref="admin"/>
 		<property name="values">
 			<list>
-				<ref bean="value1"></ref>
+				<ref bean="value5"></ref>
 			</list>
 		</property>
 	</bean>
 	
-	<!-- Value -->
-	
-	<bean id="value1" class="domain.Value">
-		<property name="text" value="Espana" />
-		<property name="attribute" ref="attribute1"/>
-		<property name="property" ref="property1"/>
-	</bean>
-	
-	<bean id="value2" class="domain.Value">
-		<property name="text" value="Sevilla" />
-		<property name="attribute" ref="attribute2"/>
-		<property name="property" ref="property1"/>
-	</bean>
-	
-	<bean id="value3" class="domain.Value">
-		<property name="text" value="Sevilla" />
-		<property name="attribute" ref="attribute3"/>
-		<property name="property" ref="property1"/>
-	</bean>
-	
-	<bean id="value4" class="domain.Value">
-		<property name="text" value="Sevilla" />
-		<property name="attribute" ref="attribute4"/>
-		<property name="property" ref="property1"/>
-	</bean>
-	
-	<bean id="value5" class="domain.Value">
-		<property name="text" value="100000" />
-		<property name="attribute" ref="attribute5"/>
-		<property name="property" ref="property1"/>
-	</bean>
-
 	<!-- Property -->
 	
 	<bean id="property1" class="domain.Property">
@@ -614,6 +575,40 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- Value -->
+	
+	<bean id="value1" class="domain.Value">
+		<property name="text" value="Espana" />
+		<property name="attribute" ref="attribute1"/>
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="value2" class="domain.Value">
+		<property name="text" value="Sevilla" />
+		<property name="attribute" ref="attribute2"/>
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="value3" class="domain.Value">
+		<property name="text" value="Sevilla" />
+		<property name="attribute" ref="attribute3"/>
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="value4" class="domain.Value">
+		<property name="text" value="Sevilla" />
+		<property name="attribute" ref="attribute4"/>
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="value5" class="domain.Value">
+		<property name="text" value="100000" />
+		<property name="attribute" ref="attribute5"/>
+		<property name="property" ref="property1"/>
+	</bean>
+
+	
 
 	<!-- Request -->
 	
@@ -623,6 +618,8 @@
 		<property name="smoker" value="true" />
 		<property name="creditCard" ref="creditCard1" />
 		<property name="status" value="PENDING"/>
+		<property name="invoice" ref="invoice1"/>
+		<property name="property" ref="property1"/>
 	</bean>
 	
 	<!-- Finder -->
@@ -686,31 +683,12 @@
 	
 	<bean id="invoice1" class="domain.Invoice">
 		<property name="issuedMoment" value="05/05/2016" />
-		<property name="VAT" value="Texto del audit1" />	
-		<property name="information" value="2" />
-		<property name="detail" value="true" />
-		<property name="amountDue" value="true" />
-		<property name="creditCard" ref="creditCard1" />
-	</bean>
-	
-	<!-- CommentOnLessor -->
-	
-	<bean id="commentOnLessor1" class="domain.CommentOnLessor">
-		<property name="title" value="Comentario sobre ti" />
-		<property name="postedMoment" value="05/05/2016 16:00" />
-		<property name="text" value="Me ha gustado" />
-		<property name="stars" value="4" />
-		<property name="lessor" ref="lessor1"/>
-	</bean>
-	
-	<!-- CommentOnTenant -->
-	
-	<bean id="commentOnTenant1" class="domain.CommentOnTenant">
-		<property name="title" value="Comentario sobre titi" />
-		<property name="postedMoment" value="08/05/2016 16:00" />
-		<property name="text" value="Me ha gustado un monton" />
-		<property name="stars" value="5" />
-		<property name="tenant" ref="tenant1"/>
+		<property name="vat" value="50" />	
+		<property name="information" value="Factura 28" />
+		<property name="detail" value="Tienes que pagar 40 euros" />
+		<property name="amountDue" value="40.0" />
+		<property name="tenant" ref="tenant1" />
+		<property name="request" ref="request1" />
 	</bean>
 	
 	
