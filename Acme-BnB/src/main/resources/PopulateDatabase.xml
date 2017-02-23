@@ -286,7 +286,6 @@
 		<property name="properties">
 			<list>
 			<ref bean="property1"/>
-			<ref bean="property2"/>
 			</list>
 		</property>
 	</bean>
@@ -304,16 +303,12 @@
 	</bean>
 	
 	<bean id="finder3" class="domain.Finder">
-		<property name="destinationCity" value="Sevilla" />
+		<property name="destinationCity" value="Madrid" />
 		<property name="minPrice" value="10" />	
 		<property name="maxPrice" value="100" />
 		<property name="keyword" value="" />
 		<property name="properties">
 			<list>
-			<ref bean="property1"/>
-			<ref bean="property2"/>
-			<ref bean="property3"/>
-			
 			</list>
 		</property>
 	</bean>
@@ -545,6 +540,8 @@
 		<property name="values">
 			<list>
 				<ref bean="value1"></ref>
+				<ref bean="value2"></ref>
+				<ref bean="value5"></ref>
 			</list>
 		</property>
 	</bean>
@@ -567,6 +564,7 @@
 		</property>
 		<property name="values">
 			<list>
+			<ref bean="value3"/>
 			</list>
 		</property>
 	</bean>
@@ -589,6 +587,7 @@
 		</property>
 		<property name="values">
 			<list>
+			<ref bean="value4"/>
 			</list>
 		</property>
 	</bean>
@@ -627,13 +626,13 @@
 	<bean id="value3" class="domain.Value">
 		<property name="text" value="Sevilla" />
 		<property name="attribute" ref="attribute3"/>
-		<property name="property" ref="property1"/>
+		<property name="property" ref="property2"/>
 	</bean>
 	
 	<bean id="value4" class="domain.Value">
 		<property name="text" value="Sevilla" />
 		<property name="attribute" ref="attribute4"/>
-		<property name="property" ref="property1"/>
+		<property name="property" ref="property3"/>
 	</bean>
 	
 	<bean id="value5" class="domain.Value">
