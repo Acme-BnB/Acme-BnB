@@ -48,16 +48,16 @@ public class Lessor extends Commentator implements Commentable {
 
 	// Relationships --------------------------
 
-	private Collection<Property>	properties;
+	private Collection<Property>	rProperties;
 
 
 	@Valid
 	@OneToMany(mappedBy = "lessor")
-	public Collection<Property> getProperties() {
-		return properties;
+	public Collection<Property> getRProperties() {
+		return rProperties;
 	}
-	public void setProperties(Collection<Property> properties) {
-		this.properties = properties;
+	public void setRProperties(Collection<Property> rProperties) {
+		this.rProperties = rProperties;
 	}
 
 }

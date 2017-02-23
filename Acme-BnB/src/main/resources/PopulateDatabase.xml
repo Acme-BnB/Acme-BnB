@@ -226,7 +226,7 @@
 				<ref bean="socialIdentity2"></ref>
 			</list>
 		</property>
-		<property name="properties">
+		<property name="rProperties">
 			<list>
 				<ref bean="property1"></ref>
 				<ref bean="property4"></ref>
@@ -248,7 +248,7 @@
 			<list>
 			</list>
 		</property>
-		<property name="properties">
+		<property name="rProperties">
 			<list>
 				<ref bean="property2"></ref>
 			</list>
@@ -269,7 +269,7 @@
 			<list>
 			</list>
 		</property>
-		<property name="properties">
+		<property name="rProperties">
 			<list>
 				<ref bean="property3"></ref>
 			</list>
@@ -283,7 +283,7 @@
 		<property name="minPrice" value="10" />	
 		<property name="maxPrice" value="20" />
 		<property name="keyword" value="finca" />
-		<property name="properties">
+		<property name="results">
 			<list>
 			<ref bean="property1"/>
 			</list>
@@ -295,7 +295,7 @@
 		<property name="minPrice" value="" />	
 		<property name="maxPrice" value="" />
 		<property name="keyword" value="casa" />
-		<property name="properties">
+		<property name="results">
 			<list>
 				<ref bean="property3"/>
 			</list>
@@ -307,7 +307,7 @@
 		<property name="minPrice" value="10" />	
 		<property name="maxPrice" value="100" />
 		<property name="keyword" value="" />
-		<property name="properties">
+		<property name="results">
 			<list>
 			</list>
 		</property>
