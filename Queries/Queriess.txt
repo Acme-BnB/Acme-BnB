@@ -1,0 +1,53 @@
+
+C9 
+
+C10
+
+B1 The minimum, the average, and the maximum number of audits that the properties have got.
+
+	select min(p.audits.size), avg(p.audits.size), max(p.audits.size) from Property p;
+
+B2 A listing in which the attributes are sorted in descending order regarding the number of times they have been used to describe a property.
+
+	select a from Attribute a order by a.values.size DESC;
+
+
+B3 A listing with his or her properties sorted according to the number of audits that they have got.
+
+	select p from Property p order by p.audits.size where p.lessor=?1;
+
+B4 A listing with his or her properties sorted according to the number of requests that they have got.
+
+	select p from Property p order by p.requests.size where p.lessor=?1;
+
+B5 A listing with his or her properties sorted according to the number of approved requests that they have got.
+
+	select p from Property p join p.requests r where r.status='ACCEPTED' and p.lessor=?1 order by r;
+
+B6 A listing with his or her properties sorted according to the number of denied requests that they have got.
+
+	select p from Property p join p.requests r where r.status='DENIED' and p.lessor=?1 order by r;
+
+
+B7 A listing with his or her properties sorted according to the number of pending requests that they have got.
+
+	select p from Property p join p.requests r where r.status='PENDING' and p.lessor=?1 order by r;
+
+A2 The minimum, the average, and the maximum number of invoices issued to the tenants.
+
+	min -> select count(r) from Request r where r.status='ACCEPTED' group by r.tenant having count(r) <= all(select count(c) from Request c where c.status='ACCEPTED' group by c.tenant);
+
+	avg ->  select 1.0*(select count(r) from Request r where r.status='ACCEPTED')/count(t) from Tenant t;
+
+	max -> select count(r) from Request r where r.status='ACCEPTED' group by r.tenant having count(r) >= all(select count(c) from Request c where c.status='ACCEPTED' group by c.tenant);
+
+A3 The total amount of money due in the invoices issued by the system.
+
+	select sum(i.amountDue) from Invoice i;
+
+A4 The average number of requests for properties that have at least an audit record versus the average number of requests for properties that do not have any audits
+
+	-> 1º parte -> select (select sum(p.requests.size) from Property p where p.audits.size>=1)/count(p) from Property p where p.audits.size>=1;
+
+
+	-> 2º parte -> select (select sum(p.requests.size) from Property p where p.audits.size=0)/count(p) from Property p where p.audits.size=0;

@@ -635,6 +635,25 @@
 		<property name="attribute" ref="attribute5"/>
 		<property name="property" ref="property1"/>
 	</bean>
+	
+	<bean id="value6" class="domain.Value">
+		<property name="text" value="Cordoba" />
+		<property name="attribute" ref="attribute2"/>
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="value7" class="domain.Value">
+		<property name="text" value="Jaen" />
+		<property name="attribute" ref="attribute2"/>
+		<property name="property" ref="property3"/>
+	</bean>
+	
+	<bean id="value8" class="domain.Value">
+		<property name="text" value="Fancia" />
+		<property name="attribute" ref="attribute1"/>
+		<property name="property" ref="property3"/>
+	</bean>
+	
 
 	
 
@@ -684,6 +703,16 @@
 		<property name="tenant" ref="tenant1"/>
 	</bean>
 
+	<bean id="request5" class="domain.Request">
+		<property name="checkIn" value="10/10/2016 16:00" />
+		<property name="checkOut" value="20/10/2016 16:00" />	
+		<property name="smoker" value="true" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="invoice" ref="invoice4"/>
+		<property name="property" ref="property3"/>
+		<property name="tenant" ref="tenant1"/>
+	</bean>
 	
 	<!-- Audit -->
 	
