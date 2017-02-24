@@ -49,7 +49,7 @@ A3 The total amount of money due in the invoices issued by the system.
 
 A4 The average number of requests for properties that have at least an audit record versus the average number of requests for properties that do not have any audits
 
-	-> 1º parte -> select (select sum(p.requests.size) from Property p where p.audits.size>=1)/count(p) from Property p where p.audits.size>=1;
+	-> 1º parte -> select 1.0*(select sum(p.requests.size) from Property p where p.audits.size>=1)/count(p) from Property p where p.audits.size>=1;
 
 
-	-> 2º parte -> select (select sum(p.requests.size) from Property p where p.audits.size=0)/count(p) from Property p where p.audits.size=0;
+	-> 2º parte -> select 1.0*(select sum(p.requests.size) from Property p where p.audits.size=0)/count(p) from Property p where p.audits.size=0;
