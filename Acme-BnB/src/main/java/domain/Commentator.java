@@ -24,16 +24,16 @@ public class Commentator extends Actor {
 
 	// Relationships ----------------------------------------------------------
 
-	private Collection<Comment>	comments;
+	private Collection<Comment>	writtenComments;
 
 
 	@Valid
 	@OneToMany(mappedBy = "commentator")
-	public Collection<Comment> getComments() {
-		return comments;
+	public Collection<Comment> getWrittenComments() {
+		return writtenComments;
 	}
-	public void setComments(Collection<Comment> comments) {
-		this.comments = comments;
+	public void setWrittenComments(Collection<Comment> writtenComments) {
+		this.writtenComments = writtenComments;
 	}
 
 }

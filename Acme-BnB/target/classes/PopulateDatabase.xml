@@ -21,6 +21,10 @@
 	<bean id="fee" class="domain.Fee">
 	 	<property name="value" value="1.00" />
 	</bean>
+	
+	<bean id="vat" class="domain.Vat">
+		<property name="value" value="ES78451578"/>
+	</bean>
 	 
 	<!-- Credit Card -->
 	
@@ -197,6 +201,7 @@
 		<property name="phone" value="+34 956999111"/>
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount1"/>
+		<property name="isCommentable" value="false"/>
 		<property name="socialIdentities">
 			<list>
 				<ref bean="socialIdentity1"></ref>
@@ -204,7 +209,7 @@
 		</property>
 	</bean>
 	
-	<!-- Comment -->
+	
 	
 	
 
@@ -220,7 +225,13 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="creditCard" ref="creditCard1" />
 		<property name="feeAmount" value="0.0"/>
+		<property name="isCommentable" value="true"/>
 		<property name="userAccount" ref="userAccount2"/>
+		<property name="writtenComments">
+			<list>
+				<ref bean="comment1"/>
+			</list>
+		</property>
 		<property name="socialIdentities">
 			<list>
 				<ref bean="socialIdentity2"></ref>
@@ -243,6 +254,7 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="creditCard" ref="creditCard2" />
 		<property name="feeAmount" value="0.0"/>
+		<property name="isCommentable" value="true"/>
 		<property name="userAccount" ref="userAccount3"/>
 		<property name="socialIdentities">
 			<list>
@@ -264,6 +276,7 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="creditCard" ref="creditCard3" />
 		<property name="feeAmount" value="0.0"/>
+		<property name="isCommentable" value="true"/>
 		<property name="userAccount" ref="userAccount4"/>
 		<property name="socialIdentities">
 			<list>
@@ -321,7 +334,13 @@
 		<property name="phone" value="+34 956222333"/>
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount5"/>
+		<property name="isCommentable" value="true"/>
 		<property name="finder" ref="finder1"/>
+		<property name="comments">
+			<list>
+			<ref bean="comment1"/>
+			</list>
+		</property>
 		<property name="socialIdentities">
 			<list>
 				<ref bean="socialIdentity3"></ref>
@@ -345,6 +364,7 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount6"/>
 		<property name="finder" ref="finder2"/>
+		<property name="isCommentable" value="true"/>
 		<property name="socialIdentities">
 			<list>
 			</list>
@@ -365,6 +385,7 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="userAccount" ref="userAccount7"/>
 		<property name="finder" ref="finder3"/>
+		<property name="isCommentable" value="true"/>
 		<property name="socialIdentities">
 			<list>
 			</list>
@@ -386,6 +407,7 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="companyName" value="Auditorias ZHF"/>
 		<property name="userAccount" ref="userAccount8"/>
+		<property name="isCommentable" value="false"/>
 		<property name="socialIdentities">
 			<list>
 				<ref bean="socialIdentity4"></ref>
@@ -406,6 +428,7 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="companyName" value="AuditRafa SL"/>
 		<property name="userAccount" ref="userAccount9"/>
+		<property name="isCommentable" value="false"/>
 		<property name="socialIdentities">
 			<list>
 			</list>
@@ -424,6 +447,7 @@
 		<property name="picture" value="https://image.freepik.com/iconos-gratis/icono-de-perfil-de-usuario_318-33925.jpg"/>
 		<property name="companyName" value="Auditorias23"/>
 		<property name="userAccount" ref="userAccount10"/>
+		<property name="isCommentable" value="false"/>
 		<property name="socialIdentities">
 			<list>
 			</list>
@@ -719,17 +743,30 @@
 	<bean id="audit1" class="domain.Audit">
 		<property name="writtenMoment" value="05/05/2016" />
 		<property name="text" value="Texto del audit1" />	
-		<property name="attachments" value="2" />
+		<property name="attachments">
+			<list>
+			<ref bean="attachment1"/>
+			<ref bean="attachment2"/>
+			</list>
+		</property>
 		<property name="draft" value="true" />
 		<property name="auditor" ref="auditor1" />
 		<property name="property" ref="property1" />
 	</bean>
 	
+	<!-- Attachment -->
+	<bean id="attachment1" class="domain.Attachment">
+		<property name="url" value="https://drive.google.com/open?id=0BzTuIoHicDzXR2c3TUk5NmVLQm8"/>
+	</bean>
+	
+	<bean id="attachment2" class="domain.Attachment">
+		<property name="url" value="https://drive.google.com/open?id=0B8_hNQq2jdcoTDNZeEpSUnA2SXc"/>
+	</bean>
 	<!-- Invoice -->
 	
 	<bean id="invoice1" class="domain.Invoice">
 		<property name="issuedMoment" value="08/05/2016 10:56" />
-		<property name="vat" value="50" />	
+		<property name="vatNumber" value="ES78451578" />	
 		<property name="information" value="Factura 30" />
 		<property name="detail" value="Tienes que pagar 100 euros" />
 		<property name="amountDue" value="40.0" />
@@ -737,7 +774,7 @@
 	
 	<bean id="invoice2" class="domain.Invoice">
 		<property name="issuedMoment" value="05/05/2016 10:56" />
-		<property name="vat" value="50" />	
+		<property name="vatNumber" value="ES78451578" />		
 		<property name="information" value="Factura 28" />
 		<property name="detail" value="Tienes que pagar 40 euros" />
 		<property name="amountDue" value="40.0" />
@@ -746,7 +783,7 @@
 	
 	<bean id="invoice3" class="domain.Invoice">
 		<property name="issuedMoment" value="05/05/2016 10:56" />
-		<property name="vat" value="50" />	
+		<property name="vatNumber" value="ES78451578" />		
 		<property name="information" value="Factura 28" />
 		<property name="detail" value="Tienes que pagar 40 euros" />
 		<property name="amountDue" value="40.0" />
@@ -755,11 +792,19 @@
 	
 	<bean id="invoice4" class="domain.Invoice">
 		<property name="issuedMoment" value="05/05/2016 10:56" />
-		<property name="vat" value="50" />	
+		<property name="vatNumber" value="ES78451578" />	
 		<property name="information" value="Factura 65" />
 		<property name="detail" value="Tienes que pagar 50 euros" />
 		<property name="amountDue" value="40.0" />
 
 	</bean>
-	
+	<!-- Comment -->
+	<bean id="comment1" class="domain.Comment">
+		<property name="title" value="title1"/>
+		<property name="postedMoment" value="08/05/2016"/>
+		<property name="text" value="text1"/>
+		<property name="stars" value="4"/>
+		<property name="commentable" ref="tenant1"/>
+		<property name="commentator" ref="lessor1"/>
+	</bean>
 </beans>

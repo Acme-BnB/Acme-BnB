@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Date;
@@ -16,12 +15,12 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
+
+
 @Entity
 @Access(AccessType.PROPERTY)
-public class Comment extends DomainEntity {
-
-	// Constructors -----------------------------
-
+public class Comment extends DomainEntity{
+	//Constructor
 	public Comment() {
 		super();
 	}
@@ -68,15 +67,20 @@ public class Comment extends DomainEntity {
 	public void setStars(Integer stars) {
 		this.stars = stars;
 	}
-
-
-	// Relationship ------------------------------
-
-	private Commentator	commentator;
-
+	//Relationships
+	private Commentable commentable;
+	private Commentator commentator;
 
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional=false)
+	public Commentable getCommentable() {
+		return commentable;
+	}
+	public void setCommentable(Commentable commentable) {
+		this.commentable = commentable;
+	}
+	@Valid
+	@ManyToOne(optional=false)
 	public Commentator getCommentator() {
 		return commentator;
 	}

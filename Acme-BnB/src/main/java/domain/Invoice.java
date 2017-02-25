@@ -27,7 +27,7 @@ public class Invoice extends DomainEntity {
 	// Attributes ----------------------------
 
 	private Date	issuedMoment;
-	private Integer	vat;
+	private String	vatNumber;
 	private String	information;
 	private String	detail;
 	private Double	amountDue;
@@ -41,12 +41,12 @@ public class Invoice extends DomainEntity {
 	public void setissuedMoment(Date issuedMoment) {
 		this.issuedMoment = issuedMoment;
 	}
-
-	public Integer getVat() {
-		return vat;
+	@NotBlank
+	public String getVatNumber() {
+		return vatNumber;
 	}
-	public void setVat(Integer vat) {
-		this.vat = vat;
+	public void setVatNumber(String vatNumber) {
+		this.vatNumber = vatNumber;
 	}
 
 	@NotBlank

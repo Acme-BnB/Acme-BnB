@@ -1,16 +1,20 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Past;
+
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,7 +34,6 @@ public class Audit extends DomainEntity {
 
 	private Date	writtenMoment;
 	private String	text;
-	private Integer	attachments;
 	private Boolean	draft;
 
 
@@ -51,14 +54,7 @@ public class Audit extends DomainEntity {
 	public void setText(String text) {
 		this.text = text;
 	}
-
-	public Integer getAttachments() {
-		return attachments;
-	}
-	public void setAttachments(Integer attachments) {
-		this.attachments = attachments;
-	}
-
+	
 	public Boolean getDraft() {
 		return draft;
 	}
@@ -71,8 +67,16 @@ public class Audit extends DomainEntity {
 
 	private Auditor		auditor;
 	private Property	property;
+	private Collection<Attachment>attachments;
 
-
+	@Valid
+	@OneToMany(mappedBy="audit", cascade=CascadeType.ALL)
+	public Collection<Attachment> getAttachments() {
+		return attachments;
+	}
+	public void setAttachments(Collection<Attachment> attachments) {
+		this.attachments = attachments;
+	}
 	@Valid
 	@ManyToOne(optional = false)
 	public Auditor getAuditor() {

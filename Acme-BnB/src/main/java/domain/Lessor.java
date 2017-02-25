@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Lessor extends Commentator implements Commentable {
+public class Lessor extends Commentator{
 
 	// Constructor -----------------------------
 

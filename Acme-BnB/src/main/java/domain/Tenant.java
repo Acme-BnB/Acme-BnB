@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Tenant extends Commentator implements Commentable {
+public class Tenant extends Commentator{
 
 	// Constructors -------------------------------
 
