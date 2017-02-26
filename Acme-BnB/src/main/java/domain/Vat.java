@@ -21,7 +21,7 @@ public class Vat extends DomainEntity{
 		private String value;
 
 		@NotBlank
-		@Pattern(regexp = "([A-Z]{2})-\\d{2,12})")
+		@Pattern(regexp = "([A-Z]{2}-\\d{2,12})")
 		public String getValue() {
 			return value;
 		}

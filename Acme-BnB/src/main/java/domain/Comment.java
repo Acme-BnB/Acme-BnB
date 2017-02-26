@@ -67,7 +67,7 @@ public class Comment extends DomainEntity{
 	public void setStars(Integer stars) {
 		this.stars = stars;
 	}
-	//Relationships
+	//Relationships-----------------------------------------------
 	private Commentable commentable;
 	private Commentator commentator;
 

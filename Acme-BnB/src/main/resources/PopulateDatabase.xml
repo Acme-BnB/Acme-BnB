@@ -23,7 +23,7 @@
 	</bean>
 	
 	<bean id="vat" class="domain.Vat">
-		<property name="value" value="ES78451578"/>
+		<property name="value" value="ES-78451578"/>
 	</bean>
 	 
 	<!-- Credit Card -->
@@ -757,10 +757,12 @@
 	<!-- Attachment -->
 	<bean id="attachment1" class="domain.Attachment">
 		<property name="url" value="https://drive.google.com/open?id=0BzTuIoHicDzXR2c3TUk5NmVLQm8"/>
+		<property name="audit" ref="audit1"/>
 	</bean>
 	
 	<bean id="attachment2" class="domain.Attachment">
 		<property name="url" value="https://drive.google.com/open?id=0B8_hNQq2jdcoTDNZeEpSUnA2SXc"/>
+		<property name="audit" ref="audit1"/>
 	</bean>
 	<!-- Invoice -->
 	
