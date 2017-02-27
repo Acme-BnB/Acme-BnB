@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import repositories.LessorRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.Lessor;
 import domain.Property;
@@ -102,6 +103,29 @@ public class LessorService {
 		Assert.isTrue(lessor.getId() != 0);
 
 		lessorRepository.delete(lessor);
+	}
+
+	public Lessor findByPrincipal() {
+		Lessor result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		assert userAccount != null;
+		result = findByUserAccount(userAccount);
+		assert result != null;
+
+		return result;
+	}
+
+	public Lessor findByUserAccount(UserAccount userAccount) {
+		assert userAccount != null;
+
+		Lessor result;
+
+		result = lessorRepository.findByUserAccountId(userAccount.getId());
+		assert result != null;
+
+		return result;
 	}
 
 }

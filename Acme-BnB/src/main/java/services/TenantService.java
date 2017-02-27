@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import repositories.TenantRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.Request;
 import domain.SocialIdentity;
@@ -102,6 +103,29 @@ public class TenantService {
 		Assert.isTrue(tenant.getId() != 0);
 
 		tenantRepository.delete(tenant);
+	}
+
+	public Tenant findByPrincipal() {
+		Tenant result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		assert userAccount != null;
+		result = findByUserAccount(userAccount);
+		assert result != null;
+
+		return result;
+	}
+
+	public Tenant findByUserAccount(UserAccount userAccount) {
+		assert userAccount != null;
+
+		Tenant result;
+
+		result = tenantRepository.findByUserAccountId(userAccount.getId());
+		assert result != null;
+
+		return result;
 	}
 
 }

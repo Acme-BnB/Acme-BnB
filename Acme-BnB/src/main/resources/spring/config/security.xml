@@ -51,6 +51,10 @@
 		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
+		
+		<security:intercept-url pattern="/lessor/property/**" access="hasRole('PROPERTY')" /> 
+		
+		<security:intercept-url pattern="/tenant/finder/**" access="hasRole('TENANT')" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

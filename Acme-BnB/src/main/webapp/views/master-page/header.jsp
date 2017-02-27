@@ -40,6 +40,27 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('LESSOR')">
+			<li><a class="fNiv"><spring:message	code="master.page.lessor" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="lessor/property/list.do"><spring:message code="master.page.lessor.property.list" /></a></li>
+					<li><a href="lessor/property/create.do"><spring:message code="master.page.lessor.property.create" /></a></li>			
+				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('TENANT')">
+			<li><a class="fNiv"><spring:message	code="master.page.tenant" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="tenant/finder/display.do"><spring:message code="master.page.tenant.finder.display" /></a></li>			
+				</ul>
+			</li>
+		</security:authorize>
+		
+		
+		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>
