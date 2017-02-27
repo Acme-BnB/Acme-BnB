@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SocialIdentityRepository;
+import security.LoginService;
 import domain.SocialIdentity;
 
 @Service
@@ -76,4 +77,18 @@ public class SocialIdentityService {
 		socialIdentityRepository.delete(socialIdentity);
 	}
 
+	// Other business services
+	
+	public SocialIdentity findByPrincipal(){
+		SocialIdentity result;
+		int userAccountId;
+		
+		userAccountId = LoginService.getPrincipal().getId();
+		result = socialIdentityRepository.findByUserAccountId(userAccountId);
+				
+		return result;
+	}
+	
+	
+	
 }

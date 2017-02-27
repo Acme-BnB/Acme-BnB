@@ -10,16 +10,19 @@ import domain.Property;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer>{
 
+	@Query("select p from Property p where p.description like %?1% or p.address like %?1% or p.name like %?1%")
+	Collection<Property> findByKey(String key);
+	
 	// Admin dashboard ------------------------------------------------
 	
 	@Query("select min(p.audits.size) from Property p")
-	Double findMinAuditsProperties();
+	Double findMinAuditsPerProperty();
 	
 	@Query("select avg(p.audits.size) from Property p")
-	Double findAvgAuditsProperties();
+	Double findAvgAuditsPerProperty();
 	
 	@Query("select max(p.audits.size) from Property p")
-	Double findMaxAuditsProperties();
+	Double findMaxAuditsPerProperty();
 	
 	@Query("select p from Property p where p.lessor=?1 order by p.audits.size ")
 	Collection<Property> findPropertiesOfALessorOrderByNumberAudit();
