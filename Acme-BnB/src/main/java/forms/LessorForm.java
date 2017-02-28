@@ -88,7 +88,7 @@ public class LessorForm {
 	}
 
 	@NotNull
-	public boolean isAgreed() {
+	public boolean getAgreed() {
 		return agreed;
 	}
 	public void setAgreed(boolean agreed) {

@@ -18,6 +18,7 @@ import security.UserAccount;
 import domain.Audit;
 import domain.Auditor;
 import domain.SocialIdentity;
+import forms.AuditorForm;
 
 @Service
 @Transactional
@@ -112,6 +113,45 @@ public class AuditorService {
 		Assert.isTrue(auditor.getId() != 0);
 
 		auditorRepository.delete(auditor);
+	}
+
+	// Form methods -----------------------------------------------------
+
+	public AuditorForm generateForm() {
+		AuditorForm result;
+
+		result = new AuditorForm();
+
+		return result;
+	}
+
+	public Auditor reconstruct(AuditorForm auditorForm) {
+		Auditor result = create();
+
+		String password;
+		password = auditorForm.getPassword();
+
+		Assert.isTrue(auditorForm.getPassword2().equals(password), "notEqualPassword");
+		Assert.isTrue(auditorForm.getAgreed(), "agreedNotAccepted");
+
+		UserAccount userAccount;
+		userAccount = new UserAccount();
+		userAccount.setUsername(auditorForm.getUsername());
+		userAccount.setPassword(password);
+
+		Authority authority;
+		authority = new Authority();
+		authority.setAuthority(Authority.AUDITOR);
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+
+		result.setName(auditorForm.getName());
+		result.setSurname(auditorForm.getSurname());
+		result.setEmail(auditorForm.getEmail());
+		result.setPhone(auditorForm.getPhone());
+		result.setCompanyName(auditorForm.getCompanyName());
+
+		return result;
 	}
 
 }

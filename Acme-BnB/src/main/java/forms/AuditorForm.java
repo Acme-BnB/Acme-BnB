@@ -85,7 +85,7 @@ public class AuditorForm {
 	}
 
 	@NotNull
-	public boolean isAgreed() {
+	public boolean getAgreed() {
 		return agreed;
 	}
 	public void setAgreed(boolean agreed) {

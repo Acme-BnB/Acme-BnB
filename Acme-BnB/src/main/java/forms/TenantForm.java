@@ -83,7 +83,7 @@ public class TenantForm {
 	}
 
 	@NotNull
-	public boolean isAgreed() {
+	public boolean getAgreed() {
 		return agreed;
 	}
 	public void setAgreed(boolean agreed) {

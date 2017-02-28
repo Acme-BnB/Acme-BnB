@@ -17,6 +17,7 @@ import security.UserAccount;
 import domain.Request;
 import domain.SocialIdentity;
 import domain.Tenant;
+import forms.TenantForm;
 
 @Service
 @Transactional
@@ -102,6 +103,46 @@ public class TenantService {
 		Assert.isTrue(tenant.getId() != 0);
 
 		tenantRepository.delete(tenant);
+	}
+
+	// Form methods -------------------------------------------------
+
+	public TenantForm generateForm() {
+		TenantForm result;
+
+		result = new TenantForm();
+
+		return result;
+	}
+
+	public Tenant reconstruct(TenantForm tenantForm) {
+
+		Tenant result = create();
+
+		String password;
+		password = tenantForm.getPassword();
+
+		Assert.isTrue(tenantForm.getPassword2().equals(password), "notEqualPassword");
+		Assert.isTrue(tenantForm.getAgreed(), "agreedNotAccepted");
+
+		UserAccount userAccount;
+		userAccount = new UserAccount();
+		userAccount.setUsername(tenantForm.getUsername());
+		userAccount.setPassword(password);
+
+		Authority authority;
+		authority = new Authority();
+		authority.setAuthority(Authority.TENANT);
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+
+		result.setName(tenantForm.getName());
+		result.setSurname(tenantForm.getSurname());
+		result.setEmail(tenantForm.getEmail());
+		result.setPhone(tenantForm.getPhone());
+
+		return result;
+
 	}
 
 }

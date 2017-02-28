@@ -17,6 +17,7 @@ import security.UserAccount;
 import domain.Lessor;
 import domain.Property;
 import domain.SocialIdentity;
+import forms.LessorForm;
 
 @Service
 @Transactional
@@ -102,6 +103,48 @@ public class LessorService {
 		Assert.isTrue(lessor.getId() != 0);
 
 		lessorRepository.delete(lessor);
+	}
+
+	// Form methods ------------------------------------------------
+
+	public LessorForm generateForm() {
+		LessorForm result;
+
+		result = new LessorForm();
+
+		return result;
+	}
+
+	public Lessor reconstruct(LessorForm lessorForm) {
+
+		Lessor result = create();
+
+		String password;
+		password = lessorForm.getPassword();
+
+		Assert.isTrue(lessorForm.getPassword2().equals(password), "notEqualPassword");
+		Assert.isTrue(lessorForm.getAgreed(), "agreedNotAccepted");
+
+		UserAccount userAccount;
+		userAccount = new UserAccount();
+		userAccount.setUsername(lessorForm.getUsername());
+		userAccount.setPassword(password);
+
+		Authority authority;
+		authority = new Authority();
+		authority.setAuthority(Authority.LESSOR);
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+
+		result.setName(lessorForm.getName());
+		result.setSurname(lessorForm.getSurname());
+		result.setEmail(lessorForm.getEmail());
+		result.setPhone(lessorForm.getPhone());
+		result.setCreditCard(lessorForm.getCreditCard());
+		result.setFeeAmount(0.0);
+
+		return result;
+
 	}
 
 }
