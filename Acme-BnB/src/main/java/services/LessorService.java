@@ -106,28 +106,26 @@ public class LessorService {
 		lessorRepository.delete(lessor);
 	}
 
-<<<<<<< HEAD
 	// Form methods ------------------------------------------------
 
 	public LessorForm generateForm() {
 		LessorForm result;
 
 		result = new LessorForm();
-=======
+		return result;
+	}
 	public Lessor findByPrincipal() {
 		Lessor result;
 		UserAccount userAccount;
-
 		userAccount = LoginService.getPrincipal();
 		assert userAccount != null;
 		result = findByUserAccount(userAccount);
 		assert result != null;
->>>>>>> origin/niclorros
 
 		return result;
 	}
 
-<<<<<<< HEAD
+
 	public Lessor reconstruct(LessorForm lessorForm) {
 
 		Lessor result = create();
@@ -155,10 +153,9 @@ public class LessorService {
 		result.setPhone(lessorForm.getPhone());
 		result.setCreditCard(lessorForm.getCreditCard());
 		result.setFeeAmount(0.0);
-
 		return result;
 
-=======
+	}
 	public Lessor findByUserAccount(UserAccount userAccount) {
 		assert userAccount != null;
 
@@ -168,7 +165,10 @@ public class LessorService {
 		assert result != null;
 
 		return result;
->>>>>>> origin/niclorros
 	}
-
+   
+   
 }
+
+
+

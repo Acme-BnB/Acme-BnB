@@ -106,14 +106,16 @@ public class TenantService {
 		tenantRepository.delete(tenant);
 	}
 
-<<<<<<< HEAD
+
 	// Form methods -------------------------------------------------
 
 	public TenantForm generateForm() {
 		TenantForm result;
 
 		result = new TenantForm();
-=======
+		return result;
+	}
+
 	public Tenant findByPrincipal() {
 		Tenant result;
 		UserAccount userAccount;
@@ -122,12 +124,12 @@ public class TenantService {
 		assert userAccount != null;
 		result = findByUserAccount(userAccount);
 		assert result != null;
->>>>>>> origin/niclorros
+
 
 		return result;
 	}
 
-<<<<<<< HEAD
+
 	public Tenant reconstruct(TenantForm tenantForm) {
 
 		Tenant result = create();
@@ -155,8 +157,9 @@ public class TenantService {
 		result.setPhone(tenantForm.getPhone());
 
 		return result;
+	}
 
-=======
+
 	public Tenant findByUserAccount(UserAccount userAccount) {
 		assert userAccount != null;
 
@@ -166,7 +169,7 @@ public class TenantService {
 		assert result != null;
 
 		return result;
->>>>>>> origin/niclorros
+
 	}
 
 }
