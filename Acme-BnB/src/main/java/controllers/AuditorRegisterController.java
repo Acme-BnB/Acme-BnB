@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Credentials;
-import services.LessorService;
-import domain.Lessor;
-import forms.LessorForm;
+import services.AuditorService;
+import domain.Auditor;
+import forms.AuditorForm;
 
 @Controller
-@RequestMapping("/lessor")
-public class LessorRegisterController extends AbstractController {
+@RequestMapping("/auditor")
+public class AuditorRegisterController extends AbstractController {
 
 	// Services ------------------------------------------------
 
 	@Autowired
-	private LessorService	lessorService;
+	private AuditorService	auditorService;
 
 
 	// Constructor ---------------------------------------------
 
-	public LessorRegisterController() {
+	public AuditorRegisterController() {
 		super();
 	}
 
@@ -37,37 +37,37 @@ public class LessorRegisterController extends AbstractController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView create(@Valid @ModelAttribute Credentials credentials) {
 		ModelAndView result;
-		LessorForm lessorForm;
+		AuditorForm auditorForm;
 
-		lessorForm = lessorService.generateForm();
-		result = createEditModelAndView(lessorForm);
+		auditorForm = auditorService.generateForm();
+		result = createEditModelAndView(auditorForm);
 		result.addObject("credentials", credentials);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid LessorForm lessorForm, BindingResult binding) {
+	public ModelAndView save(@Valid AuditorForm auditorForm, BindingResult binding) {
 		ModelAndView result;
-		Lessor lessor;
+		Auditor auditor;
 		Credentials credentials = new Credentials();
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(lessorForm);
+			result = createEditModelAndView(auditorForm);
 		} else {
 			try {
-				lessor = lessorService.reconstruct(lessorForm);
-				lessorService.save(lessor);
+				auditor = auditorService.reconstruct(auditorForm);
+				auditorService.save(auditor);
 				result = new ModelAndView("redirect:../security/login.do");
 			} catch (Throwable oops) {
-				String msgCode = "lessor.register.error";
+				String msgCode = "auditor.register.error";
 				if (oops.getMessage().equals("notEqualPassword")) {
-					msgCode = "lessor.register.notEqualPassword";
+					msgCode = "auditor.register.notEqualPassword";
 				} else {
 					if (oops.getMessage().equals("agreedNotAccepted")) {
-						msgCode = "lessor.register.agreedNotAccepted";
+						msgCode = "auditor.register.agreedNotAccepted";
 					}
 				}
-				result = createEditModelAndView(lessorForm, msgCode, credentials);
+				result = createEditModelAndView(auditorForm, msgCode, credentials);
 			}
 		}
 
@@ -77,25 +77,26 @@ public class LessorRegisterController extends AbstractController {
 
 	// Ancillary methods ---------------------------------------
 
-	protected ModelAndView createEditModelAndView(LessorForm lessorForm) {
+	protected ModelAndView createEditModelAndView(AuditorForm auditorForm) {
 		ModelAndView result;
 		Credentials credentials = new Credentials();
 
-		result = createEditModelAndView(lessorForm, null, credentials);
+		result = createEditModelAndView(auditorForm, null, credentials);
 
 		return result;
 
 	}
 
-	protected ModelAndView createEditModelAndView(LessorForm lessorForm, String message, @Valid @ModelAttribute Credentials credentials) {
+	protected ModelAndView createEditModelAndView(AuditorForm auditorForm, String message, @Valid @ModelAttribute Credentials credentials) {
 		ModelAndView result;
 
-		result = new ModelAndView("lessor/register");
-		result.addObject("lessorForm", lessorForm);
+		result = new ModelAndView("auditor/register");
+		result.addObject("auditorForm", auditorForm);
 		result.addObject("message", message);
 		result.addObject("credentials", credentials);
 
 		return result;
+
 	}
 
 }

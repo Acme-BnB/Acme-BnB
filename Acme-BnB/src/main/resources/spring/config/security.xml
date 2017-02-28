@@ -57,6 +57,9 @@
 		<security:intercept-url pattern="/tenant/finder/**" access="hasRole('TENANT')" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+		
+		<security:intercept-url pattern="/lessor/register.do" access="permitAll" /> 
+		<security:intercept-url pattern="/tenant/register.do" access="permitAll" /> 
 
 		<security:form-login 
 			login-page="/security/login.do"

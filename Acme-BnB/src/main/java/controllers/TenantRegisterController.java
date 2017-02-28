@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Credentials;
-import services.LessorService;
-import domain.Lessor;
-import forms.LessorForm;
+import services.TenantService;
+import domain.Tenant;
+import forms.TenantForm;
 
 @Controller
-@RequestMapping("/lessor")
-public class LessorRegisterController extends AbstractController {
+@RequestMapping("/tenant")
+public class TenantRegisterController extends AbstractController {
 
 	// Services ------------------------------------------------
 
 	@Autowired
-	private LessorService	lessorService;
+	private TenantService	tenantService;
 
 
 	// Constructor ---------------------------------------------
 
-	public LessorRegisterController() {
+	public TenantRegisterController() {
 		super();
 	}
 
@@ -37,37 +37,37 @@ public class LessorRegisterController extends AbstractController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView create(@Valid @ModelAttribute Credentials credentials) {
 		ModelAndView result;
-		LessorForm lessorForm;
+		TenantForm tenantForm;
 
-		lessorForm = lessorService.generateForm();
-		result = createEditModelAndView(lessorForm);
+		tenantForm = tenantService.generateForm();
+		result = createEditModelAndView(tenantForm);
 		result.addObject("credentials", credentials);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid LessorForm lessorForm, BindingResult binding) {
+	public ModelAndView save(@Valid TenantForm tenantForm, BindingResult binding) {
 		ModelAndView result;
-		Lessor lessor;
+		Tenant tenant;
 		Credentials credentials = new Credentials();
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(lessorForm);
+			result = createEditModelAndView(tenantForm);
 		} else {
 			try {
-				lessor = lessorService.reconstruct(lessorForm);
-				lessorService.save(lessor);
+				tenant = tenantService.reconstruct(tenantForm);
+				tenantService.save(tenant);
 				result = new ModelAndView("redirect:../security/login.do");
 			} catch (Throwable oops) {
-				String msgCode = "lessor.register.error";
+				String msgCode = "tenant.register.error";
 				if (oops.getMessage().equals("notEqualPassword")) {
-					msgCode = "lessor.register.notEqualPassword";
+					msgCode = "tenant.register.notEqualPassword";
 				} else {
 					if (oops.getMessage().equals("agreedNotAccepted")) {
-						msgCode = "lessor.register.agreedNotAccepted";
+						msgCode = "tenant.register.agreedNotAccepted";
 					}
 				}
-				result = createEditModelAndView(lessorForm, msgCode, credentials);
+				result = createEditModelAndView(tenantForm, msgCode, credentials);
 			}
 		}
 
@@ -77,25 +77,26 @@ public class LessorRegisterController extends AbstractController {
 
 	// Ancillary methods ---------------------------------------
 
-	protected ModelAndView createEditModelAndView(LessorForm lessorForm) {
+	protected ModelAndView createEditModelAndView(TenantForm tenantForm) {
 		ModelAndView result;
 		Credentials credentials = new Credentials();
 
-		result = createEditModelAndView(lessorForm, null, credentials);
+		result = createEditModelAndView(tenantForm, null, credentials);
 
 		return result;
 
 	}
 
-	protected ModelAndView createEditModelAndView(LessorForm lessorForm, String message, @Valid @ModelAttribute Credentials credentials) {
+	protected ModelAndView createEditModelAndView(TenantForm tenantForm, String message, @Valid @ModelAttribute Credentials credentials) {
 		ModelAndView result;
 
-		result = new ModelAndView("lessor/register");
-		result.addObject("lessorForm", lessorForm);
+		result = new ModelAndView("tenant/register");
+		result.addObject("tenantForm", tenantForm);
 		result.addObject("message", message);
 		result.addObject("credentials", credentials);
 
 		return result;
+
 	}
 
 }

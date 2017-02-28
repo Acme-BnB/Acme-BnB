@@ -14,7 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<img src="images/logo.png" alt="Sample Project Co., Inc." />
+	<img src="images/logo.png" alt="Acme BnB Co., Inc." />
 </div>
 
 <div>
@@ -24,8 +24,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
+<%-- 					<li><a href="auditor/register.do"><spring:message code="master.page.administrator.register" /></a></li>				 --%>
 				</ul>
 			</li>
 		</security:authorize>
@@ -63,6 +62,8 @@
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNiv" href="lessor/register.do"><spring:message code="master.page.lessor.register"/></a></li>
+			<li><a class="fNiv" href="tenant/register.do"><spring:message code="master.page.tenant.register"/></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
