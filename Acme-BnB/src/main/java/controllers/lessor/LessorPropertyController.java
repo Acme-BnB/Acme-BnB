@@ -47,7 +47,7 @@ public class LessorPropertyController extends AbstractController {
 		ModelAndView result;
 		Collection<Property> properties;
 
-		properties = propertyService.findByPrincipal();
+		properties = propertyService.findByUserAccount();
 
 		result = new ModelAndView("tenant/list");
 		result.addObject("properties", properties);

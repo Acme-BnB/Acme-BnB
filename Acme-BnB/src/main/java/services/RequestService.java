@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.util.Assert;
 import repositories.RequestRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.CreditCard;
 import domain.Request;
 
 @Service
@@ -64,6 +66,8 @@ public class RequestService {
 		Assert.notNull(request);
 
 		Request result;
+		
+		Assert.isTrue(check(request.getCreditCard()));
 
 		result = requestRepository.save(request);
 
@@ -77,15 +81,30 @@ public class RequestService {
 
 		requestRepository.delete(request);
 	}
+	
+	public static boolean check(CreditCard creditCard){
+		boolean validador = false;
+        Calendar fecha = Calendar.getInstance();
+        int mes = fecha.get(Calendar.MONTH)+1;
+        int año = fecha.get(Calendar.YEAR);
+        
+        if(creditCard.getExpirationYear()>año){
+        	validador=true;
+        }else if(creditCard.getExpirationYear()==año){
+        	if(creditCard.getExpirationYear()>=mes){
+        		validador=true;
+        	}
+        }
+        
+        return validador;
+	}
 
-	//others----
-
-	public Collection<Request> findByPrincipal() {
+	public Collection<Request> findByCreator() {
 		Collection<Request> result;
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
-		result = requestRepository.findByUserAccount(userAccount);
+		result = requestRepository.findByCreator(userAccount);
 
 		return result;
 	}

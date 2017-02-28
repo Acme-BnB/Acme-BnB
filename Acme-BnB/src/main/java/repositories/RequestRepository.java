@@ -14,6 +14,6 @@ import domain.Request;
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	@Query("select r from Request r where r.tenant.userAccount = ?1")
-	Collection<Request> findByUserAccount(UserAccount userAccount);
+	Collection<Request> findByCreator(UserAccount userAccount);
 
 }

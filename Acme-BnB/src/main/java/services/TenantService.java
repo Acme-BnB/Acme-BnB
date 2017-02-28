@@ -54,6 +54,7 @@ public class TenantService {
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Request> request = new ArrayList<Request>();
 
+		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRequests(request);
 
@@ -105,6 +106,78 @@ public class TenantService {
 
 		tenantRepository.delete(tenant);
 	}
+	
+	// Other business services
+	public Tenant findByPrincipal(){
+		Tenant result;
+		int userAccountId;
+		
+		userAccountId = LoginService.getPrincipal().getId();
+		result = tenantRepository.findByUserAccountId(userAccountId);
+				
+		return result;
+	}
+	
+	public Double findAvgAcceptedRequestPerTenant(){
+		Double result;
+		
+		result = tenantRepository.findAvgAcceptedRequestPerTenant();
+		
+		return result;
+	}
+	
+	public Double findAvgDeniedRequestPerTenant(){
+		Double result;
+		
+		result = tenantRepository.findAvgDeniedRequestPerTenant();
+		
+		return result;
+	}
+	
+	public Collection<Tenant> findTenantMoreApprovedRequest(){
+		Collection<Tenant> result;
+		
+		result = (Collection<Tenant>) tenantRepository.findTenantMoreApprovedRequest();
+		
+		return result;
+	}
+	
+	public Collection<Tenant> findTenantMoreDeniedRequest(){
+		Collection<Tenant> result;
+		
+		result = (Collection<Tenant>) tenantRepository.findTenantMoreDeniedRequest();
+		
+		return result;
+	}
+	
+	public Collection<Tenant> findTenantMorePendingRequest(){
+		Collection<Tenant> result;
+		
+		result = (Collection<Tenant>) tenantRepository.findTenantMorePendingRequest();
+		
+		return result;
+	}
+	
+	public Collection<Double> findMinAvgMaxNumberInvoiceToTheTenant(){
+		Collection<Double> result;
+		Double aux;
+		
+		result = new ArrayList<Double>();
+		
+		aux = tenantRepository.findMinNumberInvoiceToTheTenant();
+		result.add(aux);
+		
+		aux = tenantRepository.findAvgNumberInvoiceToTheTenant();
+		result.add(aux);
+		
+		aux = tenantRepository.findMaxNumberInvoiceToTheTenant();
+		result.add(aux);
+		
+		return result;
+	}
+	
+	
+
 
 
 	// Form methods -------------------------------------------------
@@ -115,20 +188,6 @@ public class TenantService {
 		result = new TenantForm();
 		return result;
 	}
-
-	public Tenant findByPrincipal() {
-		Tenant result;
-		UserAccount userAccount;
-
-		userAccount = LoginService.getPrincipal();
-		assert userAccount != null;
-		result = findByUserAccount(userAccount);
-		assert result != null;
-
-
-		return result;
-	}
-
 
 	public Tenant reconstruct(TenantForm tenantForm) {
 
@@ -157,19 +216,6 @@ public class TenantService {
 		result.setPhone(tenantForm.getPhone());
 
 		return result;
-	}
-
-
-	public Tenant findByUserAccount(UserAccount userAccount) {
-		assert userAccount != null;
-
-		Tenant result;
-
-		result = tenantRepository.findByUserAccountId(userAccount.getId());
-		assert result != null;
-
-		return result;
-
 	}
 
 }

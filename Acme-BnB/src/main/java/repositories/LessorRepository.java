@@ -25,13 +25,13 @@ public interface LessorRepository extends JpaRepository<Lessor, Integer>{
 	Double findAvgDeniedRequestPerLessor();
 	
 	@Query("select r.property.lessor from Request r where r.status='ACCEPTED' group by r.property.lessor having count(r)>=all(select count(c) from Request c where c.status='ACCEPTED' group by c.property.lessor)")
-	Lessor findLessorMoreApprovedRequest();
+	Collection<Lessor> findLessorsMoreApprovedRequest();
 	
 	@Query("select r.property.lessor from Request r where r.status='DENIED' group by r.property.lessor having count(r)>=all(select count(c) from Request c where c.status='DENIED' group by c.property.lessor)")
-	Lessor findLessorMoreDeniedRequest();
+	Collection<Lessor> findLessorsMoreDeniedRequest();
 	
 	@Query("select r.property.lessor from Request r where r.status='PENDING' group by r.property.lessor having count(r)>=all(select count(c) from Request c where c.status='PENDING' group by c.property.lessor)")
-	Lessor findLessorMorePendingRequest();
+	Collection<Lessor> findLessorsMorePendingRequest();
 	
 	
 

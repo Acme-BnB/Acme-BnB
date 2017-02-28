@@ -75,5 +75,14 @@ public class InvoiceService {
 
 		invoiceRepository.delete(invoice);
 	}
+	
+	// Other business services
+	
+	public Double findTotalAmountOfInvoice(){
+		Double result;
+		
+		result = invoiceRepository.findTotalAmountOfInvoices();
+		return result;
+	}
 
 }

@@ -111,6 +111,26 @@ public class FinderService {
 
 		finderRepository.delete(finder);
 	}
+	
+	// Other business services 
+	
+	public Collection<Double> findMinAvgMaxResultPerFinder(){
+		Collection<Double> result;
+		Double aux;
+		
+		result = new ArrayList<Double>();
+		
+		aux= finderRepository.findMinResultPerFinder();
+		result.add(aux);
+		
+		aux= finderRepository.findAvgResultPerFinder();
+		result.add(aux);
+		
+		aux= finderRepository.findMaxResultPerFinder();
+		result.add(aux);
+		
+		return result;
+	}
 
 	// Others -----
 
