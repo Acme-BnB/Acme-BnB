@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import repositories.LessorRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.Lessor;
 import domain.Property;
@@ -105,16 +106,28 @@ public class LessorService {
 		lessorRepository.delete(lessor);
 	}
 
+<<<<<<< HEAD
 	// Form methods ------------------------------------------------
 
 	public LessorForm generateForm() {
 		LessorForm result;
 
 		result = new LessorForm();
+=======
+	public Lessor findByPrincipal() {
+		Lessor result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		assert userAccount != null;
+		result = findByUserAccount(userAccount);
+		assert result != null;
+>>>>>>> origin/niclorros
 
 		return result;
 	}
 
+<<<<<<< HEAD
 	public Lessor reconstruct(LessorForm lessorForm) {
 
 		Lessor result = create();
@@ -145,6 +158,17 @@ public class LessorService {
 
 		return result;
 
+=======
+	public Lessor findByUserAccount(UserAccount userAccount) {
+		assert userAccount != null;
+
+		Lessor result;
+
+		result = lessorRepository.findByUserAccountId(userAccount.getId());
+		assert result != null;
+
+		return result;
+>>>>>>> origin/niclorros
 	}
 
 }

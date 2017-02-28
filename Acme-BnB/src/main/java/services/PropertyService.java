@@ -117,4 +117,16 @@ public class PropertyService {
 
 		propertyRepository.delete(property);
 	}
+
+	//others----
+
+	public Collection<Property> findByPrincipal() {
+		Collection<Property> result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		result = propertyRepository.findByUserAccount(userAccount);
+
+		return result;
+	}
 }

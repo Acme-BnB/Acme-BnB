@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RequestRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Request;
 
 @Service
@@ -74,6 +76,18 @@ public class RequestService {
 		Assert.isTrue(request.getId() != 0);
 
 		requestRepository.delete(request);
+	}
+
+	//others----
+
+	public Collection<Request> findByPrincipal() {
+		Collection<Request> result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		result = requestRepository.findByUserAccount(userAccount);
+
+		return result;
 	}
 
 }

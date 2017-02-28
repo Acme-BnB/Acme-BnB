@@ -112,4 +112,16 @@ public class FinderService {
 		finderRepository.delete(finder);
 	}
 
+	// Others -----
+
+	public Finder findByPrincipal() {
+		Finder result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		result = finderRepository.findByUserAccount(userAccount);
+
+		return result;
+	}
+
 }

@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import repositories.TenantRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.Request;
 import domain.SocialIdentity;
@@ -105,16 +106,28 @@ public class TenantService {
 		tenantRepository.delete(tenant);
 	}
 
+<<<<<<< HEAD
 	// Form methods -------------------------------------------------
 
 	public TenantForm generateForm() {
 		TenantForm result;
 
 		result = new TenantForm();
+=======
+	public Tenant findByPrincipal() {
+		Tenant result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		assert userAccount != null;
+		result = findByUserAccount(userAccount);
+		assert result != null;
+>>>>>>> origin/niclorros
 
 		return result;
 	}
 
+<<<<<<< HEAD
 	public Tenant reconstruct(TenantForm tenantForm) {
 
 		Tenant result = create();
@@ -143,6 +156,17 @@ public class TenantService {
 
 		return result;
 
+=======
+	public Tenant findByUserAccount(UserAccount userAccount) {
+		assert userAccount != null;
+
+		Tenant result;
+
+		result = tenantRepository.findByUserAccountId(userAccount.getId());
+		assert result != null;
+
+		return result;
+>>>>>>> origin/niclorros
 	}
 
 }
