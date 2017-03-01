@@ -13,7 +13,7 @@
 	<tbody>
 		<tr>
 			<td>
-				<img src="${lessor.picture}" width="200" height="200" >
+				<img src="${lessor.picture}" width="100" height="100" >
 				
 			</td>
 		</tr>
@@ -42,8 +42,8 @@
 		<table id="row" class="table">
 			<tbody>
 				<tr>
-					<th><spring:message code="lessor.creditCard.holderName"/></th>
-					<td><jstl:out value="${lessor.creditCard.holderName}"/></td>
+					<th><spring:message code="lessor.creditCard.brandName"/></th>
+					<td><jstl:out value="${lessor.creditCard.brandName}"/></td>
 				</tr>
 				<tr>
 					<th><spring:message code="lessor.creditCard.number"/></th>
