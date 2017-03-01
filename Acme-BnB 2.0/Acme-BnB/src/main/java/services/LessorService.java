@@ -19,7 +19,6 @@ import security.UserAccount;
 import domain.CreditCard;
 import domain.Lessor;
 import domain.Property;
-import domain.Request;
 import domain.SocialIdentity;
 import forms.LessorForm;
 
@@ -216,9 +215,7 @@ public class LessorService {
 	
 	public static boolean check(CreditCard creditCard){
 			boolean validador = false;
-			int sum = 0;
             Calendar fecha = Calendar.getInstance();
-            String numero = creditCard.getNumber();
             int mes = fecha.get(Calendar.MONTH)+1;
             int año = fecha.get(Calendar.YEAR);
             
@@ -230,37 +227,8 @@ public class LessorService {
             	}
             }
             
-            if(validador){
-                validador = false;
-                for (int i = numero.length() - 1; i >= 0; i--)
-                {
-                        int n = Integer.parseInt(numero.substring(i, i + 1));
-                        if (validador)
-                        {
-                                n *= 2;
-                                if (n > 9)
-                                {
-                                        n = (n % 10) + 1;
-                                }
-                        }
-                        sum += n;
-                        validador = !validador;
-                }
-	            if(sum % 10 == 0){
-	            	validador = true;
-	            }
-            }
-                
             return validador;
     }
-	
-	public Collection<Request> findRequestPerLessor(Lessor lessor){
-		Collection<Request> result;
-		
-		result=lessorRepository.findRequestPerLessor(lessor);
-		
-		return result;
-	}
 
 }
 

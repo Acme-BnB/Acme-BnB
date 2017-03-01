@@ -1,7 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -107,22 +106,6 @@ public class RequestService {
 		userAccount = LoginService.getPrincipal();
 		result = requestRepository.findByCreator(userAccount);
 
-		return result;
-	}
-	
-	public Collection<Request> encryptCreditCard(Collection<Request> requests){
-		Collection<Request> result = new ArrayList<Request>();
-		CreditCard caux;
-		String aux;
-		
-		for(Request r : requests){
-			caux = r.getCreditCard();
-			aux = "************"+caux.getNumber().substring(12);
-			caux.setNumber(aux);
-			r.setCreditCard(caux);
-			result.add(r);
-		}
-	
 		return result;
 	}
 
