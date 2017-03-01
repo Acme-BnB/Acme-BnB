@@ -27,6 +27,13 @@
 	<acme:password code="lessor.password" path="password"/>
 	<br/>
 	<acme:password code="lessor.password2" path="password2"/>
+	<form:checkbox path="agreed"/>
+	<form:label path="agreed">
+		<spring:message code="lessor.register.agree" />
+		<a href="misc/lopd.do"><spring:message code="lessor.register.agree.2"/></a>
+	</form:label>
+	<form:errors path="agreed" cssClass="error" />
+	
 	<br/>
 	<acme:textbox code="lessor.name" path="name" />
 	<br/>
@@ -38,28 +45,23 @@
 	<br/>
 	<acme:textbox code="lessor.picture" path="picture"/>
 	<br/>
-	<div>
+	<fieldset>
+		<legend align="right"><spring:message code="lessor.creditCard.info"/></legend>
 		<acme:textbox code="lessor.creditCard.holderName" path="creditCard.holderName"/>
-					
+		<br/>			
 		<acme:textbox code="lessor.creditCard.brandName" path="creditCard.brandName"/>
-					
+		<br/>		
 		<acme:textbox code="lessor.creditCard.number" path="creditCard.number"/>
-					
+		<br/>			
 		<acme:textbox code="lessor.creditCard.expirationMonth" path="creditCard.expirationMonth"/>
-					
+		<br/>			
 		<acme:textbox code="lessor.creditCard.expirationYear" path="creditCard.expirationYear"/>
-			
+		<br/>	
 		<acme:textbox code="lessor.creditCard.cvv" path="creditCard.cvv"/>
-	</div>
-	<form:checkbox path="agreed"/>
-	<form:label path="agreed">
-		<spring:message code="lessor.register.agree" />
-		<a href="misc/lopd.do"><spring:message code="lessor.register.agree.2"/></a>
-	</form:label>
-	<form:errors path="agreed" cssClass="error" />
+	</fieldset>
 	<br/>
 	<acme:submit name="save" code="lessor.save"/>
-	<acme:cancel url="welcome/index.do" code="lessor.cancel"/>
+	<acme:cancel url="/welcome/index.do" code="lessor.cancel"/>
 
 </form:form>
 

@@ -90,7 +90,7 @@ public class LessorService {
 		lessor.getUserAccount().setPassword(md5);
 
 		Assert.isTrue(check(lessor.getCreditCard()));
-		
+
 		Lessor result = lessorRepository.save(lessor);
 
 		return result;
@@ -150,7 +150,7 @@ public class LessorService {
 		return result;
 
 	}
-	
+
 	public Lessor findByUserAccount(UserAccount userAccount) {
 		assert userAccount != null;
 
@@ -161,76 +161,73 @@ public class LessorService {
 
 		return result;
 	}
-   
+
 	// Other business services
-	
-	public Lessor findByPrincipal(){
+
+	public Lessor findByPrincipal() {
 		Lessor result;
 		int userAccountId;
-		
+
 		userAccountId = LoginService.getPrincipal().getId();
 		result = lessorRepository.findByUserAccountId(userAccountId);
-				
+
 		return result;
 	}
-	
-	public Collection<Double> findAvgAcceptedAndDeniedPerLessor(){
+
+	public Collection<Double> findAvgAcceptedAndDeniedPerLessor() {
 		Collection<Double> result;
 		Double aux;
-		
+
 		result = new ArrayList<Double>();
-		
+
 		aux = lessorRepository.findAvgAcceptedRequestPerLessor();
 		result.add(aux);
-		
+
 		aux = lessorRepository.findAvgDeniedRequestPerLessor();
 		result.add(aux);
-		
+
 		return result;
 	}
-	
-	public Collection<Lessor> findLessorsMoreApprovedRequest(){
+
+	public Collection<Lessor> findLessorsMoreApprovedRequest() {
 		Collection<Lessor> result;
-		
+
 		result = lessorRepository.findLessorsMoreApprovedRequest();
-		
+
 		return result;
 	}
-	
-	public Collection<Lessor> findLessorsMoreDeniedRequest(){
+
+	public Collection<Lessor> findLessorsMoreDeniedRequest() {
 		Collection<Lessor> result;
-		
+
 		result = lessorRepository.findLessorsMoreDeniedRequest();
-		
+
 		return result;
 	}
-	
-	public Collection<Lessor> findLessorsMorePendingRequest(){
+
+	public Collection<Lessor> findLessorsMorePendingRequest() {
 		Collection<Lessor> result;
-		
+
 		result = lessorRepository.findLessorsMorePendingRequest();
-		
+
 		return result;
 	}
-	
-	public static boolean check(CreditCard creditCard){
-			boolean validador = false;
-            Calendar fecha = Calendar.getInstance();
-            int mes = fecha.get(Calendar.MONTH)+1;
-            int año = fecha.get(Calendar.YEAR);
-            
-            if(creditCard.getExpirationYear()>año){
-            	validador=true;
-            }else if(creditCard.getExpirationYear()==año){
-            	if(creditCard.getExpirationYear()>=mes){
-            		validador=true;
-            	}
-            }
-            
-            return validador;
-    }
+
+	public static boolean check(CreditCard creditCard) {
+		boolean validador = false;
+		Calendar fecha = Calendar.getInstance();
+		int mes = fecha.get(Calendar.MONTH) + 1;
+		int año = fecha.get(Calendar.YEAR);
+
+		if (creditCard.getExpirationYear() > año) {
+			validador = true;
+		} else if (creditCard.getExpirationYear() == año) {
+			if (creditCard.getExpirationMonth() >= mes) {
+				validador = true;
+			}
+		}
+
+		return validador;
+	}
 
 }
-
-
-
