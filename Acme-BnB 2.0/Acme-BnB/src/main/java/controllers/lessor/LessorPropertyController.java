@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import services.LessorService;
 import services.PropertyService;
 import controllers.AbstractController;
-import domain.Lessor;
 import domain.Property;
 
 @Controller
@@ -49,9 +48,9 @@ public class LessorPropertyController extends AbstractController {
 
 		properties = propertyService.findByUserAccount();
 
-		result = new ModelAndView("tenant/list");
+		result = new ModelAndView("property/list");
 		result.addObject("properties", properties);
-		result.addObject("requestURI", "tenant/property/list.do");
+		result.addObject("requestURI", "lessor/property/list.do");
 
 		return result;
 	}
@@ -91,17 +90,12 @@ public class LessorPropertyController extends AbstractController {
 	public ModelAndView save(@Valid Property property, BindingResult binding) {
 
 		ModelAndView result;
-		Lessor lessor = lessorService.findByPrincipal();
 
-		if (binding.hasErrors() || property.getLessor() != lessor) {
-			result = createEditModelAndView(property);
-		} else {
-			try {
-				propertyService.save(property);
-				result = list();
-			} catch (Throwable oops) {
-				result = createEditModelAndView(property, "master.page.commit.error");
-			}
+		try {
+			propertyService.save(property);
+			result = list();
+		} catch (Throwable oops) {
+			result = createEditModelAndView(property, "master.page.commit.error");
 		}
 		return result;
 	}
