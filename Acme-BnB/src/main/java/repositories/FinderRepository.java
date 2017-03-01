@@ -22,7 +22,7 @@ public interface FinderRepository extends JpaRepository<Finder, Integer> {
 	@Query("select max(f.results.size) from Finder f")
 	Double findMaxResultPerFinder();
 
-	@Query("select ua.finder from UserAccount ua where ua = ?1")
-	Finder findByUserAccount(UserAccount userAccount);
+	@Query("select t.finder from Tenant t where t.userAccount = ?1")
+	 Finder findByUserAccount(UserAccount userAccount);
 
 }

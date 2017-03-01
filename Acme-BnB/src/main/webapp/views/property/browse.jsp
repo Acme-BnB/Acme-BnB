@@ -17,3 +17,36 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
+<!-- Listing grid -->
+
+<display:table pagesize="5" class="displaytag" keepStatus="true" name="properties" requestURI="${requestURI}" id="row">
+	
+	<!-- Action links -->
+	
+	<!-- Attributes -->
+	
+	<spring:message code="property.name" var="nameHeader"/>
+	<display:column property="name" title="${nameHeader}" sortable="false" />
+
+	<spring:message code="property.rate" var="rateHeader" />
+	<display:column property="rate" title="${rateHeader}" sortable="true" />
+
+	<spring:message code="property.description" var="descriptionHeader" />
+	<display:column property="description" title="${descriptionHeader}" sortable="false" />
+
+	<spring:message code="property.address" var="addressHeader" />
+	<display:column property="address" title="${addressHeader}" sortable="false"  />
+
+	<spring:message code="property.lessor" var="lessor"/>
+	<display:column property="lessor.name" title="${lessor}" sortable="true"/>
+	
+	<display:column>
+		<a href="lessor/display.do?propertyId=${row.id}"><spring:message code="property.view.lessor" /></a>
+	</display:column>
+	
+	<display:column>
+		<a href="property/display.do?propertyId=${row.id}"><spring:message code="property.view" /></a>
+	</display:column>
+	
+	
+</display:table>

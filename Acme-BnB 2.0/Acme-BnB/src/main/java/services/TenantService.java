@@ -10,6 +10,8 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.TenantRepository;
 import security.Authority;
@@ -30,8 +32,11 @@ public class TenantService {
 	@Autowired
 	private TenantRepository	tenantRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -110,7 +115,8 @@ public class TenantService {
 		tenantRepository.delete(tenant);
 	}
 
-	// Other business services
+	// Other business services ------------------------------------------
+
 	public Tenant findByPrincipal() {
 		Tenant result;
 		int userAccountId;
@@ -188,7 +194,7 @@ public class TenantService {
 		return result;
 	}
 
-	public Tenant reconstruct(TenantForm tenantForm) {
+	public Tenant reconstruct(TenantForm tenantForm, BindingResult binding) {
 
 		Tenant result = create();
 
@@ -213,8 +219,30 @@ public class TenantService {
 		result.setSurname(tenantForm.getSurname());
 		result.setEmail(tenantForm.getEmail());
 		result.setPhone(tenantForm.getPhone());
+		result.setPicture(tenantForm.getPicture());
+
+		validator.validate(result, binding);
 
 		return result;
 	}
 
+	public Tenant reconstruct(Tenant tenant, BindingResult binding) {
+		Tenant result;
+
+		if (tenant.getId() == 0) {
+			result = tenant;
+		} else {
+			result = tenantRepository.findOne(tenant.getId());
+
+			result.setName(tenant.getName());
+			result.setSurname(tenant.getSurname());
+			result.setEmail(tenant.getEmail());
+			result.setPhone(tenant.getPhone());
+			result.setPicture(tenant.getPicture());
+
+			validator.validate(result, binding);
+		}
+
+		return result;
+	}
 }

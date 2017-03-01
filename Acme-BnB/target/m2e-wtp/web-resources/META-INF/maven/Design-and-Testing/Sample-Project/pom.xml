@@ -18,7 +18,7 @@
 	<!-- Artifact identification and properties -->
 
 	<groupId>Design-and-Testing</groupId>
-	<artifactId>Acme-BnB</artifactId>
+	<artifactId>Sample-Project</artifactId>
 	<version>1.9</version>
 	<packaging>war</packaging>
 	
@@ -28,7 +28,7 @@
 
 	<!-- Indexing information -->
 
-	<name>Acme-BnB</name>
+	<name>Sample Project</name>
 	<url>http://www.sample-project.com</url>
 	<description>This is D&amp;T's sample project.</description>
 	

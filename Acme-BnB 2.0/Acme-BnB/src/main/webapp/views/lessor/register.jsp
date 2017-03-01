@@ -27,13 +27,14 @@
 	<acme:password code="lessor.password" path="password"/>
 	<br/>
 	<acme:password code="lessor.password2" path="password2"/>
+	<br/>
 	<form:checkbox path="agreed"/>
 	<form:label path="agreed">
 		<spring:message code="lessor.register.agree" />
 		<a href="misc/lopd.do"><spring:message code="lessor.register.agree.2"/></a>
 	</form:label>
 	<form:errors path="agreed" cssClass="error" />
-	
+	<br/>
 	<br/>
 	<acme:textbox code="lessor.name" path="name" />
 	<br/>
@@ -46,7 +47,7 @@
 	<acme:textbox code="lessor.picture" path="picture"/>
 	<br/>
 	<fieldset>
-		<legend align="right"><spring:message code="lessor.creditCard.info"/></legend>
+		<legend align="left"><spring:message code="lessor.creditCard.info"/></legend>
 		<acme:textbox code="lessor.creditCard.holderName" path="creditCard.holderName"/>
 		<br/>			
 		<acme:textbox code="lessor.creditCard.brandName" path="creditCard.brandName"/>
@@ -61,7 +62,7 @@
 	</fieldset>
 	<br/>
 	<acme:submit name="save" code="lessor.save"/>
-	<acme:cancel url="/welcome/index.do" code="lessor.cancel"/>
+	<acme:cancel code="lessor.cancel" url="welcome/index.do" />
 
 </form:form>
 

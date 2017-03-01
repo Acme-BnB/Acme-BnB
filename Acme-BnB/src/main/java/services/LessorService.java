@@ -11,6 +11,8 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.LessorRepository;
 import security.Authority;
@@ -31,8 +33,11 @@ public class LessorService {
 	@Autowired
 	private LessorRepository	lessorRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -145,10 +150,31 @@ public class LessorService {
 		result.setSurname(lessorForm.getSurname());
 		result.setEmail(lessorForm.getEmail());
 		result.setPhone(lessorForm.getPhone());
+		result.setPicture(lessorForm.getPicture());
 		result.setCreditCard(lessorForm.getCreditCard());
 		result.setFeeAmount(0.0);
 		return result;
 
+	}
+
+	public Lessor reconstruct(Lessor lessor, BindingResult binding) {
+		Lessor result;
+
+		if (lessor.getId() == 0) {
+			result = lessor;
+		} else {
+			result = lessorRepository.findOne(lessor.getId());
+
+			result.setName(lessor.getName());
+			result.setSurname(lessor.getSurname());
+			result.setEmail(lessor.getEmail());
+			result.setPhone(lessor.getPhone());
+			result.setPicture(lessor.getPicture());
+
+			validator.validate(result, binding);
+		}
+
+		return result;
 	}
 
 	public Lessor findByUserAccount(UserAccount userAccount) {
@@ -222,7 +248,7 @@ public class LessorService {
 		if (creditCard.getExpirationYear() > año) {
 			validador = true;
 		} else if (creditCard.getExpirationYear() == año) {
-			if (creditCard.getExpirationMonth() >= mes) {
+			if (creditCard.getExpirationYear() >= mes) {
 				validador = true;
 			}
 		}
