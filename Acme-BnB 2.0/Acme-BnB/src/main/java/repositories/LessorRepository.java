@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import domain.Lessor;
+import domain.Request;
 
 @Repository
 public interface LessorRepository extends JpaRepository<Lessor, Integer>{
@@ -34,7 +35,9 @@ public interface LessorRepository extends JpaRepository<Lessor, Integer>{
 	Collection<Lessor> findLessorsMorePendingRequest();
 	
 	
-
+	// Other ------------------------------------------------
+	@Query("select r from Property p join p.requests r where p.lessor=?1")
+	Collection<Request> findRequestPerLessor(Lessor lessor);
 
 }
 

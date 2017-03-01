@@ -56,6 +56,7 @@
 		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
 	
 		<security:intercept-url pattern="/lessor/property/**" access="hasRole('PROPERTY')" /> 
+		<security:intercept-url pattern="/request/list.do" access="hasRole('LESSOR')" />
 		
 		<security:intercept-url pattern="/tenant/finder/**" access="hasRole('TENANT')" /> 
 	
