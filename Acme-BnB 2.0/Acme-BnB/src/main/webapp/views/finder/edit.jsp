@@ -27,6 +27,7 @@
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		<form:hidden path="lastTimeSearched"/>
+		<form:hidden path="results"/>
 		
 		<acme:textbox code="finder.destinationCity" path="destinationCity"/>
 		<acme:textbox code="finder.minPrice" path="minPrice"/>
@@ -34,9 +35,6 @@
 		<acme:textbox code="finder.keyword" path="keyword"/>
 		
 		<acme:submit name="save" code="finder.save"/>
-		<jstl:if test="${finder.id != 0}">
-			<acme:submit name="delete" code="finder.delete"/>
-		</jstl:if>
 		<acme:cancel code="finder.cancel" url="tenant/finder/display.do"/>
 		
 		

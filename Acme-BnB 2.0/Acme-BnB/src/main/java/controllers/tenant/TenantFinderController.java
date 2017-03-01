@@ -16,7 +16,6 @@ import services.FinderService;
 import services.TenantService;
 import controllers.AbstractController;
 import domain.Finder;
-import domain.Tenant;
 
 @Controller
 @RequestMapping("/tenant/finder")
@@ -47,7 +46,7 @@ public class TenantFinderController extends AbstractController {
 
 		finder = finderService.findByPrincipal();
 
-		result = new ModelAndView("tenant/display");
+		result = new ModelAndView("finder/display");
 		result.addObject("finder", finder);
 		result.addObject("requestURI", "tenant/finder/display.do");
 
@@ -89,18 +88,14 @@ public class TenantFinderController extends AbstractController {
 	public ModelAndView save(@Valid Finder finder, BindingResult binding) {
 
 		ModelAndView result;
-		Tenant tenant = tenantService.findByPrincipal();
 
-		if (binding.hasErrors() || tenant.getFinder() != finder) {
-			result = createEditModelAndView(finder);
-		} else {
-			try {
-				finderService.save(finder);
-				result = display();
-			} catch (Throwable oops) {
-				result = createEditModelAndView(finder, "master.page.commit.error");
-			}
+		try {
+			finderService.save(finder);
+			result = display();
+		} catch (Throwable oops) {
+			result = createEditModelAndView(finder, "master.page.commit.error");
 		}
+
 		return result;
 	}
 
