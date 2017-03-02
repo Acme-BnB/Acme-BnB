@@ -116,7 +116,7 @@ public class RequestController {
 						Collection<Request> requests;
 						Tenant tenant;
 						tenant= tenantService.findByPrincipal();
-						requests = requestService.findByCreator();
+						requests = requestService.findByCreator(tenant);
 						
 						requests = requestService.encryptCreditCard(requests);
 						result=new ModelAndView("request/browse");
