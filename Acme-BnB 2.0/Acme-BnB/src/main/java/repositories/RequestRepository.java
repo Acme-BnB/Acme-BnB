@@ -9,12 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import security.UserAccount;
 import domain.Request;
-import domain.Tenant;
 
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
-	@Query("select r from Request r where r.tenant= ?1")
-	Collection<Request> findByCreator(Tenant t);
+	@Query("select r from Request r where r.tenant.userAccount = ?1")
+	Collection<Request> findByCreator(UserAccount userAccount);
 
 }

@@ -30,6 +30,7 @@
 						<li><a href="administrator/attribute/create.do"><spring:message code="master.page.administrator.attribute.create" /></a></li>			
 				
 				</ul>
+				<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>	
 			</li>
 		</security:authorize>
 		
@@ -58,8 +59,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.tenant" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="tenant/finder/display.do"><spring:message code="master.page.tenant.finder.display" /></a></li>
-					<li><a href="request/browse.do"><spring:message code="master.page.tenant.request.browse" /></a></li>			
+					<li><a href="tenant/finder/display.do"><spring:message code="master.page.tenant.finder.display" /></a></li>			
 				</ul>
 			</li>
 		</security:authorize>
@@ -82,9 +82,7 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<security:authorize access="hasRole('LESSOR')">
-						<li><a href="lessor/displayL.do"><spring:message code="master.page.profile" /></a></li>
-					</security:authorize>
+					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
 					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
 					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>

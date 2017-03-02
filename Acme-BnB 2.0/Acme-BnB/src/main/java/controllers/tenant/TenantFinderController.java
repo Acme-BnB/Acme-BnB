@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.FinderService;
-
+import services.TenantService;
 import controllers.AbstractController;
 import domain.Finder;
-import forms.FinderForm;
 
 @Controller
 @RequestMapping("/tenant/finder")
@@ -27,7 +26,9 @@ public class TenantFinderController extends AbstractController {
 	@Autowired
 	private FinderService	finderService;
 
-	
+	@Autowired
+	private TenantService	tenantService;
+
 
 	//Constructor----------------------
 
@@ -54,7 +55,18 @@ public class TenantFinderController extends AbstractController {
 
 	//Creation-------------------------
 
-	
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+
+		ModelAndView result;
+		Finder finder;
+
+		finder = finderService.create();
+		result = createEditModelAndView(finder);
+
+		return result;
+
+	}
 
 	//Edition--------------------------
 
@@ -63,55 +75,60 @@ public class TenantFinderController extends AbstractController {
 
 		ModelAndView result;
 		Finder finder;
-		
+
 		finder = finderService.findOne(finderId);
-		FinderForm finderform=finderService.transform(finder);
-		Assert.notNull(finderform);
-		result = createEditModelAndView(finderform);
+		Assert.notNull(finder);
+		result = createEditModelAndView(finder);
 
 		return result;
 
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid FinderForm finderForm, BindingResult binding) {
+	public ModelAndView save(@Valid Finder finder, BindingResult binding) {
 
 		ModelAndView result;
-		Finder finder;
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(finderForm);
-		} else {
-			try {
-				finder=finderService.reconstruct(finderForm, binding);
-				finderService.save(finder);
-				result = display();
-			} catch (Throwable oops) {
-				result = createEditModelAndView(finderForm, "master.page.commit.error");
+
+		try {
+			finderService.save(finder);
+			result = display();
+		} catch (Throwable oops) {
+			result = createEditModelAndView(finder, "master.page.commit.error");
 		}
 
-		
-		}
 		return result;
 	}
 
-	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(Finder finder, BindingResult binding) {
+
+		ModelAndView result;
+
+		try {
+			finderService.delete(finder);
+			result = display();
+		} catch (Throwable oops) {
+			result = createEditModelAndView(finder, "master.page.commit.error");
+		}
+		return result;
+	}
 
 	//Ancillary Methods---------------------------
 
-	protected ModelAndView createEditModelAndView(FinderForm finderForm) {
+	protected ModelAndView createEditModelAndView(Finder finder) {
 
 		ModelAndView result;
 
-		result = createEditModelAndView(finderForm, null);
+		result = createEditModelAndView(finder, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(FinderForm finderForm, String message) {
+	protected ModelAndView createEditModelAndView(Finder finder, String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("finder/edit");
-		result.addObject("finder", finderForm);
+		result.addObject("finder", finder);
 
 		result.addObject("message", message);
 

@@ -727,7 +727,16 @@
 		<property name="tenant" ref="tenant1"/>
 	</bean>
 
-	
+	<bean id="request5" class="domain.Request">
+		<property name="checkIn" value="10/10/2016 16:00" />
+		<property name="checkOut" value="20/10/2016 16:00" />	
+		<property name="smoker" value="true" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="invoice" ref="invoice4"/>
+		<property name="property" ref="property3"/>
+		<property name="tenant" ref="tenant1"/>
+	</bean>
 	
 	<!-- Audit -->
 	

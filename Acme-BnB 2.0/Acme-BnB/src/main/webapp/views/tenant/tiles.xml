@@ -21,9 +21,5 @@
 		<put-attribute name="body" value="/views/tenant/register.jsp" />
 	</definition>
 
-	<definition name="tenant/display" extends="master.page">	
-		<put-attribute name="title" value="Display a Tenant" />
-		<put-attribute name="body" value="/views/tenant/display.jsp" />
-	</definition>
 	
 </tiles-definitions>

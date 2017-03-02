@@ -3,25 +3,18 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
 import repositories.FinderRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Finder;
-import domain.Tenant;
-
 import domain.Property;
-import forms.FinderForm;
-
 
 @Service
 @Transactional
@@ -31,13 +24,6 @@ public class FinderService {
 
 	@Autowired
 	private FinderRepository	finderRepository;
-	
-	@Autowired
-	private TenantService	tenantService;
-	
-	@Autowired
-	private Validator			validator;
-
 
 
 	// Supporting services ----------------------------------------------------
@@ -52,18 +38,18 @@ public class FinderService {
 
 	public Finder create() {
 
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("TENANT");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
 		Finder result;
 		result = new Finder();
-		Date date = new Date(System.currentTimeMillis() - 1);
 
 		Collection<Property> results = new ArrayList<Property>();
 
 		result.setResults(results);
-		result.setDestinationCity("Ciudad");
-		result.setMinPrice(0.0);
-		result.setLastTimeSearched(date);
-
-		save2(result);
 
 		return result;
 	}
@@ -128,16 +114,16 @@ public class FinderService {
 
 	// Other business services 
 
-	public Collection<Double> findMinAvgMaxResultPerFinder() {
+	public Collection<Double> findAvgMinMaxResultPerFinder() {
 		Collection<Double> result;
 		Double aux;
 
 		result = new ArrayList<Double>();
 
-		aux = finderRepository.findMinResultPerFinder();
+		aux = finderRepository.findAvgResultPerFinder();
 		result.add(aux);
 
-		aux = finderRepository.findAvgResultPerFinder();
+		aux = finderRepository.findMinResultPerFinder();
 		result.add(aux);
 
 		aux = finderRepository.findMaxResultPerFinder();
@@ -157,39 +143,5 @@ public class FinderService {
 
 		return result;
 	}
-	public FinderForm generateForm() {
-		FinderForm result;
 
-		result = new FinderForm();
-		return result;
-	}
-	
-	public Finder reconstruct(FinderForm finderForm, BindingResult binding) {
-		Tenant tenant=tenantService.findByPrincipal();
-		
-		Finder result = tenant.getFinder();
-		result.setDestinationCity(finderForm.getDestinationCity());
-		result.setMinPrice(finderForm.getMinPrice());
-		result.setMaxPrice(finderForm.getMaxPrice());
-		result.setKeyword(finderForm.getKeyword());
-		Date d=new Date(System.currentTimeMillis()-10000);
-		result.setLastTimeSearched(d);
-		validator.validate(result, binding);
-
-		return result;
-
-	}
-
-	
-
-	
-	
-	public FinderForm transform(Finder finder){
-		FinderForm result=generateForm();
-		result.setDestinationCity(finder.getDestinationCity());
-		result.setMinPrice(finder.getMinPrice());
-		result.setMaxPrice(finder.getMaxPrice());
-		result.setKeyword(finder.getKeyword());
-		return result;
-	}
 }

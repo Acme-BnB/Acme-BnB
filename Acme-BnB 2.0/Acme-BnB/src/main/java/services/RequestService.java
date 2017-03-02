@@ -15,7 +15,6 @@ import security.LoginService;
 import security.UserAccount;
 import domain.CreditCard;
 import domain.Request;
-import domain.Tenant;
 
 @Service
 @Transactional
@@ -101,9 +100,13 @@ public class RequestService {
         return validador;
 	}
 
-	public Collection<Request> findByCreator(Tenant tenant) {
+	public Collection<Request> findByCreator() {
 		Collection<Request> result;
-		result = requestRepository.findByCreator(tenant);
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		result = requestRepository.findByCreator(userAccount);
+
 		return result;
 	}
 	

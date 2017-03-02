@@ -61,21 +61,18 @@ public class TenantService {
 		Tenant result = new Tenant();
 		result.setUserAccount(userAccount);
 		Finder f;
-		f = finderService.create();
-		Finder f2 = finderService.save2(f);
+		f = new Finder();
 
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Request> request = new ArrayList<Request>();
 		Collection<Comment> writtenComments = new ArrayList<Comment>();
 		Collection<Comment> comments = new ArrayList<Comment>();
-
-		result.setFinder(f2);
+		result.setFinder(f);
 		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRequests(request);
 		result.setWrittenComments(writtenComments);
 		result.setComments(comments);
-		result.setIsCommentable(true);
 		return result;
 	}
 
@@ -137,18 +134,23 @@ public class TenantService {
 		return result;
 	}
 
-	public Double findAvgAcceptedRequestPerTenant() {
-		Double result;
+	public Collection<Double> findAvgAcceptedAndDeniedPerTenant() {
 
-		result = tenantRepository.findAvgAcceptedRequestPerTenant();
+		Collection<Double> result = new ArrayList<Double>();
 
-		return result;
-	}
+		Double a = tenantRepository.findAvgAcceptedRequestPerTenant();
+		Double d = tenantRepository.findAvgDeniedRequestPerTenant();
 
-	public Double findAvgDeniedRequestPerTenant() {
-		Double result;
-
-		result = tenantRepository.findAvgDeniedRequestPerTenant();
+		if (a == null || a == 0) {
+			result.add(0.0);
+		} else {
+			result.add(a);
+		}
+		if (d == null || d == 0) {
+			result.add(0.0);
+		} else {
+			result.add(d);
+		}
 
 		return result;
 	}

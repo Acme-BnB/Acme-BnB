@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -8,17 +7,16 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
-
 @Entity
 @Access(AccessType.PROPERTY)
-public abstract class Commentable extends DomainEntity {
-
+public abstract class Commentable extends DomainEntity{
+	
 	//Constructor --------------------------------
-
+	
 	// Attributes --------------------------------
-
-	private Boolean	isCommentable	= false;
-
+	 
+	private Boolean isCommentable= false;
+	
 
 	public Boolean getIsCommentable() {
 		return isCommentable;
@@ -27,15 +25,11 @@ public abstract class Commentable extends DomainEntity {
 	public void setIsCommentable(Boolean isCommentable) {
 		this.isCommentable = isCommentable;
 	}
-
-
 	// Relationships -----------------------------
-
-	private Collection<Comment>	comments;
-
+	private Collection<Comment>comments;
 
 	@Valid
-	@OneToMany(mappedBy = "commentable")
+	@OneToMany(mappedBy="commentable")
 	public Collection<Comment> getcomments() {
 		return comments;
 	}

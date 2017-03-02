@@ -129,7 +129,7 @@ public class LessorService {
 		return result;
 	}
 
-	public Lessor reconstruct(LessorForm lessorForm, BindingResult binding) {
+	public Lessor reconstruct(LessorForm lessorForm) {
 
 		Lessor result = create();
 
@@ -138,7 +138,6 @@ public class LessorService {
 
 		Assert.isTrue(lessorForm.getPassword2().equals(password), "notEqualPassword");
 		Assert.isTrue(lessorForm.getAgreed(), "agreedNotAccepted");
-		Assert.isTrue(check(lessorForm.getCreditCard()));
 
 		UserAccount userAccount;
 		userAccount = new UserAccount();
@@ -158,9 +157,6 @@ public class LessorService {
 		result.setPicture(lessorForm.getPicture());
 		result.setCreditCard(lessorForm.getCreditCard());
 		result.setFeeAmount(0.0);
-
-		validator.validate(result, binding);
-
 		return result;
 
 	}
@@ -209,16 +205,22 @@ public class LessorService {
 	}
 
 	public Collection<Double> findAvgAcceptedAndDeniedPerLessor() {
-		Collection<Double> result;
-		Double aux;
 
-		result = new ArrayList<Double>();
+		Collection<Double> result = new ArrayList<Double>();
 
-		aux = lessorRepository.findAvgAcceptedRequestPerLessor();
-		result.add(aux);
+		Double a = lessorRepository.findAvgAcceptedRequestPerLessor();
+		Double d = lessorRepository.findAvgDeniedRequestPerLessor();
 
-		aux = lessorRepository.findAvgDeniedRequestPerLessor();
-		result.add(aux);
+		if (a == null || a == 0) {
+			result.add(0.0);
+		} else {
+			result.add(a);
+		}
+		if (d == null || d == 0) {
+			result.add(0.0);
+		} else {
+			result.add(d);
+		}
 
 		return result;
 	}
@@ -258,7 +260,7 @@ public class LessorService {
 		if (creditCard.getExpirationYear() > año) {
 			validador = true;
 		} else if (creditCard.getExpirationYear() == año) {
-			if (creditCard.getExpirationMonth() >= mes) {
+			if (creditCard.getExpirationYear() >= mes) {
 				validador = true;
 			}
 		}
@@ -291,4 +293,5 @@ public class LessorService {
 
 		return result;
 	}
+
 }

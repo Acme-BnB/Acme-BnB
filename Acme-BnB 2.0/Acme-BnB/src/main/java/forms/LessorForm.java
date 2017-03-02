@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+
 import org.hibernate.validator.constraints.URL;
 
 import domain.CreditCard;
@@ -22,6 +23,8 @@ import domain.CreditCard;
 public class LessorForm {
 
 	// Attributes ----------------------------------------------------
+
+	
 
 	private String		username;
 	private String		password;
@@ -36,7 +39,7 @@ public class LessorForm {
 	private String		picture;
 
 	private CreditCard	creditCard;
-
+	
 
 	// Constructor --------------------------------------------------
 
@@ -46,6 +49,7 @@ public class LessorForm {
 
 	// Getters and Setters ------------------------------------------
 
+	
 	@Size(min = 5, max = 32)
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getUsername() {
