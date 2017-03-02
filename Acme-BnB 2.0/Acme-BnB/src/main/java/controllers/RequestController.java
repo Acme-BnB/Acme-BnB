@@ -14,6 +14,7 @@ import services.LessorService;
 import services.RequestService;
 import domain.Lessor;
 import domain.Request;
+import services.TenantService;
 
 @Controller
 @RequestMapping("/request")
@@ -28,6 +29,9 @@ public class RequestController {
 		
 		@Autowired
 		private FeeService feeService;
+
+		@Autowired
+		private TenantService tenantService;
 
 
 
@@ -103,4 +107,19 @@ public class RequestController {
 						result.addObject("lessor", lessor);
 						return result;
 				}
+				//Browse--------------------------
+
+				@RequestMapping(value="/browse", method=RequestMethod.GET)
+				public ModelAndView browse() {
+						ModelAndView result;
+						Collection<Request> requests;
+						Tenant tenant;
+						tenant= tenantService.findByPrincipal();
+						requests = requestService.findByCreator();
+						
+						requests = requestService.encryptCreditCard(requests);
+						result=new ModelAndView("request/browse");
+						result.addObject("requests", requests);
+						return result;
+					}
 }
