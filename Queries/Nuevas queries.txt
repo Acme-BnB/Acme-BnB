@@ -1,0 +1,14 @@
+    The average number of accepted and denied requests per lessor.
+    The average number of accepted and denied requests per tenant.
+
+	@Query("select 1.0*(select count(r1) from Request r1 where r1.status='ACCEPTED')/count(r) from Request r")
+	Double findAvgAcceptedRequestPerLessor();
+
+	@Query("select 1.0*(select count(r1) from Request r1 where r1.status='DENIED')/count(r) from Request r")
+	Double findAvgDeniedRequestPerLessor();
+
+	@Query("select 1.0*(select count(r1) from Request r1 where r1.status='ACCEPTED')/count(r) from Tenant r")
+	Double findAvgAcceptedRequestPerTenant();
+
+	@Query("select 1.0*(select count(r1) from Request r1 where r1.status='DENIED')/count(r) from Tenant r")
+	Double findAvgDeniedRequestPerTenant();
