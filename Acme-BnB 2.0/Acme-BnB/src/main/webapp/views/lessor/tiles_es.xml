@@ -26,5 +26,9 @@
 		<put-attribute name="body" value="/views/lessor/display.jsp" />
 	</definition>
 
+	<definition name="lessor/displayL" extends="master.page">	
+		<put-attribute name="title" value="Mostrar arrendador" />
+		<put-attribute name="body" value="/views/lessor/display.jsp" />
+	</definition>
 	
 </tiles-definitions>

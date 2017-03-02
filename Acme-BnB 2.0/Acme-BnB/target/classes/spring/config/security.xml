@@ -28,6 +28,7 @@
 
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/" access="permitAll" /> 
+		<security:intercept-url pattern="/tenant/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/lessor/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/property/browse.do" access="permitAll" /> 
 		<security:intercept-url pattern="/lessor/register.do" access="permitAll" /> 
@@ -59,6 +60,10 @@
 	
 		<security:intercept-url pattern="/lessor/property/**" access="hasRole('LESSOR')" /> 
 		<security:intercept-url pattern="/request/list.do" access="hasRole('LESSOR')" />
+		<security:intercept-url pattern="/lessor/displayL.do" access="hasRole('LESSOR')" /> 
+		<security:intercept-url pattern="/request/accept.do" access="hasRole('LESSOR')" /> 
+		<security:intercept-url pattern="/request/deny.do" access="hasRole('LESSOR')" /> 
+		
 
 		
 		<security:intercept-url pattern="/tenant/finder/**" access="hasRole('TENANT')" /> 

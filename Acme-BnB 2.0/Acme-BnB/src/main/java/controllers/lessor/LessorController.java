@@ -46,4 +46,16 @@ public class LessorController {
 				result.addObject("comments", lessor.getcomments());
 				return result;
 			}
+		
+		@RequestMapping(value="/displayL", method=RequestMethod.GET)
+		public ModelAndView display() {
+				ModelAndView result;
+				Lessor lessor;
+				
+				lessor = lessorService.findByPrincipal();
+				result=new ModelAndView("lessor/display");
+				result.addObject("lessor", lessor);
+				result.addObject("comments", lessor.getcomments());
+				return result;
+			}
 }
