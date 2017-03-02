@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.LessorService;
 import services.PropertyService;
+import services.RequestService;
 import domain.Lessor;
 import domain.Property;
 import domain.Request;

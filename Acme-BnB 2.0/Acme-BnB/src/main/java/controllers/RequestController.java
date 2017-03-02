@@ -14,6 +14,7 @@ import services.LessorService;
 import services.RequestService;
 import domain.Lessor;
 import domain.Request;
+import domain.Tenant;
 import services.TenantService;
 
 @Controller
