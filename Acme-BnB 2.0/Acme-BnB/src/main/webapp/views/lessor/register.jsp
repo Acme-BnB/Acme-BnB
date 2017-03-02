@@ -19,8 +19,6 @@
 
 <form:form action="${requestURI}" modelAttribute="lessorForm">
 
-	<form:hidden path="id"/>
-	<form:hidden path="version"/>
 	
 	<acme:textbox code="lessor.username" path="username" />
 	<br/>

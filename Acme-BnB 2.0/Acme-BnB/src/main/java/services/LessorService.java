@@ -18,6 +18,7 @@ import repositories.LessorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Comment;
 import domain.CreditCard;
 import domain.Lessor;
 import domain.Property;
@@ -57,13 +58,17 @@ public class LessorService {
 		userAccount.addAuthority(a);
 		Lessor result = new Lessor();
 		result.setUserAccount(userAccount);
-
+		Collection<Comment> comments=new ArrayList<Comment>();
+		Collection<Comment> writtenComments=new ArrayList<Comment>();
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Property> properties = new ArrayList<Property>();
-
+		result.setComments(comments);
+		result.setWrittenComments(writtenComments);
 		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRProperties(properties);
+		
+		
 
 		return result;
 	}
@@ -94,7 +99,7 @@ public class LessorService {
 		String md5 = encoder.encodePassword(password, null);
 		lessor.getUserAccount().setPassword(md5);
 
-		Assert.isTrue(check(lessor.getCreditCard()));
+		//Assert.isTrue(check(lessor.getCreditCard()));
 
 		Lessor result = lessorRepository.save(lessor);
 

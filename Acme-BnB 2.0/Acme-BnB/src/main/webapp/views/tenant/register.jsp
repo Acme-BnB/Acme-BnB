@@ -19,8 +19,6 @@
 
 <form:form action="${requestURI}" modelAttribute="tenantForm">
 
-	<form:hidden path="id"/>
-	<form:hidden path="version"/>
 	
 	<acme:textbox code="tenant.username" path="username" />
 	<br/>

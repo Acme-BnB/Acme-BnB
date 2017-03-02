@@ -18,6 +18,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
+import domain.Finder;
 import domain.Request;
 import domain.SocialIdentity;
 import domain.Tenant;
@@ -31,6 +32,9 @@ public class TenantService {
 
 	@Autowired
 	private TenantRepository	tenantRepository;
+	
+	@Autowired
+	private FinderService	finderService;
 
 	// Supporting services ----------------------------------------------------
 
@@ -56,16 +60,19 @@ public class TenantService {
 		userAccount.addAuthority(a);
 		Tenant result = new Tenant();
 		result.setUserAccount(userAccount);
-
+		Finder f;
+		f = new Finder();
+		
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Request> request = new ArrayList<Request>();
 		Collection<Comment> writtenComments = new ArrayList<Comment>();
-
+		Collection<Comment> comments=new ArrayList<Comment>();
+		result.setFinder(f);
 		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRequests(request);
 		result.setWrittenComments(writtenComments);
-
+		result.setComments(comments);
 		return result;
 	}
 
