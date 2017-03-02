@@ -52,7 +52,7 @@ public class LessorRegisterController extends AbstractController {
 			result = createEditModelAndView(lessorForm);
 		} else {
 			try {
-				lessor = lessorService.reconstruct(lessorForm);
+				lessor = lessorService.reconstruct(lessorForm, binding);
 				lessorService.save(lessor);
 				result = new ModelAndView("redirect:../security/login.do");
 			} catch (Throwable oops) {

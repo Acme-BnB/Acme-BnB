@@ -58,8 +58,8 @@ public class LessorService {
 		userAccount.addAuthority(a);
 		Lessor result = new Lessor();
 		result.setUserAccount(userAccount);
-		Collection<Comment> comments=new ArrayList<Comment>();
-		Collection<Comment> writtenComments=new ArrayList<Comment>();
+		Collection<Comment> comments = new ArrayList<Comment>();
+		Collection<Comment> writtenComments = new ArrayList<Comment>();
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Property> properties = new ArrayList<Property>();
 		result.setComments(comments);
@@ -67,8 +67,6 @@ public class LessorService {
 		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRProperties(properties);
-		
-		
 
 		return result;
 	}
@@ -99,7 +97,7 @@ public class LessorService {
 		String md5 = encoder.encodePassword(password, null);
 		lessor.getUserAccount().setPassword(md5);
 
-		//Assert.isTrue(check(lessor.getCreditCard()));
+		Assert.isTrue(check(lessor.getCreditCard()));
 
 		Lessor result = lessorRepository.save(lessor);
 
@@ -130,7 +128,7 @@ public class LessorService {
 		return result;
 	}
 
-	public Lessor reconstruct(LessorForm lessorForm) {
+	public Lessor reconstruct(LessorForm lessorForm, BindingResult binding) {
 
 		Lessor result = create();
 
@@ -139,6 +137,7 @@ public class LessorService {
 
 		Assert.isTrue(lessorForm.getPassword2().equals(password), "notEqualPassword");
 		Assert.isTrue(lessorForm.getAgreed(), "agreedNotAccepted");
+		Assert.isTrue(check(lessorForm.getCreditCard()));
 
 		UserAccount userAccount;
 		userAccount = new UserAccount();
@@ -158,10 +157,12 @@ public class LessorService {
 		result.setPicture(lessorForm.getPicture());
 		result.setCreditCard(lessorForm.getCreditCard());
 		result.setFeeAmount(0.0);
+
+		validator.validate(result, binding);
+
 		return result;
 
 	}
-
 	public Lessor reconstruct(Lessor lessor, BindingResult binding) {
 		Lessor result;
 
@@ -244,7 +245,7 @@ public class LessorService {
 		return result;
 	}
 
-	public static boolean check(CreditCard creditCard) {
+	public boolean check(CreditCard creditCard) {
 		boolean validador = false;
 		Calendar fecha = Calendar.getInstance();
 		int mes = fecha.get(Calendar.MONTH) + 1;
@@ -253,7 +254,7 @@ public class LessorService {
 		if (creditCard.getExpirationYear() > año) {
 			validador = true;
 		} else if (creditCard.getExpirationYear() == año) {
-			if (creditCard.getExpirationYear() >= mes) {
+			if (creditCard.getExpirationMonth() >= mes) {
 				validador = true;
 			}
 		}

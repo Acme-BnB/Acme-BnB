@@ -32,9 +32,9 @@ public class TenantService {
 
 	@Autowired
 	private TenantRepository	tenantRepository;
-	
+
 	@Autowired
-	private FinderService	finderService;
+	private FinderService		finderService;
 
 	// Supporting services ----------------------------------------------------
 
@@ -61,18 +61,21 @@ public class TenantService {
 		Tenant result = new Tenant();
 		result.setUserAccount(userAccount);
 		Finder f;
-		f = new Finder();
-		
+		f = finderService.create();
+		Finder f2 = finderService.save2(f);
+
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Request> request = new ArrayList<Request>();
 		Collection<Comment> writtenComments = new ArrayList<Comment>();
-		Collection<Comment> comments=new ArrayList<Comment>();
-		result.setFinder(f);
+		Collection<Comment> comments = new ArrayList<Comment>();
+
+		result.setFinder(f2);
 		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRequests(request);
 		result.setWrittenComments(writtenComments);
 		result.setComments(comments);
+		result.setIsCommentable(true);
 		return result;
 	}
 
