@@ -24,10 +24,7 @@
 
 	<form:form	action="tenant/finder/edit.do"	modelAttribute="finder"> 
 		
-		<form:hidden path="id"/>
-		<form:hidden path="version"/>
-		<form:hidden path="lastTimeSearched"/>
-		<form:hidden path="results"/>
+		
 		
 		<acme:textbox code="finder.destinationCity" path="destinationCity"/>
 		<acme:textbox code="finder.minPrice" path="minPrice"/>
