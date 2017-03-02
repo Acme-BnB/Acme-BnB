@@ -59,8 +59,8 @@ public class LessorService {
 		userAccount.addAuthority(a);
 		Lessor result = new Lessor();
 		result.setUserAccount(userAccount);
-		Collection<Comment> comments=new ArrayList<Comment>();
-		Collection<Comment> writtenComments=new ArrayList<Comment>();
+		Collection<Comment> comments = new ArrayList<Comment>();
+		Collection<Comment> writtenComments = new ArrayList<Comment>();
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Property> properties = new ArrayList<Property>();
 		result.setComments(comments);
@@ -68,8 +68,6 @@ public class LessorService {
 		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRProperties(properties);
-		
-		
 
 		return result;
 	}
@@ -131,7 +129,7 @@ public class LessorService {
 		return result;
 	}
 
-	public Lessor reconstruct(LessorForm lessorForm) {
+	public Lessor reconstruct(LessorForm lessorForm, BindingResult binding) {
 
 		Lessor result = create();
 
@@ -140,6 +138,7 @@ public class LessorService {
 
 		Assert.isTrue(lessorForm.getPassword2().equals(password), "notEqualPassword");
 		Assert.isTrue(lessorForm.getAgreed(), "agreedNotAccepted");
+		Assert.isTrue(check(lessorForm.getCreditCard()));
 
 		UserAccount userAccount;
 		userAccount = new UserAccount();
@@ -159,6 +158,9 @@ public class LessorService {
 		result.setPicture(lessorForm.getPicture());
 		result.setCreditCard(lessorForm.getCreditCard());
 		result.setFeeAmount(0.0);
+
+		validator.validate(result, binding);
+
 		return result;
 
 	}
@@ -244,52 +246,49 @@ public class LessorService {
 
 		return result;
 	}
-	
-	public static boolean check(CreditCard creditCard){
-			boolean validador = false;
-			int sum = 0;
-            Calendar fecha = Calendar.getInstance();
-            String numero = creditCard.getNumber();
-            int mes = fecha.get(Calendar.MONTH)+1;
-            int año = fecha.get(Calendar.YEAR);
-            
-            if(creditCard.getExpirationYear()>año){
-            	validador=true;
-            }else if(creditCard.getExpirationYear()==año){
-            	if(creditCard.getExpirationYear()>=mes){
-            		validador=true;
-            	}
-            }
-            
-            if(validador){
-                validador = false;
-                for (int i = numero.length() - 1; i >= 0; i--)
-                {
-                        int n = Integer.parseInt(numero.substring(i, i + 1));
-                        if (validador)
-                        {
-                                n *= 2;
-                                if (n > 9)
-                                {
-                                        n = (n % 10) + 1;
-                                }
-                        }
-                        sum += n;
-                        validador = !validador;
-                }
-	            if(sum % 10 == 0){
-	            	validador = true;
-	            }
-            }
-                
-            return validador;
-    }
-	
-	public Collection<Request> findRequestPerLessor(Lessor lessor){
+
+	public static boolean check(CreditCard creditCard) {
+		boolean validador = false;
+		int sum = 0;
+		Calendar fecha = Calendar.getInstance();
+		String numero = creditCard.getNumber();
+		int mes = fecha.get(Calendar.MONTH) + 1;
+		int año = fecha.get(Calendar.YEAR);
+
+		if (creditCard.getExpirationYear() > año) {
+			validador = true;
+		} else if (creditCard.getExpirationYear() == año) {
+			if (creditCard.getExpirationMonth() >= mes) {
+				validador = true;
+			}
+		}
+
+		if (validador) {
+			validador = false;
+			for (int i = numero.length() - 1; i >= 0; i--) {
+				int n = Integer.parseInt(numero.substring(i, i + 1));
+				if (validador) {
+					n *= 2;
+					if (n > 9) {
+						n = (n % 10) + 1;
+					}
+				}
+				sum += n;
+				validador = !validador;
+			}
+			if (sum % 10 == 0) {
+				validador = true;
+			}
+		}
+
+		return validador;
+	}
+
+	public Collection<Request> findRequestPerLessor(Lessor lessor) {
 		Collection<Request> result;
-		
-		result=lessorRepository.findRequestPerLessor(lessor);
-		
+
+		result = lessorRepository.findRequestPerLessor(lessor);
+
 		return result;
 	}
 }
