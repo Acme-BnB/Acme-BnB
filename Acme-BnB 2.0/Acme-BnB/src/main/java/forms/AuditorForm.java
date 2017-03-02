@@ -20,8 +20,6 @@ public class AuditorForm {
 
 	// Attributes ----------------------------------------------------
 
-	private int		id, version;
-
 	private String	username;
 	private String	password;
 
@@ -44,20 +42,6 @@ public class AuditorForm {
 	}
 
 	// Getters and Setters ------------------------------------------
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
 
 	@Size(min = 5, max = 32)
 	@SafeHtml(whitelistType = WhiteListType.NONE)

@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,18 +39,18 @@ public class FinderService {
 
 	public Finder create() {
 
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		Authority au = new Authority();
-		au.setAuthority("TENANT");
-		Assert.isTrue(userAccount.getAuthorities().contains(au));
-
 		Finder result;
 		result = new Finder();
+		Date date = new Date(System.currentTimeMillis() - 1);
 
 		Collection<Property> results = new ArrayList<Property>();
 
 		result.setResults(results);
+		result.setDestinationCity("Ciudad");
+		result.setMinPrice(0.0);
+		result.setLastTimeSearched(date);
+
+		save2(result);
 
 		return result;
 	}
@@ -111,24 +112,24 @@ public class FinderService {
 
 		finderRepository.delete(finder);
 	}
-	
+
 	// Other business services 
-	
-	public Collection<Double> findMinAvgMaxResultPerFinder(){
+
+	public Collection<Double> findMinAvgMaxResultPerFinder() {
 		Collection<Double> result;
 		Double aux;
-		
+
 		result = new ArrayList<Double>();
-		
-		aux= finderRepository.findMinResultPerFinder();
+
+		aux = finderRepository.findMinResultPerFinder();
 		result.add(aux);
-		
-		aux= finderRepository.findAvgResultPerFinder();
+
+		aux = finderRepository.findAvgResultPerFinder();
 		result.add(aux);
-		
-		aux= finderRepository.findMaxResultPerFinder();
+
+		aux = finderRepository.findMaxResultPerFinder();
 		result.add(aux);
-		
+
 		return result;
 	}
 

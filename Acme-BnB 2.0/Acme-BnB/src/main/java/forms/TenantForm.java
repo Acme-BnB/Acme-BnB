@@ -20,8 +20,6 @@ public class TenantForm {
 
 	// Attributes ----------------------------------------------------
 
-	
-
 	private String	username;
 	private String	password;
 
@@ -42,8 +40,6 @@ public class TenantForm {
 	}
 
 	// Getters and Setters ------------------------------------------
-
-	
 
 	@Size(min = 5, max = 32)
 	@SafeHtml(whitelistType = WhiteListType.NONE)
