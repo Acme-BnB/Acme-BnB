@@ -1,7 +1,7 @@
 <%--
  * edit.jsp
  *
- * Copyright (C) 2017 Universidad de Sevilla
+ * Copyright (C) 2016 Universidad de Sevilla
  * 
  * The use of this project is hereby constrained to the conditions of the 
  * TDG Licence, a copy of which you may download from 
@@ -20,31 +20,24 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <security:authorize
-	access="hasRole('LESSOR')">
+	access="hasRole('ADMIN')">
 
-	<form:form	action="lessor/property/edit.do"	modelAttribute="property"> 
+	<form:form	action="administrator/attribute/edit.do"	modelAttribute="attribute"> 
 		
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
-		<form:hidden path="lessor"/>
 		<form:hidden path="values"/>
-		<form:hidden path="audits"/>
-		<form:hidden path="requests"/>
 		
-		<acme:textbox code="property.name" path="name"/>
-		<acme:textbox code="property.rate" path="rate"/>
-		<acme:textbox code="property.description" path="description"/>
-		<acme:textbox code="property.address" path="address"/>
+		<acme:textbox code="attribute.name" path="name"/>
 		
-		<acme:submit name="save" code="property.save"/>
-		<jstl:if test="${property.id != 0}">
-			<acme:submit name="delete" code="property.delete"/>
+		<acme:submit name="save" code="attribute.save"/>
+		<jstl:if test="${attribute.id != 0}">
+			<acme:submit name="delete" code="attribute.delete"/>
 		</jstl:if>
-		<acme:cancel code="property.cancel" url="lessor/property/list.do"/>
+		<acme:cancel code="attribute.cancel" url="administrator/attribute/list.do"/>
 		
 		
 	</form:form>
 
 </security:authorize>
-
 

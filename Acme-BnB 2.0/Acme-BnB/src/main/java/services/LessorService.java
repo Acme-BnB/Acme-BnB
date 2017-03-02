@@ -11,11 +11,14 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.LessorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Comment;
 import domain.CreditCard;
 import domain.Lessor;
 import domain.Property;
@@ -31,8 +34,11 @@ public class LessorService {
 	@Autowired
 	private LessorRepository	lessorRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -52,13 +58,17 @@ public class LessorService {
 		userAccount.addAuthority(a);
 		Lessor result = new Lessor();
 		result.setUserAccount(userAccount);
-
+		Collection<Comment> comments=new ArrayList<Comment>();
+		Collection<Comment> writtenComments=new ArrayList<Comment>();
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Property> properties = new ArrayList<Property>();
-
+		result.setComments(comments);
+		result.setWrittenComments(writtenComments);
 		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRProperties(properties);
+		
+		
 
 		return result;
 	}
@@ -89,8 +99,8 @@ public class LessorService {
 		String md5 = encoder.encodePassword(password, null);
 		lessor.getUserAccount().setPassword(md5);
 
-		Assert.isTrue(check(lessor.getCreditCard()));
-		
+		//Assert.isTrue(check(lessor.getCreditCard()));
+
 		Lessor result = lessorRepository.save(lessor);
 
 		return result;
@@ -145,12 +155,33 @@ public class LessorService {
 		result.setSurname(lessorForm.getSurname());
 		result.setEmail(lessorForm.getEmail());
 		result.setPhone(lessorForm.getPhone());
+		result.setPicture(lessorForm.getPicture());
 		result.setCreditCard(lessorForm.getCreditCard());
 		result.setFeeAmount(0.0);
 		return result;
 
 	}
-	
+
+	public Lessor reconstruct(Lessor lessor, BindingResult binding) {
+		Lessor result;
+
+		if (lessor.getId() == 0) {
+			result = lessor;
+		} else {
+			result = lessorRepository.findOne(lessor.getId());
+
+			result.setName(lessor.getName());
+			result.setSurname(lessor.getSurname());
+			result.setEmail(lessor.getEmail());
+			result.setPhone(lessor.getPhone());
+			result.setPicture(lessor.getPicture());
+
+			validator.validate(result, binding);
+		}
+
+		return result;
+	}
+
 	public Lessor findByUserAccount(UserAccount userAccount) {
 		assert userAccount != null;
 
@@ -161,76 +192,73 @@ public class LessorService {
 
 		return result;
 	}
-   
+
 	// Other business services
-	
-	public Lessor findByPrincipal(){
+
+	public Lessor findByPrincipal() {
 		Lessor result;
 		int userAccountId;
-		
+
 		userAccountId = LoginService.getPrincipal().getId();
 		result = lessorRepository.findByUserAccountId(userAccountId);
-				
+
 		return result;
 	}
-	
-	public Collection<Double> findAvgAcceptedAndDeniedPerLessor(){
+
+	public Collection<Double> findAvgAcceptedAndDeniedPerLessor() {
 		Collection<Double> result;
 		Double aux;
-		
+
 		result = new ArrayList<Double>();
-		
+
 		aux = lessorRepository.findAvgAcceptedRequestPerLessor();
 		result.add(aux);
-		
+
 		aux = lessorRepository.findAvgDeniedRequestPerLessor();
 		result.add(aux);
-		
+
 		return result;
 	}
-	
-	public Collection<Lessor> findLessorsMoreApprovedRequest(){
+
+	public Collection<Lessor> findLessorsMoreApprovedRequest() {
 		Collection<Lessor> result;
-		
+
 		result = lessorRepository.findLessorsMoreApprovedRequest();
-		
+
 		return result;
 	}
-	
-	public Collection<Lessor> findLessorsMoreDeniedRequest(){
+
+	public Collection<Lessor> findLessorsMoreDeniedRequest() {
 		Collection<Lessor> result;
-		
+
 		result = lessorRepository.findLessorsMoreDeniedRequest();
-		
+
 		return result;
 	}
-	
-	public Collection<Lessor> findLessorsMorePendingRequest(){
+
+	public Collection<Lessor> findLessorsMorePendingRequest() {
 		Collection<Lessor> result;
-		
+
 		result = lessorRepository.findLessorsMorePendingRequest();
-		
+
 		return result;
 	}
-	
-	public static boolean check(CreditCard creditCard){
-			boolean validador = false;
-            Calendar fecha = Calendar.getInstance();
-            int mes = fecha.get(Calendar.MONTH)+1;
-            int año = fecha.get(Calendar.YEAR);
-            
-            if(creditCard.getExpirationYear()>año){
-            	validador=true;
-            }else if(creditCard.getExpirationYear()==año){
-            	if(creditCard.getExpirationYear()>=mes){
-            		validador=true;
-            	}
-            }
-            
-            return validador;
-    }
+
+	public static boolean check(CreditCard creditCard) {
+		boolean validador = false;
+		Calendar fecha = Calendar.getInstance();
+		int mes = fecha.get(Calendar.MONTH) + 1;
+		int año = fecha.get(Calendar.YEAR);
+
+		if (creditCard.getExpirationYear() > año) {
+			validador = true;
+		} else if (creditCard.getExpirationYear() == año) {
+			if (creditCard.getExpirationYear() >= mes) {
+				validador = true;
+			}
+		}
+
+		return validador;
+	}
 
 }
-
-
-

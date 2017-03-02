@@ -6,12 +6,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.Credentials;
 import services.LessorService;
 import domain.Lessor;
 import forms.LessorForm;
@@ -35,13 +33,12 @@ public class LessorRegisterController extends AbstractController {
 	// Creation ------------------------------------------------
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView create(@Valid @ModelAttribute Credentials credentials) {
+	public ModelAndView create() {
 		ModelAndView result;
 		LessorForm lessorForm;
 
 		lessorForm = lessorService.generateForm();
 		result = createEditModelAndView(lessorForm);
-		result.addObject("credentials", credentials);
 
 		return result;
 	}
@@ -50,7 +47,7 @@ public class LessorRegisterController extends AbstractController {
 	public ModelAndView save(@Valid LessorForm lessorForm, BindingResult binding) {
 		ModelAndView result;
 		Lessor lessor;
-		Credentials credentials = new Credentials();
+
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(lessorForm);
 		} else {
@@ -67,7 +64,7 @@ public class LessorRegisterController extends AbstractController {
 						msgCode = "lessor.register.agreedNotAccepted";
 					}
 				}
-				result = createEditModelAndView(lessorForm, msgCode, credentials);
+				result = createEditModelAndView(lessorForm, msgCode);
 			}
 		}
 
@@ -79,21 +76,19 @@ public class LessorRegisterController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(LessorForm lessorForm) {
 		ModelAndView result;
-		Credentials credentials = new Credentials();
 
-		result = createEditModelAndView(lessorForm, null, credentials);
+		result = createEditModelAndView(lessorForm, null);
 
 		return result;
 
 	}
 
-	protected ModelAndView createEditModelAndView(LessorForm lessorForm, String message, @Valid @ModelAttribute Credentials credentials) {
+	protected ModelAndView createEditModelAndView(LessorForm lessorForm, String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("lessor/register");
 		result.addObject("lessorForm", lessorForm);
 		result.addObject("message", message);
-		result.addObject("credentials", credentials);
 
 		return result;
 	}

@@ -18,7 +18,7 @@
 	<!-- Artifact identification and properties -->
 
 	<groupId>Design-and-Testing</groupId>
-	<artifactId>Acme-BnB</artifactId>
+	<artifactId>Sample-Project</artifactId>
 	<version>1.9</version>
 	<packaging>war</packaging>
 	
@@ -28,7 +28,7 @@
 
 	<!-- Indexing information -->
 
-	<name>Acme-BnB</name>
+	<name>Sample Project</name>
 	<url>http://www.sample-project.com</url>
 	<description>This is D&amp;T's sample project.</description>
 	
@@ -315,18 +315,6 @@
 		    <version>1.7.4</version>
 		</dependency>
 		
-		<dependency>
-		    <groupId>org.jsoup</groupId>
-		    <artifactId>jsoup</artifactId>
-		    <version>1.7.2</version>
-		</dependency>
-		
-		<!-- Validator -->
-		<dependency>
-		    <groupId>commons-validator</groupId>
-		    <artifactId>commons-validator</artifactId>
-		    <version>1.5.1</version>
-		</dependency>
 	</dependencies>
 
 </project> 

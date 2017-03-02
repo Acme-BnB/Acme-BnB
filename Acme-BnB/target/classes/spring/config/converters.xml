@@ -72,7 +72,6 @@
 		
 		<bean class="converters.ValueToStringConverter" />
 		<bean class="converters.StringToValueConverter" />
-		
 	</util:list>
 	
 </beans>

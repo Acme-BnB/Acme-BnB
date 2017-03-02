@@ -1,5 +1,5 @@
 
-package controllers.lessor;
+package controllers.administrator;
 
 import java.util.Collection;
 
@@ -14,27 +14,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.LessorService;
-import services.PropertyService;
+import services.AttributeService;
 import controllers.AbstractController;
-import domain.Property;
+import domain.Attribute;
 
 @Controller
-@RequestMapping("/lessor/property")
-public class LessorPropertyController extends AbstractController {
+@RequestMapping("/administrator/attribute")
+public class AdministratorAttributeController extends AbstractController {
 
 	//Services-------------------------
 
 	@Autowired
-	private PropertyService	propertyService;
-
-	@Autowired
-	private LessorService	lessorService;
+	private AttributeService	attributeService;
 
 
 	//Constructor----------------------
 
-	public LessorPropertyController() {
+	public AdministratorAttributeController() {
 		super();
 	}
 
@@ -44,13 +40,13 @@ public class LessorPropertyController extends AbstractController {
 	public ModelAndView list() {
 
 		ModelAndView result;
-		Collection<Property> properties;
+		Collection<Attribute> attributes;
 
-		properties = propertyService.findByUserAccount();
+		attributes = attributeService.findAll();
 
-		result = new ModelAndView("property/list");
-		result.addObject("properties", properties);
-		result.addObject("requestURI", "lessor/property/list.do");
+		result = new ModelAndView("attribute/list");
+		result.addObject("attributes", attributes);
+		result.addObject("requestURI", "administrator/attribute/list.do");
 
 		return result;
 	}
@@ -61,10 +57,10 @@ public class LessorPropertyController extends AbstractController {
 	public ModelAndView create() {
 
 		ModelAndView result;
-		Property property;
+		Attribute attribute;
 
-		property = propertyService.create();
-		result = createEditModelAndView(property);
+		attribute = attributeService.create();
+		result = createEditModelAndView(attribute);
 
 		return result;
 
@@ -73,63 +69,63 @@ public class LessorPropertyController extends AbstractController {
 	//Edition--------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int propertyId) {
+	public ModelAndView edit(@RequestParam int attributeId) {
 
 		ModelAndView result;
-		Property property;
+		Attribute attribute;
 
-		property = propertyService.findOne(propertyId);
-		Assert.notNull(property);
-		result = createEditModelAndView(property);
+		attribute = attributeService.findOne(attributeId);
+		Assert.notNull(attribute);
+		result = createEditModelAndView(attribute);
 
 		return result;
 
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Property property, BindingResult binding) {
+	public ModelAndView save(@Valid Attribute attribute, BindingResult binding) {
 
 		ModelAndView result;
 
 		try {
-			propertyService.save(property);
+			attributeService.save(attribute);
 			result = list();
 		} catch (Throwable oops) {
-			result = createEditModelAndView(property, "master.page.commit.error");
+			result = createEditModelAndView(attribute, "master.page.commit.error");
 		}
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(Property property, BindingResult binding) {
+	public ModelAndView delete(Attribute attribute, BindingResult binding) {
 
 		ModelAndView result;
 
 		try {
-			propertyService.delete(property);
+			attributeService.delete(attribute);
 			result = list();
 		} catch (Throwable oops) {
-			result = createEditModelAndView(property, "master.page.commit.error");
+			result = createEditModelAndView(attribute, "master.page.commit.error");
 		}
 		return result;
 	}
 
 	//Ancillary Methods---------------------------
 
-	protected ModelAndView createEditModelAndView(Property property) {
+	protected ModelAndView createEditModelAndView(Attribute attribute) {
 
 		ModelAndView result;
 
-		result = createEditModelAndView(property, null);
+		result = createEditModelAndView(attribute, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Property property, String message) {
+	protected ModelAndView createEditModelAndView(Attribute attribute, String message) {
 		ModelAndView result;
 
-		result = new ModelAndView("property/edit");
-		result.addObject("property", property);
+		result = new ModelAndView("attribute/edit");
+		result.addObject("attribute", attribute);
 
 		result.addObject("message", message);
 

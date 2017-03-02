@@ -22,44 +22,47 @@
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	
-	<acme:textbox code="lesor.username" path="username" />
+	<acme:textbox code="lessor.username" path="username" />
 	<br/>
-	<acme:password code="lesor.password" path="password"/>
+	<acme:password code="lessor.password" path="password"/>
 	<br/>
-	<acme:password code="lesor.password2" path="password2"/>
+	<acme:password code="lessor.password2" path="password2"/>
 	<br/>
-	<acme:textbox code="lesor.name" path="name" />
-	<br/>
-	<acme:textbox code="lesor.surname" path="surname"/>
-	<br/>
-	<acme:textbox code="lesor.email" path="email"/>
-	<br/>
-	<acme:textbox code="lesor.phone" path="phone"/>
-	<br/>
-	<acme:textbox code="lesor.picture" path="picture"/>
-	<br/>
-	<div>
-		<acme:textbox code="lesor.creditCard.holderName" path="creditCard.holderName"/>
-					
-		<acme:textbox code="lesor.creditCard.brandName" path="creditCard.brandName"/>
-					
-		<acme:textbox code="lesor.creditCard.number" path="creditCard.number"/>
-					
-		<acme:textbox code="lesor.creditCard.expirationMonth" path="creditCard.expirationMonth"/>
-					
-		<acme:textbox code="lesor.creditCard.expirationYear" path="creditCard.expirationYear"/>
-			
-		<acme:textbox code="lesor.creditCard.cvvCode" path="creditCard.cvvCode"/>
-	</div>
 	<form:checkbox path="agreed"/>
 	<form:label path="agreed">
-		<spring:message code="lesor.register.agree" />
-		<a href="misc/lopd.do"><spring:message code="lesor.register.agree.2"/></a>
+		<spring:message code="lessor.register.agree" />
+		<a href="misc/lopd.do"><spring:message code="lessor.register.agree.2"/></a>
 	</form:label>
 	<form:errors path="agreed" cssClass="error" />
 	<br/>
-	<acme:submit name="save" code="lesor.save"/>
-	<acme:cancel url="welcome/index.do" code="lesor.cancel"/>
+	<br/>
+	<acme:textbox code="lessor.name" path="name" />
+	<br/>
+	<acme:textbox code="lessor.surname" path="surname"/>
+	<br/>
+	<acme:textbox code="lessor.email" path="email"/>
+	<br/>
+	<acme:textbox code="lessor.phone" path="phone"/>
+	<br/>
+	<acme:textbox code="lessor.picture" path="picture"/>
+	<br/>
+	<fieldset>
+		<legend align="left"><spring:message code="lessor.creditCard.info"/></legend>
+		<acme:textbox code="lessor.creditCard.holderName" path="creditCard.holderName"/>
+		<br/>			
+		<acme:textbox code="lessor.creditCard.brandName" path="creditCard.brandName"/>
+		<br/>		
+		<acme:textbox code="lessor.creditCard.number" path="creditCard.number"/>
+		<br/>			
+		<acme:textbox code="lessor.creditCard.expirationMonth" path="creditCard.expirationMonth"/>
+		<br/>			
+		<acme:textbox code="lessor.creditCard.expirationYear" path="creditCard.expirationYear"/>
+		<br/>	
+		<acme:textbox code="lessor.creditCard.cvv" path="creditCard.cvv"/>
+	</fieldset>
+	<br/>
+	<acme:submit name="save" code="lessor.save"/>
+	<acme:cancel code="lessor.cancel" url="welcome/index.do" />
 
 </form:form>
 

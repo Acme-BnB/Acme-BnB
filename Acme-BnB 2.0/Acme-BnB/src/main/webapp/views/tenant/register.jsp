@@ -19,15 +19,21 @@
 
 <form:form action="${requestURI}" modelAttribute="tenantForm">
 
-	<form:hidden path="id"/>
-	<form:hidden path="version"/>
 	
 	<acme:textbox code="tenant.username" path="username" />
 	<br/>
 	<acme:password code="tenant.password" path="password"/>
 	<br/>
+	
 	<acme:password code="tenant.password2" path="password2"/>
 	<br/>
+	<form:checkbox path="agreed"/>
+	<form:label path="agreed">
+		<spring:message code="tenant.register.agree" />
+		<a href="misc/lopd.do"><spring:message code="tenant.register.agree.2"/></a>
+	</form:label>
+	<form:errors path="agreed" cssClass="error" />
+	<br/><br/>
 	<acme:textbox code="tenant.name" path="name" />
 	<br/>
 	<acme:textbox code="tenant.surname" path="surname"/>
@@ -38,13 +44,7 @@
 	<br/>
 	<acme:textbox code="tenant.picture" path="picture"/>
 	<br/>
-	<form:checkbox path="agreed"/>
-	<form:label path="agreed">
-		<spring:message code="tenant.register.agree" />
-		<a href="misc/lopd.do"><spring:message code="tenant.register.agree.2"/></a>
-	</form:label>
-	<form:errors path="agreed" cssClass="error" />
-	<br/>
+	
 	<acme:submit name="save" code="tenant.save"/>
 	<acme:cancel url="welcome/index.do" code="tenant.cancel"/>
 

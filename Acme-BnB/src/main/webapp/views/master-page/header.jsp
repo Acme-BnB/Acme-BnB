@@ -19,6 +19,7 @@
 
 <div>
 	<ul id="jMenu">
+		<li><a href="property/browse.do"><spring:message code="master.page.browseProperty" /></a></li>
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
@@ -61,9 +62,11 @@
 		
 		
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			
+			
 			<li><a class="fNiv" href="lessor/register.do"><spring:message code="master.page.lessor.register"/></a></li>
 			<li><a class="fNiv" href="tenant/register.do"><spring:message code="master.page.tenant.register"/></a></li>
+			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">

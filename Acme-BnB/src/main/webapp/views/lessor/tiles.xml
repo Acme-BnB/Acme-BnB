@@ -19,7 +19,12 @@
 	<definition name="lessor/register" extends="master.page">	
 		<put-attribute name="title" value="Register a Lessor" />
 		<put-attribute name="body" value="/views/lessor/register.jsp" />
+	
 	</definition>
-
+	
+	<definition name="lessor/display" extends="master.page">	
+		<put-attribute name="title" value="Display a Lessor" />
+		<put-attribute name="body" value="/views/lessor/display.jsp" />
+	</definition>
 	
 </tiles-definitions>

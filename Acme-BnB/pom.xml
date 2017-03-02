@@ -29,8 +29,8 @@
 	<!-- Indexing information -->
 
 	<name>Acme-BnB</name>
-	<url>http://www.acme-bnb.com</url>
-	<description>Acme-BnB project.</description>
+	<url>http://www.sample-project.com</url>
+	<description>This is D&amp;T's sample project.</description>
 	
 	<!-- Build commands -->
 

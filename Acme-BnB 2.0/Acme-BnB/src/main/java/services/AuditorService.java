@@ -10,6 +10,8 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.AuditorRepository;
 import security.Authority;
@@ -29,8 +31,11 @@ public class AuditorService {
 	@Autowired
 	private AuditorRepository	auditorRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -149,7 +154,28 @@ public class AuditorService {
 		result.setSurname(auditorForm.getSurname());
 		result.setEmail(auditorForm.getEmail());
 		result.setPhone(auditorForm.getPhone());
+		result.setPicture(auditorForm.getPicture());
 		result.setCompanyName(auditorForm.getCompanyName());
+
+		return result;
+	}
+
+	public Auditor reconstruct(Auditor auditor, BindingResult binding) {
+		Auditor result;
+
+		if (auditor.getId() == 0) {
+			result = auditor;
+		} else {
+			result = auditorRepository.findOne(auditor.getId());
+
+			result.setName(auditor.getName());
+			result.setSurname(auditor.getSurname());
+			result.setEmail(auditor.getEmail());
+			result.setPhone(auditor.getPhone());
+			result.setPicture(auditor.getPicture());
+
+			validator.validate(result, binding);
+		}
 
 		return result;
 	}

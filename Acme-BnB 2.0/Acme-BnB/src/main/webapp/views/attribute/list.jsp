@@ -16,3 +16,21 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<display:table name="attributes"
+	id="row"
+	class="displaytag"
+	pagesize="5"
+	requestURI="${requestURI}">
+	
+	<security:authorize access="hasRole('ADMIN')">
+	
+	<display:column>
+		<a href="administrator/attribute/edit.do?attributeId=${row.id}"><spring:message code="attribute.edit" /></a>
+	</display:column>			
+	
+	<spring:message code="attribute.name" var="nameHeader" />
+	<display:column property="name" title="${nameHeader}" sortable="true"/>
+	
+	</security:authorize>
+
+</display:table>

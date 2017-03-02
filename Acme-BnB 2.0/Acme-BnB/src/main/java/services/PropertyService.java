@@ -14,6 +14,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Audit;
+import domain.Lessor;
 import domain.Property;
 import domain.Request;
 import domain.Value;
@@ -27,8 +28,11 @@ public class PropertyService {
 	@Autowired
 	private PropertyRepository	propertyRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private LessorService		lessorService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -46,6 +50,8 @@ public class PropertyService {
 		au.setAuthority("LESSOR");
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
+		Lessor lessor = lessorService.findByPrincipal();
+
 		Property result;
 		result = new Property();
 
@@ -56,10 +62,9 @@ public class PropertyService {
 		result.setValues(values);
 		result.setRequests(requests);
 		result.setAudits(audits);
-
+		result.setLessor(lessor);
 		return result;
 	}
-
 	public Collection<Property> findAll() {
 		Collection<Property> result;
 
@@ -117,98 +122,98 @@ public class PropertyService {
 
 		propertyRepository.delete(property);
 	}
-	
+
 	// Other business services
-	
-	public Collection<Double> findMinAvgMaxAuditsPerProperty(){
+
+	public Collection<Double> findMinAvgMaxAuditsPerProperty() {
 		Collection<Double> result;
 		Double aux;
-		
+
 		result = new ArrayList<Double>();
-		
+
 		aux = propertyRepository.findMinAuditsPerProperty();
 		result.add(aux);
-		
+
 		aux = propertyRepository.findAvgAuditsPerProperty();
 		result.add(aux);
-		
+
 		aux = propertyRepository.findMaxAuditsPerProperty();
 		result.add(aux);
-		
+
 		return result;
 	}
-	
-	public Collection<Property> findPropertiesOfALessorOrderByNumberAudit(){
+
+	public Collection<Property> findPropertiesOfALessorOrderByNumberAudit() {
 		Collection<Property> result;
-		
+
 		result = propertyRepository.findPropertiesOfALessorOrderByNumberAudit();
-		
+
 		return result;
 	}
-	
-	public Collection<Property> findPropertiesOfALessorOrderByNumberRequest(){
+
+	public Collection<Property> findPropertiesOfALessorOrderByNumberRequest() {
 		Collection<Property> result;
-		
+
 		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequest();
-		
+
 		return result;
 	}
-	
-	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestAccepted(){
+
+	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestAccepted() {
 		Collection<Property> result;
-		
+
 		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequestAccepted();
-		
+
 		return result;
 	}
-	
-	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestDenied(){
+
+	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestDenied() {
 		Collection<Property> result;
-		
+
 		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequestDenied();
-		
+
 		return result;
 	}
-	
-	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestPending(){
+
+	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestPending() {
 		Collection<Property> result;
-		
+
 		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequestPending();
-		
+
 		return result;
 	}
-	
-	public Double findAvgRequestForPropertiesWithOneOrMoreAudit(){
+
+	public Double findAvgRequestForPropertiesWithOneOrMoreAudit() {
 		Double result;
-		
+
 		result = propertyRepository.findAvgRequestForPropertiesWithOneOrMoreAudit();
-		
+
 		return result;
 	}
-	
-	public Double findAvgRequestForPropertiesWithZeroAudit(){
+
+	public Double findAvgRequestForPropertiesWithZeroAudit() {
 		Double result;
-		
+
 		result = propertyRepository.findAvgRequestForPropertiesWithZeroAudit();
-		
+
 		return result;
 	}
-	
-	public Collection<Property> findByKey(String key){
+
+	public Collection<Property> findByKey(String key) {
 		Collection<Property> result;
-		
+
 		result = propertyRepository.findByKey(key);
-		
+
 		return result;
 	}
-	
-	public Collection<Property> findByUserAccount(){
+
+	public Collection<Property> findByUserAccount() {
 		Collection<Property> result;
 		UserAccount userAccountId;
-		
+
 		userAccountId = LoginService.getPrincipal();
 		result = propertyRepository.findByUserAccount(userAccountId);
-				
+
 		return result;
 	}
 }

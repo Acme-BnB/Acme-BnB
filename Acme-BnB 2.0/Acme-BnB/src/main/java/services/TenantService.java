@@ -10,11 +10,15 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.TenantRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Comment;
+import domain.Finder;
 import domain.Request;
 import domain.SocialIdentity;
 import domain.Tenant;
@@ -28,9 +32,15 @@ public class TenantService {
 
 	@Autowired
 	private TenantRepository	tenantRepository;
-
+	
+	@Autowired
+	private FinderService	finderService;
 
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,14 +60,19 @@ public class TenantService {
 		userAccount.addAuthority(a);
 		Tenant result = new Tenant();
 		result.setUserAccount(userAccount);
-
+		Finder f;
+		f = new Finder();
+		
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Request> request = new ArrayList<Request>();
-
+		Collection<Comment> writtenComments = new ArrayList<Comment>();
+		Collection<Comment> comments=new ArrayList<Comment>();
+		result.setFinder(f);
 		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRequests(request);
-
+		result.setWrittenComments(writtenComments);
+		result.setComments(comments);
 		return result;
 	}
 
@@ -106,79 +121,76 @@ public class TenantService {
 
 		tenantRepository.delete(tenant);
 	}
-	
-	// Other business services
-	public Tenant findByPrincipal(){
+
+	// Other business services ------------------------------------------
+
+	public Tenant findByPrincipal() {
 		Tenant result;
 		int userAccountId;
-		
+
 		userAccountId = LoginService.getPrincipal().getId();
 		result = tenantRepository.findByUserAccountId(userAccountId);
-				
+
 		return result;
 	}
-	
-	public Double findAvgAcceptedRequestPerTenant(){
+
+	public Double findAvgAcceptedRequestPerTenant() {
 		Double result;
-		
+
 		result = tenantRepository.findAvgAcceptedRequestPerTenant();
-		
+
 		return result;
 	}
-	
-	public Double findAvgDeniedRequestPerTenant(){
+
+	public Double findAvgDeniedRequestPerTenant() {
 		Double result;
-		
+
 		result = tenantRepository.findAvgDeniedRequestPerTenant();
-		
+
 		return result;
 	}
-	
-	public Collection<Tenant> findTenantMoreApprovedRequest(){
+
+	public Collection<Tenant> findTenantMoreApprovedRequest() {
 		Collection<Tenant> result;
-		
-		result = (Collection<Tenant>) tenantRepository.findTenantMoreApprovedRequest();
-		
+
+		result = tenantRepository.findTenantMoreApprovedRequest();
+
 		return result;
 	}
-	
-	public Collection<Tenant> findTenantMoreDeniedRequest(){
+
+	public Collection<Tenant> findTenantMoreDeniedRequest() {
 		Collection<Tenant> result;
-		
-		result = (Collection<Tenant>) tenantRepository.findTenantMoreDeniedRequest();
-		
+
+		result = tenantRepository.findTenantMoreDeniedRequest();
+
 		return result;
 	}
-	
-	public Collection<Tenant> findTenantMorePendingRequest(){
+
+	public Collection<Tenant> findTenantMorePendingRequest() {
 		Collection<Tenant> result;
-		
-		result = (Collection<Tenant>) tenantRepository.findTenantMorePendingRequest();
-		
+
+		result = tenantRepository.findTenantMorePendingRequest();
+
 		return result;
 	}
-	
-	public Collection<Double> findMinAvgMaxNumberInvoiceToTheTenant(){
+
+	public Collection<Double> findMinAvgMaxNumberInvoiceToTheTenant() {
 		Collection<Double> result;
 		Double aux;
-		
+
 		result = new ArrayList<Double>();
-		
+
 		aux = tenantRepository.findMinNumberInvoiceToTheTenant();
 		result.add(aux);
-		
+
 		aux = tenantRepository.findAvgNumberInvoiceToTheTenant();
 		result.add(aux);
-		
+
 		aux = tenantRepository.findMaxNumberInvoiceToTheTenant();
 		result.add(aux);
-		
+
 		return result;
 	}
-	
-	
-
-
 
 	// Form methods -------------------------------------------------
 
@@ -189,7 +201,7 @@ public class TenantService {
 		return result;
 	}
 
-	public Tenant reconstruct(TenantForm tenantForm) {
+	public Tenant reconstruct(TenantForm tenantForm, BindingResult binding) {
 
 		Tenant result = create();
 
@@ -214,8 +226,30 @@ public class TenantService {
 		result.setSurname(tenantForm.getSurname());
 		result.setEmail(tenantForm.getEmail());
 		result.setPhone(tenantForm.getPhone());
+		result.setPicture(tenantForm.getPicture());
+
+		validator.validate(result, binding);
 
 		return result;
 	}
 
+	public Tenant reconstruct(Tenant tenant, BindingResult binding) {
+		Tenant result;
+
+		if (tenant.getId() == 0) {
+			result = tenant;
+		} else {
+			result = tenantRepository.findOne(tenant.getId());
+
+			result.setName(tenant.getName());
+			result.setSurname(tenant.getSurname());
+			result.setEmail(tenant.getEmail());
+			result.setPhone(tenant.getPhone());
+			result.setPicture(tenant.getPicture());
+
+			validator.validate(result, binding);
+		}
+
+		return result;
+	}
 }
