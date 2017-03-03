@@ -33,16 +33,6 @@
 			</li>
 		</security:authorize>
 		
-		<security:authorize access="hasRole('CUSTOMER')">
-			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
-				</ul>
-			</li>
-		</security:authorize>
-		
 		<security:authorize access="hasRole('LESSOR')">
 			<li><a class="fNiv"><spring:message	code="master.page.lessor" /></a>
 				<ul>
@@ -84,9 +74,14 @@
 					<li class="arrow"></li>
 					<security:authorize access="hasRole('LESSOR')">
 						<li><a href="lessor/displayL.do"><spring:message code="master.page.profile" /></a></li>
+						<li><a href="lessor/edit.do"><spring:message code="master.page.edit" /></a></li>
 					</security:authorize>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
+					<security:authorize access="hasRole('TENANT')">
+						<li><a href="tenant/edit.do"><spring:message code="master.page.edit" /></a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('ADMINISTRATOR')">
+						<li><a href="administrator/edit.do"><spring:message code="master.page.edit" /></a></li>
+					</security:authorize>				
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
