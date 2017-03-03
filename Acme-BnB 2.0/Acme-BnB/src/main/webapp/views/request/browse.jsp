@@ -51,7 +51,7 @@
 	</display:column>
 	
 	<display:column>
-		<a href="property/display.do?propertyId=${row.id}"><spring:message code="request.view.property" /></a>
+		<a href="property/displayByRequest.do?requestId=${row.id}"><spring:message code="request.view.property" /></a>
 	</display:column>
 	
 	
