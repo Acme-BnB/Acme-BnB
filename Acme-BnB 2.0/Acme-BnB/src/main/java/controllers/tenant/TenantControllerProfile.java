@@ -41,4 +41,17 @@ public class TenantControllerProfile {
 				result.addObject("comments", tenant.getcomments());
 				return result;
 		}
+		
+		@RequestMapping(value="/displayT", method=RequestMethod.GET)
+		public ModelAndView display() {
+				ModelAndView result;
+				Tenant tenant;
+				
+				tenant = tenantService.findByPrincipal();
+				result=new ModelAndView("tenant/display");
+				result.addObject("tenant", tenant);
+				result.addObject("comments", tenant.getcomments());
+				return result;
+			}
+
 }

@@ -148,7 +148,11 @@ public class PropertyService {
 			result.setId(propertyForm.getId());
 			result.setLessor(lessor);
 			result.setName(propertyForm.getName());
+			
+			Assert.isTrue(propertyForm.getRate()==null, "nullRate");
+			
 			result.setRate(propertyForm.getRate());
+			
 			result.setDescription(propertyForm.getDescription());
 			result.setAddress(propertyForm.getAddress());
 		
@@ -170,6 +174,11 @@ public class PropertyService {
 				
 				result.setName(property.getName());
 				result.setAddress(property.getAddress());
+				
+				Assert.isTrue(property.getRate()!=null, "nullRate");
+				
+				result.setRate(property.getRate());
+				
 				result.setRate(property.getRate());
 				result.setDescription(property.getDescription());
 				

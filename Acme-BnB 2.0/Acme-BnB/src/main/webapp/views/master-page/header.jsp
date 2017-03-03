@@ -86,6 +86,7 @@
 						<li><a href="lessor/edit.do"><spring:message code="master.page.edit" /></a></li>
 					</security:authorize>
 					<security:authorize access="hasRole('TENANT')">
+						<li><a href="tenant/displayT.do"><spring:message code="master.page.profile" /></a></li>
 						<li><a href="tenant/edit.do"><spring:message code="master.page.edit" /></a></li>
 					</security:authorize>
 					<security:authorize access="hasRole('ADMINISTRATOR')">
