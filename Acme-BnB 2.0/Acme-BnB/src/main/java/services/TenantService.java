@@ -204,6 +204,25 @@ public class TenantService {
 		return result;
 	}
 
+	public TenantForm generateForm(Tenant tenant) {
+		TenantForm result;
+
+		result = new TenantForm();
+
+		result.setId(tenant.getId());
+		result.setUsername(tenant.getUserAccount().getUsername());
+		result.setPassword(tenant.getUserAccount().getPassword());
+		result.setPassword2(tenant.getUserAccount().getPassword());
+		result.setName(tenant.getName());
+		result.setAgreed(true);
+		result.setSurname(tenant.getSurname());
+		result.setPhone(tenant.getPhone());
+		result.setPicture(tenant.getPicture());
+		result.setEmail(tenant.getEmail());
+
+		return result;
+	}
+
 	public Tenant reconstruct(TenantForm tenantForm, BindingResult binding) {
 
 		Tenant result = create();
@@ -236,22 +255,18 @@ public class TenantService {
 		return result;
 	}
 
-	public Tenant reconstruct(Tenant tenant, BindingResult binding) {
+	public Tenant reconstructEditPersonalData(TenantForm tenantForm, BindingResult binding) {
 		Tenant result;
 
-		if (tenant.getId() == 0) {
-			result = tenant;
-		} else {
-			result = tenantRepository.findOne(tenant.getId());
+		result = tenantRepository.findOne(tenantForm.getId());
 
-			result.setName(tenant.getName());
-			result.setSurname(tenant.getSurname());
-			result.setEmail(tenant.getEmail());
-			result.setPhone(tenant.getPhone());
-			result.setPicture(tenant.getPicture());
+		result.setName(tenantForm.getName());
+		result.setSurname(tenantForm.getSurname());
+		result.setEmail(tenantForm.getEmail());
+		result.setPhone(tenantForm.getPhone());
+		result.setPicture(tenantForm.getPicture());
 
-			validator.validate(result, binding);
-		}
+		validator.validate(result, binding);
 
 		return result;
 	}
