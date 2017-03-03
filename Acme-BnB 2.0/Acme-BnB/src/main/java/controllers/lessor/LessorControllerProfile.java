@@ -16,7 +16,7 @@ import domain.Request;
 
 @Controller
 @RequestMapping("/lessor")
-public class LessorController {
+public class LessorControllerProfile {
 	//Services-------------------------
 
 		@Autowired
@@ -32,7 +32,7 @@ public class LessorController {
 
 		//Constructor----------------------
 
-		public LessorController() {
+		public LessorControllerProfile() {
 			super();
 		}
 

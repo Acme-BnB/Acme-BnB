@@ -12,7 +12,7 @@ import domain.Tenant;
 
 @Controller
 @RequestMapping("/tenant")
-public class TenantController {
+public class TenantControllerProfile {
 	//Services-------------------------
 
 		@Autowired
@@ -23,7 +23,7 @@ public class TenantController {
 
 		//Constructor----------------------
 
-		public TenantController() {
+		public TenantControllerProfile() {
 			super();
 		}
 
