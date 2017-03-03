@@ -9,11 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.RequestRepository;
 import domain.CreditCard;
+import domain.Property;
 import domain.Request;
 import domain.Tenant;
+import forms.RequestForm;
 
 @Service
 @Transactional
@@ -27,6 +31,15 @@ public class RequestService {
 
 	// Supporting services ----------------------------------------------------
 
+	@Autowired
+	private TenantService tenantService;
+	
+	@Autowired
+	private PropertyService propertyService;
+	
+	@Autowired
+	private Validator validator;
+	
 	// Constructors -----------------------------------------------------------
 
 	public RequestService() {
@@ -82,21 +95,41 @@ public class RequestService {
 		requestRepository.delete(request);
 	}
 	
-	public static boolean check(CreditCard creditCard){
+	public static boolean check(CreditCard creditCard) {
 		boolean validador = false;
-        Calendar fecha = Calendar.getInstance();
-        int mes = fecha.get(Calendar.MONTH)+1;
-        int año = fecha.get(Calendar.YEAR);
-        
-        if(creditCard.getExpirationYear()>año){
-        	validador=true;
-        }else if(creditCard.getExpirationYear()==año){
-        	if(creditCard.getExpirationYear()>=mes){
-        		validador=true;
-        	}
-        }
-        
-        return validador;
+		int sum = 0;
+		Calendar fecha = Calendar.getInstance();
+		String numero = creditCard.getNumber();
+		int mes = fecha.get(Calendar.MONTH) + 1;
+		int año = fecha.get(Calendar.YEAR);
+
+		if (creditCard.getExpirationYear() > año) {
+			validador = true;
+		} else if (creditCard.getExpirationYear() == año) {
+			if (creditCard.getExpirationMonth() >= mes) {
+				validador = true;
+			}
+		}
+
+		if (validador) {
+			validador = false;
+			for (int i = numero.length() - 1; i >= 0; i--) {
+				int n = Integer.parseInt(numero.substring(i, i + 1));
+				if (validador) {
+					n *= 2;
+					if (n > 9) {
+						n = (n % 10) + 1;
+					}
+				}
+				sum += n;
+				validador = !validador;
+			}
+			if (sum % 10 == 0) {
+				validador = true;
+			}
+		}
+
+		return validador;
 	}
 
 	public Collection<Request> findByCreator(Tenant tenant) {
@@ -120,5 +153,79 @@ public class RequestService {
 	
 		return result;
 	}
+	
+	// Form methods --------------------------------
+	
+			public RequestForm generateForm(){
+				RequestForm result;
+				
+				result = new RequestForm();
+				
+				return result;
+			}
+			
+			public Request reconstruct(RequestForm requestForm,  BindingResult binding){
+				Request result = create();
+				
+				Tenant tenant;
+				Property property;
+				
+				tenant = tenantService.findByPrincipal();
+				property = propertyService.findOne(requestForm.getPropertyId());
+				
+				//Assert.isTrue(check(requestForm.getCreditCard()));
+				System.out.println(requestForm.getPropertyId());
+				System.out.println(requestForm.getSmoker());
+				result.setProperty(property);
+				//result.setId(requestForm.getId());
+				result.setTenant(tenant);
+				result.setCheckIn(requestForm.getCheckIn());
+				result.setCheckOut(requestForm.getCheckOut());
+				result.setSmoker(requestForm.getSmoker());
+				result.setStatus("PENDING");
+				
+			
+				validator.validate(result, binding);
+				
+				return result;
+			}
+			/*
+			public Request reconstruct(Request request, BindingResult binding){
+				Request result;
+				
+				if(request.getId() == 0){
+					Tenant tenant = tenantService.findByPrincipal();
+					
+					result = request;
+					result.setTenant(tenant);
+				}else{
+					result = requestRepository.findOne(request.getId());
+					
+					result.setName(property.getName());
+					result.setAddress(property.getAddress());
+					
+					Assert.isTrue(property.getRate()!=null, "nullRate");
+					
+					result.setRate(property.getRate());
+					
+					result.setRate(property.getRate());
+					result.setDescription(property.getDescription());
+					
+					validator.validate(result, binding);
+				}
+				
+				return result;
+			}
+			*/
+			/*
+			public RequestForm transform(Request request){
+				RequestForm result=generateForm();
+				result.setAddress(request.getAddress());
+				result.setName(request.getName());
+				result.setDescription(request.getDescription());
+				result.setRate(request.getRate());
+				return result;
+			}
+			*/
 
 }

@@ -58,7 +58,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="tenant/finder/display.do"><spring:message code="master.page.tenant.finder.display" /></a></li>
-					<li><a href="request/browse.do"><spring:message code="master.page.tenant.request.browse" /></a></li>			
+					<li><a href="tenant/request/browse.do"><spring:message code="master.page.tenant.request.browse" /></a></li>			
 				</ul>
 			</li>
 		</security:authorize>

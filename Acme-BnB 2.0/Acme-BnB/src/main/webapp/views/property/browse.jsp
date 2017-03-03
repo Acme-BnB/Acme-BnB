@@ -48,5 +48,6 @@
 		<a href="property/display.do?propertyId=${row.id}"><spring:message code="property.view" /></a>
 	</display:column>
 	
+
 	
 </display:table>
