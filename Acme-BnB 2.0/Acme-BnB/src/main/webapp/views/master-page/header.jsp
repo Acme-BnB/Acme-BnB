@@ -26,6 +26,9 @@
 				<ul>
 					<li class="arrow"></li>
 <%-- 					<li><a href="auditor/register.do"><spring:message code="master.page.administrator.register" /></a></li>				 --%>
+						<li><a href="administrator/attribute/list.do"><spring:message code="master.page.administrator.attribute.list" /></a></li>
+						<li><a href="administrator/attribute/create.do"><spring:message code="master.page.administrator.attribute.create" /></a></li>			
+				
 				</ul>
 			</li>
 		</security:authorize>
@@ -55,7 +58,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.tenant" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="tenant/finder/display.do"><spring:message code="master.page.tenant.finder.display" /></a></li>			
+					<li><a href="tenant/finder/display.do"><spring:message code="master.page.tenant.finder.display" /></a></li>
+					<li><a href="request/browse.do"><spring:message code="master.page.tenant.request.browse" /></a></li>			
 				</ul>
 			</li>
 		</security:authorize>
@@ -64,9 +68,10 @@
 		
 		<security:authorize access="isAnonymous()">
 			
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			
 			<li><a class="fNiv" href="lessor/register.do"><spring:message code="master.page.lessor.register"/></a></li>
 			<li><a class="fNiv" href="tenant/register.do"><spring:message code="master.page.tenant.register"/></a></li>
+			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
@@ -77,7 +82,9 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
+					<security:authorize access="hasRole('LESSOR')">
+						<li><a href="lessor/displayL.do"><spring:message code="master.page.profile" /></a></li>
+					</security:authorize>
 					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
 					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>

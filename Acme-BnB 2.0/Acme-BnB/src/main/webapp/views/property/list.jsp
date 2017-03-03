@@ -19,7 +19,8 @@
 <display:table name="properties"
 	id="row"
 	class="displaytag"
-	pagesize="5">
+	pagesize="5"
+	requestURI="${requestURI}" >
 	
 	<security:authorize access="hasRole('LESSOR')">
 	

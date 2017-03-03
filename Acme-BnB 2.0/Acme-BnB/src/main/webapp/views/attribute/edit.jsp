@@ -20,17 +20,21 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <security:authorize
-	access="hasRole('TENANT')">
+	access="hasRole('ADMIN')">
 
-	<form:form	action="tenant/finder/edit.do"	modelAttribute="finder"> 
+	<form:form	action="administrator/attribute/edit.do"	modelAttribute="attribute"> 
 		
-		<acme:textbox code="finder.destinationCity" path="destinationCity"/>
-		<acme:textbox code="finder.minPrice" path="minPrice"/>
-		<acme:textbox code="finder.maxPrice" path="maxPrice"/>
-		<acme:textbox code="finder.keyword" path="keyword"/>
+		<form:hidden path="id"/>
+		<form:hidden path="version"/>
+		<form:hidden path="values"/>
 		
-		<acme:submit name="save" code="finder.save"/>
-		<acme:cancel code="finder.cancel" url="tenant/finder/display.do"/>
+		<acme:textbox code="attribute.name" path="name"/>
+		
+		<acme:submit name="save" code="attribute.save"/>
+		<jstl:if test="${attribute.id != 0}">
+			<acme:submit name="delete" code="attribute.delete"/>
+		</jstl:if>
+		<acme:cancel code="attribute.cancel" url="administrator/attribute/list.do"/>
 		
 		
 	</form:form>
