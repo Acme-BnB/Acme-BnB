@@ -25,11 +25,6 @@
 	<form:form	action="lessor/property/edit.do"	modelAttribute="property"> 
 		
 		<form:hidden path="id"/>
-		<form:hidden path="version"/>
-		<form:hidden path="lessor"/>
-		<form:hidden path="values"/>
-		<form:hidden path="audits"/>
-		<form:hidden path="requests"/>
 		
 		<acme:textbox code="property.name" path="name"/>
 		<acme:textbox code="property.rate" path="rate"/>
@@ -37,7 +32,7 @@
 		<acme:textbox code="property.address" path="address"/>
 		
 		<acme:submit name="save" code="property.save"/>
-		<jstl:if test="${property.id != 0}">
+		<jstl:if test="${id!=0}">
 			<acme:submit name="delete" code="property.delete"/>
 		</jstl:if>
 		<acme:cancel code="property.cancel" url="lessor/property/list.do"/>

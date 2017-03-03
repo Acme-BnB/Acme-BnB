@@ -175,15 +175,10 @@ public class FinderService {
 		Date d=new Date(System.currentTimeMillis()-10000);
 		result.setLastTimeSearched(d);
 		validator.validate(result, binding);
-
+		
 		return result;
-
 	}
 
-	
-
-	
-	
 	public FinderForm transform(Finder finder){
 		FinderForm result=generateForm();
 		result.setDestinationCity(finder.getDestinationCity());
@@ -192,6 +187,7 @@ public class FinderService {
 		result.setKeyword(finder.getKeyword());
 		return result;
 	}
+
 	public Boolean compareSearch(Finder finder){
 		Finder old=findByPrincipal();
 		Boolean res=false;
@@ -201,5 +197,5 @@ public class FinderService {
 		}
 		return res;
 	}
-	
+
 }

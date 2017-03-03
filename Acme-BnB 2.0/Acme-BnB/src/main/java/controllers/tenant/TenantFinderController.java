@@ -18,12 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.FinderService;
 import services.PropertyService;
-import services.TenantService;
 
 import controllers.AbstractController;
 import domain.Finder;
 import domain.Property;
-import domain.Tenant;
 import forms.FinderForm;
 
 @Controller
@@ -37,9 +35,6 @@ public class TenantFinderController extends AbstractController {
 	
 	@Autowired
 	private PropertyService	propertyService;
-	
-	@Autowired
-	private TenantService	tenantService;
 
 
 	
@@ -102,7 +97,6 @@ public class TenantFinderController extends AbstractController {
 		} else {
 			try {
 				finder=finderService.reconstruct(finderForm, binding);
-				
 				if(finderService.compareSearch(finder)==false){
 					propertyService.findByFinder(finder);
 					finderService.save(finder);

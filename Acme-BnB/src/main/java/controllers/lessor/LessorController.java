@@ -9,8 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.LessorService;
 import services.PropertyService;
+import services.RequestService;
+import domain.CreditCard;
 import domain.Lessor;
 import domain.Property;
+import domain.Request;
 
 @Controller
 @RequestMapping("/lessor")
@@ -22,6 +25,9 @@ public class LessorController {
 		
 		@Autowired
 		private PropertyService	propertyService;
+
+		@Autowired
+		private RequestService	requestService;
 
 
 
@@ -41,6 +47,41 @@ public class LessorController {
 				
 				property = propertyService.findOne(propertyId);
 				lessor=property.getLessor();
+			
+				
+				result=new ModelAndView("lessor/display");
+				result.addObject("lessor", lessor);
+				result.addObject("comments", lessor.getcomments());
+				return result;
+			}
+		
+		@RequestMapping(value="/displayL", method=RequestMethod.GET)
+		public ModelAndView display() {
+				ModelAndView result;
+				Lessor lessor;
+				CreditCard caux;
+
+				
+				lessor = lessorService.findByPrincipal();
+				
+				
+				caux = lessor.getCreditCard();
+				caux.setNumber("************"+lessor.getCreditCard().getNumber().substring(12));
+				lessor.setCreditCard(caux);
+				
+				result=new ModelAndView("lessor/display");
+				result.addObject("lessor", lessor);
+				result.addObject("comments", lessor.getcomments());
+				return result;
+			}
+
+		@RequestMapping(value="/displayByReq", method=RequestMethod.GET)
+		public ModelAndView displayByReq(@RequestParam int requestId) {
+				ModelAndView result;
+				Request r;
+				Lessor lessor;
+				r=requestService.findOne(requestId);
+				lessor=r.getProperty().getLessor();
 				result=new ModelAndView("lessor/display");
 				result.addObject("lessor", lessor);
 				result.addObject("comments", lessor.getcomments());

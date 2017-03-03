@@ -24,8 +24,11 @@
 
 	<form:form	action="tenant/finder/edit.do"	modelAttribute="finder"> 
 		
+<<<<<<< HEAD
 		
 		
+=======
+>>>>>>> ruben
 		<acme:textbox code="finder.destinationCity" path="destinationCity"/>
 		<acme:textbox code="finder.minPrice" path="minPrice"/>
 		<acme:textbox code="finder.maxPrice" path="maxPrice"/>

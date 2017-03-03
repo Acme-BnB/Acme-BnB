@@ -3,11 +3,12 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.PropertyRepository;
 import security.Authority;
@@ -19,6 +20,7 @@ import domain.Lessor;
 import domain.Property;
 import domain.Request;
 import domain.Value;
+import forms.PropertyForm;
 
 @Service
 @Transactional
@@ -33,6 +35,9 @@ public class PropertyService {
 
 	@Autowired
 	private LessorService		lessorService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	// Constructors -----------------------------------------------------------
@@ -123,7 +128,66 @@ public class PropertyService {
 
 		propertyRepository.delete(property);
 	}
-
+	
+	// Form methods --------------------------------
+	
+		public PropertyForm generateForm(){
+			PropertyForm result;
+			
+			result = new PropertyForm();
+			return result;
+		}
+		
+		public Property reconstruct(PropertyForm propertyForm,  BindingResult binding){
+			Property result = create();
+			
+			Lessor lessor;
+			
+			lessor = lessorService.findByPrincipal();
+			
+			result.setId(propertyForm.getId());
+			result.setLessor(lessor);
+			result.setName(propertyForm.getName());
+			result.setRate(propertyForm.getRate());
+			result.setDescription(propertyForm.getDescription());
+			result.setAddress(propertyForm.getAddress());
+		
+			validator.validate(result, binding);
+			
+			return result;
+		}
+		
+		public Property reconstruct(Property property, BindingResult binding){
+			Property result;
+			
+			if(property.getId() == 0){
+				Lessor lessor = lessorService.findByPrincipal();
+				
+				result = property;
+				result.setLessor(lessor);
+			}else{
+				result = propertyRepository.findOne(property.getId());
+				
+				result.setName(property.getName());
+				result.setAddress(property.getAddress());
+				result.setRate(property.getRate());
+				result.setDescription(property.getDescription());
+				
+				validator.validate(result, binding);
+			}
+			
+			return result;
+		}
+		
+		public PropertyForm transform(Property property){
+			PropertyForm result=generateForm();
+			result.setAddress(property.getAddress());
+			result.setName(property.getName());
+			result.setDescription(property.getDescription());
+			result.setRate(property.getRate());
+			return result;
+		}
+		
 	// Other business services
 
 	public Collection<Double> findMinAvgMaxAuditsPerProperty() {

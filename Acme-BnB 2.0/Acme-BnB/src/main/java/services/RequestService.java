@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RequestRepository;
-import security.LoginService;
-import security.UserAccount;
 import domain.CreditCard;
 import domain.Request;
 import domain.Tenant;
