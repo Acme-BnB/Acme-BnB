@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AttributeService;
 import controllers.AbstractController;
 import domain.Attribute;
+import forms.AttributeForm;
+
 
 @Controller
 @RequestMapping("/administrator/attribute")
@@ -57,10 +59,10 @@ public class AdministratorAttributeController extends AbstractController {
 	public ModelAndView create() {
 
 		ModelAndView result;
-		Attribute attribute;
+		AttributeForm attributeForm;
 
-		attribute = attributeService.create();
-		result = createEditModelAndView(attribute);
+		attributeForm = attributeService.generateForm();
+		result = createEditModelAndView(attributeForm,null);
 
 		return result;
 
@@ -76,61 +78,86 @@ public class AdministratorAttributeController extends AbstractController {
 
 		attribute = attributeService.findOne(attributeId);
 		Assert.notNull(attribute);
-		result = createEditModelAndView(attribute);
-
+		result = new ModelAndView("attribute/edit");
+		result.addObject("attribute", attribute);
 		return result;
 
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Attribute attribute, BindingResult binding) {
-
-		ModelAndView result;
-
-		try {
-			attributeService.save(attribute);
-			result = list();
-		} catch (Throwable oops) {
-			result = createEditModelAndView(attribute, "master.page.commit.error");
-		}
+		ModelAndView result =  new ModelAndView();		
+		if (binding.hasErrors()) {
+			result = createEditModelAndView(attribute);
+		} else {
+			try {
+				attribute = attributeService.reconstruct(attribute, binding);
+				attributeService.save2(attribute);
+				result = list();
+			} catch (Throwable oops) {
+				String msgCode = "administrator.register.error";
+				result = createEditModelAndView(attribute, msgCode); 
+				}
+			}
+		
 		return result;
+	
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(Attribute attribute, BindingResult binding) {
 
 		ModelAndView result;
-
-		try {
-			attributeService.delete(attribute);
-			result = list();
-		} catch (Throwable oops) {
-			result = createEditModelAndView(attribute, "master.page.commit.error");
+		
+		attribute = attributeService.reconstruct(attribute, binding);
+		if (binding.hasErrors()) {
+			result = createEditModelAndView(attribute);
+		} else {
+			try {
+				attributeService.delete(attribute);
+				result = list();
+			} catch (Throwable oops) {
+				result = createEditModelAndView(attribute);
+			}
 		}
 		return result;
 	}
 
+	
+
+	
 	//Ancillary Methods---------------------------
 
-	protected ModelAndView createEditModelAndView(Attribute attribute) {
 
-		ModelAndView result;
+		protected ModelAndView createEditModelAndView(Attribute attribute, String message) {
+			ModelAndView result;
 
-		result = createEditModelAndView(attribute, null);
+			result = new ModelAndView("attribute/edit");
+			result.addObject("attribute", attribute);
+			result.addObject("message", message);
+			return result;
 
-		return result;
-	}
+		}
+		
+		protected ModelAndView createEditModelAndView(AttributeForm attribute, String message) {
+			ModelAndView result;
 
-	protected ModelAndView createEditModelAndView(Attribute attribute, String message) {
-		ModelAndView result;
+			result = new ModelAndView("attribute/edit");
+			result.addObject("attribute", attribute);
 
-		result = new ModelAndView("attribute/edit");
-		result.addObject("attribute", attribute);
+			result.addObject("message", message);
 
-		result.addObject("message", message);
+			return result;
 
-		return result;
+		}
+		
+		protected ModelAndView createEditModelAndView(Attribute attribute) {
+			ModelAndView result;
 
-	}
+			result = createEditModelAndView(attribute, null);
+
+			return result;
+
+		}
 
 }

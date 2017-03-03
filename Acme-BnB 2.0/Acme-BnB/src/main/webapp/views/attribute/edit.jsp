@@ -25,8 +25,7 @@
 	<form:form	action="administrator/attribute/edit.do"	modelAttribute="attribute"> 
 		
 		<form:hidden path="id"/>
-		<form:hidden path="version"/>
-		<form:hidden path="values"/>
+		
 		
 		<acme:textbox code="attribute.name" path="name"/>
 		

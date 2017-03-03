@@ -25,8 +25,11 @@
 	<security:authorize access="hasRole('ADMIN')">
 	
 	<display:column>
+	<jstl:if test="${row.name != 'Country' && row.name !='Province' && row.name !='State' && row.name!='City' && row.name!='Capacity'}">
 		<a href="administrator/attribute/edit.do?attributeId=${row.id}"><spring:message code="attribute.edit" /></a>
-	</display:column>			
+	</jstl:if>	
+	</display:column>	
+		
 	
 	<spring:message code="attribute.name" var="nameHeader" />
 	<display:column property="name" title="${nameHeader}" sortable="true"/>
