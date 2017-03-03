@@ -192,4 +192,14 @@ public class FinderService {
 		result.setKeyword(finder.getKeyword());
 		return result;
 	}
+	public Boolean compareSearch(Finder finder){
+		Finder old=findByPrincipal();
+		Boolean res=false;
+		if(old.getDestinationCity().compareTo(finder.getDestinationCity())!=0 && old.getMaxPrice().compareTo(finder.getMaxPrice())!=0 
+				&& old.getMinPrice().compareTo(finder.getMinPrice())!=0 && old.getKeyword().compareTo(finder.getKeyword())!=0){
+			res=true;
+		}
+		return res;
+	}
+	
 }

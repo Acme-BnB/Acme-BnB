@@ -102,11 +102,11 @@ public class TenantFinderController extends AbstractController {
 		} else {
 			try {
 				finder=finderService.reconstruct(finderForm, binding);
-				//Tenant t=tenantService.findByPrincipal();
-				//if(t.getFinder().getDestinationCity().compareTo(finder.getDestinationCity())!=0){
+				
+				if(finderService.compareSearch(finder)==false){
 					propertyService.findByFinder(finder);
 					finderService.save(finder);
-				//}
+				}
 				result = display();
 				result.addObject("properties",finder.getResults());
 			} catch (Throwable oops) {
