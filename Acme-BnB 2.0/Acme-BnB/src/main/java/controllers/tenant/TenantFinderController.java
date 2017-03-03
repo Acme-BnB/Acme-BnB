@@ -1,6 +1,10 @@
 
 package controllers.tenant;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.FinderService;
+import services.PropertyService;
+import services.TenantService;
 
 import controllers.AbstractController;
 import domain.Finder;
+import domain.Property;
+import domain.Tenant;
 import forms.FinderForm;
 
 @Controller
@@ -26,6 +34,13 @@ public class TenantFinderController extends AbstractController {
 
 	@Autowired
 	private FinderService	finderService;
+	
+	@Autowired
+	private PropertyService	propertyService;
+	
+	@Autowired
+	private TenantService	tenantService;
+
 
 	
 
@@ -42,17 +57,21 @@ public class TenantFinderController extends AbstractController {
 
 		ModelAndView result;
 		Finder finder;
-
+		
 		finder = finderService.findByPrincipal();
-
+		Date d=new Date(System.currentTimeMillis());
+		Long aux=d.getTime()-finder.getLastTimeSearched().getTime();
+		if(aux>=3600000){
+			Collection<Property> f=new ArrayList<Property>();
+			finder.setResults(f);
+		}
 		result = new ModelAndView("finder/display");
 		result.addObject("finder", finder);
+		result.addObject("properties",finder.getResults());
 		result.addObject("requestURI", "tenant/finder/display.do");
 
 		return result;
 	}
-
-	//Creation-------------------------
 
 	
 
@@ -83,8 +102,13 @@ public class TenantFinderController extends AbstractController {
 		} else {
 			try {
 				finder=finderService.reconstruct(finderForm, binding);
-				finderService.save(finder);
+				//Tenant t=tenantService.findByPrincipal();
+				//if(t.getFinder().getDestinationCity().compareTo(finder.getDestinationCity())!=0){
+					propertyService.findByFinder(finder);
+					finderService.save(finder);
+				//}
 				result = display();
+				result.addObject("properties",finder.getResults());
 			} catch (Throwable oops) {
 				result = createEditModelAndView(finderForm, "master.page.commit.error");
 		}
@@ -93,7 +117,7 @@ public class TenantFinderController extends AbstractController {
 		}
 		return result;
 	}
-
+	
 	
 
 	//Ancillary Methods---------------------------

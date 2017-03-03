@@ -13,9 +13,11 @@ import domain.Property;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
 
-	@Query("select p from Property p where p.description like %?1% or p.address like %?1% or p.name like %?1%")
-	Collection<Property> findByKey(String key);
+	@Query("select distinct p from Property p join p.values v where v.text=?2 and (p.description like %?1% or p.address like %?1% or p.name like %?1%)")
+	Collection<Property> findByKey(String key,String destionationCity);
 	
+	@Query("select distinct v.property from Value v where v.text=?1")
+	Collection<Property> findByDestination(String destionationCity);
 	// Admin dashboard ------------------------------------------------
 
 	@Query("select min(p.audits.size) from Property p")

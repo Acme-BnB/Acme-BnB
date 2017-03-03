@@ -14,6 +14,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Audit;
+import domain.Finder;
 import domain.Lessor;
 import domain.Property;
 import domain.Request;
@@ -199,12 +200,44 @@ public class PropertyService {
 		return result;
 	}
 
-	public Collection<Property> findByKey(String key) {
+	public Collection<Property> findByKey(String key,String destinationCity) {
 		Collection<Property> result;
 
-		result = propertyRepository.findByKey(key);
+		result = propertyRepository.findByKey(key,destinationCity);
 
 		return result;
+	}
+	public void findByFinder(Finder finder){
+		Collection<Property> result=new ArrayList<Property>();
+		Collection<Property> aux;
+		if(finder.getKeyword()==null){
+			aux=propertyRepository.findByDestination(finder.getDestinationCity());
+		}else{
+			aux=propertyRepository.findByKey(finder.getKeyword(), finder.getDestinationCity());
+		}
+		if(finder.getMinPrice()==null && finder.getMaxPrice()==null){
+			result=aux;
+		}else if(finder.getMinPrice()==null){
+			for(Property p:aux){
+				if(p.getRate()<=finder.getMaxPrice()){
+					result.add(p);
+				}
+			}
+		}else if(finder.getMaxPrice()==null){
+			for(Property p:aux){
+				if(p.getRate()>=finder.getMinPrice()){
+					result.add(p);
+				}
+			}
+		}else{
+			for(Property p:aux){
+				if(p.getRate()>=finder.getMinPrice() && p.getRate()<=finder.getMaxPrice()){
+					result.add(p);
+				}
+			}
+		}
+		finder.setResults(result);
+		
 	}
 
 	public Collection<Property> findByUserAccount() {
