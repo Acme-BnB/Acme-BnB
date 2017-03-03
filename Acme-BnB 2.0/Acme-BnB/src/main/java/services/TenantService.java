@@ -194,6 +194,26 @@ public class TenantService {
 
 		return result;
 	}
+	public Collection<Double> findAvgAcceptedAndDeniedPerTenant() {
+
+		Collection<Double> result = new ArrayList<Double>();
+
+		Double a = tenantRepository.findAvgAcceptedRequestPerTenant();
+		Double d = tenantRepository.findAvgDeniedRequestPerTenant();
+
+		if (a == null || a == 0) {
+			result.add(0.0);
+		} else {
+			result.add(a);
+		}
+		if (d == null || d == 0) {
+			result.add(0.0);
+		} else {
+			result.add(d);
+		}
+
+		return result;
+	}
 
 	// Form methods -------------------------------------------------
 
