@@ -129,6 +129,26 @@ public class LessorService {
 		return result;
 	}
 
+	public LessorForm generateForm(Lessor lessor) {
+		LessorForm result;
+
+		result = new LessorForm();
+
+		result.setId(lessor.getId());
+		result.setUsername(lessor.getUserAccount().getUsername());
+		result.setPassword(lessor.getUserAccount().getPassword());
+		result.setPassword2(lessor.getUserAccount().getPassword());
+		result.setName(lessor.getName());
+		result.setAgreed(true);
+		result.setSurname(lessor.getSurname());
+		result.setPhone(lessor.getPhone());
+		result.setPicture(lessor.getPicture());
+		result.setCreditCard(lessor.getCreditCard());
+		result.setEmail(lessor.getEmail());
+
+		return result;
+	}
+
 	public Lessor reconstruct(LessorForm lessorForm, BindingResult binding) {
 
 		Lessor result = create();
@@ -165,22 +185,19 @@ public class LessorService {
 
 	}
 
-	public Lessor reconstruct(Lessor lessor, BindingResult binding) {
+	public Lessor reconstructEditPersonalData(LessorForm lessorForm, BindingResult binding) {
 		Lessor result;
 
-		if (lessor.getId() == 0) {
-			result = lessor;
-		} else {
-			result = lessorRepository.findOne(lessor.getId());
+		result = lessorRepository.findOne(lessorForm.getId());
 
-			result.setName(lessor.getName());
-			result.setSurname(lessor.getSurname());
-			result.setEmail(lessor.getEmail());
-			result.setPhone(lessor.getPhone());
-			result.setPicture(lessor.getPicture());
+		result.setName(lessorForm.getName());
+		result.setSurname(lessorForm.getSurname());
+		result.setEmail(lessorForm.getEmail());
+		result.setPhone(lessorForm.getPhone());
+		result.setPicture(lessorForm.getPicture());
+		result.setCreditCard(lessorForm.getCreditCard());
 
-			validator.validate(result, binding);
-		}
+		validator.validate(result, binding);
 
 		return result;
 	}

@@ -72,39 +72,6 @@ public class LessorController extends AbstractController {
 
 	}
 
-	// Edit ----------------------------------------------------------------
-
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit() {
-		ModelAndView result;
-		Lessor lessor = lessorService.findByPrincipal();
-
-		result = new ModelAndView("lessor/register");
-		result.addObject("lessorForm", lessor);
-
-		return result;
-	}
-
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Lessor lessor, BindingResult binding) {
-		ModelAndView result;
-
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(lessor);
-		} else {
-			try {
-				lessor = lessorService.reconstruct(lessor, binding);
-				lessorService.save(lessor);
-				result = new ModelAndView("redirect:welcome/index.do");
-			} catch (Throwable oops) {
-				String msgCode = "lessor.register.error";
-				result = createEditModelAndView(lessor, msgCode);
-			}
-		}
-
-		return result;
-	}
-
 	// Ancillary methods ---------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(LessorForm lessorForm) {
@@ -121,25 +88,6 @@ public class LessorController extends AbstractController {
 
 		result = new ModelAndView("lessor/register");
 		result.addObject("lessorForm", lessorForm);
-		result.addObject("message", message);
-
-		return result;
-	}
-
-	protected ModelAndView createEditModelAndView(Lessor lessor) {
-		ModelAndView result;
-
-		result = createEditModelAndView(lessor, null);
-
-		return result;
-
-	}
-
-	protected ModelAndView createEditModelAndView(Lessor lessor, String message) {
-		ModelAndView result;
-
-		result = new ModelAndView("lessor/register");
-		result.addObject("lessorForm", lessor);
 		result.addObject("message", message);
 
 		return result;

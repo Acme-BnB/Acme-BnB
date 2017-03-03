@@ -20,7 +20,6 @@
 <form:form action="${requestURI}" modelAttribute="auditorForm">
 
 	<form:hidden path="id"/>
-	<form:hidden path="version"/>
 	
 	<acme:textbox code="auditor.username" path="username" />
 	<br/>

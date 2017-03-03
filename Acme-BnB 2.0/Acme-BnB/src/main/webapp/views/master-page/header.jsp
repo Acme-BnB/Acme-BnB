@@ -74,10 +74,11 @@
 					<li class="arrow"></li>
 					<security:authorize access="hasRole('LESSOR')">
 						<li><a href="lessor/displayL.do"><spring:message code="master.page.profile" /></a></li>
-						<li><a href="lessor/edit.do"><spring:message code="master.page.edit" /></a></li>
+						<li><a href="lessor/edit.do"><spring:message code="master.page.edit.personal" /></a></li>
+						
 					</security:authorize>
 					<security:authorize access="hasRole('TENANT')">
-						<li><a href="tenant/edit.do"><spring:message code="master.page.edit" /></a></li>
+						<li><a href="tenant/edit.do"><spring:message code="master.page.edit.personal" /></a></li>
 					</security:authorize>
 					<security:authorize access="hasRole('ADMINISTRATOR')">
 						<li><a href="administrator/edit.do"><spring:message code="master.page.edit" /></a></li>
