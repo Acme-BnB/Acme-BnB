@@ -23,12 +23,7 @@
 	requestURI="${requestURI}" >
 	
 	<security:authorize access="hasRole('LESSOR')">
-	
-	<display:column>
-		<a href="lessor/property/edit.do?propertyId=${row.id}"><spring:message code="property.edit" /></a>
-	</display:column>			
-	
-					
+						
 	<spring:message code="property.name" var="nameHeader" />
 	<display:column property="name" title="${nameHeader}" sortable="true"/>
 	
@@ -40,6 +35,15 @@
 	
 	<spring:message code="property.address" var="addressHeader"/>
 	<display:column property="address" title="${addressHeader}" sortable="false"/>
+	
+	<display:column>
+		<a href="lessor/property/edit.do?propertyId=${row.id}"><spring:message code="property.edit" /></a>
+	</display:column>			
+	
+	<display:column>
+		<a href="property/display.do?propertyId=${row.id}"><spring:message code="property.view" /></a>
+	</display:column>			
+	
 	
 	</security:authorize>
 

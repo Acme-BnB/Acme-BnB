@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -81,8 +82,8 @@ public class TenantRequestController {
 				result = createEditModelAndView(requestForm);
 			} else {
 				try {
-					System.out.println(requestForm.getPropertyId());
 					request = requestService.reconstruct(requestForm, binding);
+					Assert.isTrue(requestService.checkDate(request), "badDate");
 					requestService.save(request);
 					result = browse();
 				} catch (Throwable oops) {
@@ -93,6 +94,10 @@ public class TenantRequestController {
 					}
 					if (oops.getMessage().equals("badProperty")) {
 						msgCode = "request.badProperty";
+						result = createEditModelAndView(requestForm, msgCode); 
+					}
+					if (oops.getMessage().equals("badDate")) {
+						msgCode = "request.badDate";
 						result = createEditModelAndView(requestForm, msgCode); 
 					}
 				}

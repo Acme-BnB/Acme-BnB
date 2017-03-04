@@ -50,6 +50,7 @@ public class LessorControllerProfile {
 		Lessor lessor;
 		r = requestService.findOne(requestId);
 		lessor = r.getProperty().getLessor();
+		lessor = lessorService.encryptCreditCard(lessor);
 		result = new ModelAndView("lessor/display");
 		result.addObject("lessor", lessor);
 		result.addObject("comments", lessor.getcomments());
@@ -82,6 +83,7 @@ public class LessorControllerProfile {
 				
 				property = propertyService.findOne(propertyId);
 				lessor=property.getLessor();
+				lessor = lessorService.encryptCreditCard(lessor);
 				result=new ModelAndView("lessor/display");
 				result.addObject("lessor", lessor);
 				result.addObject("comments", lessor.getcomments());
