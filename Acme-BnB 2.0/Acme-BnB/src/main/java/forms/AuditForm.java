@@ -50,7 +50,7 @@ public class AuditForm {
 		@Past
 		@Temporal(TemporalType.TIMESTAMP)
 		@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-		@SafeHtml(whitelistType = WhiteListType.NONE)
+		
 		public Date getWrittenMoment() {
 			return writtenMoment;
 		}

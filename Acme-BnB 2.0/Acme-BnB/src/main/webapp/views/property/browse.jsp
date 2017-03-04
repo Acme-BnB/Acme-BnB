@@ -51,6 +51,12 @@
 	<display:column>
 		<a href="audit/browse.do?propertyId=${row.id}"><spring:message code="property.view.audits" /></a>
 	</display:column>
+</security:authorize>
+
+<security:authorize access="hasRole('AUDITOR')">
+	<display:column>
+		<a href="auditor/audit/create.do?propertyId=${row.id}"><spring:message code="property.add.audit" /></a>
+	</display:column>
 </security:authorize>	
 
 </display:table>

@@ -27,7 +27,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-<%-- 					<li><a href="auditor/register.do"><spring:message code="master.page.administrator.register" /></a></li>				 --%>
+					<li><a href="auditor/register.do"><spring:message code="master.page.administrator.register" /></a></li>				
 					<li><a href="administrator/attribute/list.do"><spring:message code="master.page.administrator.attribute.list" /></a></li>
 					<li><a href="administrator/attribute/create.do"><spring:message code="master.page.administrator.attribute.create" /></a></li>			
 				</ul>

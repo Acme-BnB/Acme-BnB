@@ -16,8 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <security:authorize access="hasRole('AUDITOR')">
-<jstl:if test="${lessor.userAccount.username == pageContext.request.remoteUser}">
-	<display:table pagesize="5" class="displaytag" keepStatus="true" name="audits" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" class="displaytag" keepStatus="true" name="audits" requestURI="${requestURI}" id="row">
 	
 	<!-- Action links -->
 	
@@ -47,7 +46,12 @@
 	<display:column>
 		<a href="audit/display.do?auditId=${row.id}"><spring:message code="audit.view" /></a>
 	</display:column>
+	
+	<display:column>
+	<jstl:if test="${row.draft == true}">
+		<a href="auditor/audit/edit.do?auditId=${row.id}"><spring:message code="audit.view.edit" /></a>
+	</jstl:if>
+	</display:column>
 		
 	</display:table>
-</jstl:if>	
 </security:authorize>

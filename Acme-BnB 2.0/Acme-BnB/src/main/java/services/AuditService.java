@@ -135,10 +135,10 @@ public class AuditService {
 		}
 		return result;
 	}
-	public Collection<Audit> findByCreator(Auditor a) {
+	public Collection<Audit> findByCreator(Auditor t) {
 		Collection<Audit> result;
-		result = auditRepository.findByCreator(a);
-
+		result = auditRepository.findByCreator(t);
+		System.out.println(result);
 		return result;
 	}
 	// Form methods --------------------------------
