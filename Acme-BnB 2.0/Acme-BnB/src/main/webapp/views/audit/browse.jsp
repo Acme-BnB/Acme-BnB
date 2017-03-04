@@ -1,5 +1,5 @@
 <%--
- * display.jsp
+ * browse.jsp
  *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
@@ -16,26 +16,24 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+
+<!-- Listing grid -->
 <security:authorize access="isAuthenticated()">
+<display:table pagesize="5" class="displaytag" keepStatus="true" name="audits" requestURI="${requestURI}" id="row">
 	
-<table id="row" class="table">
-	<tbody>
-		<tr>
-			<th><spring:message code="audit.auditor"/></th>
-			<th><spring:message code="audit.writtenMoment"/></th>
-		</tr>
-		<tr>
-			<td><jstl:out value="${audit.auditor.name}"/></td>
-			<td><jstl:out value="${audit.writtenMoment}"/></td>
-		</tr>
-		<tr>
-			<th><spring:message code="audit.text"/></th>
-		</tr>
-		<tr>
-			<td><jstl:out value="${audit.Text}"/></td>
-		</tr>
-	</tbody>
-</table>
+	<!-- Action links -->
+	
+	<!-- Attributes -->
+	
+	<spring:message code="audit.auditor" var="auditor"/>
+	<display:column property="auditor.name" title="${auditor}" sortable="false" />
 
-
+	<spring:message code="audit.writtenMoment" var="writtenMomentHeader" />
+	<display:column property="writtenMoment" title="${writtenMomentHeader}" sortable="true" />
+	
+	<display:column>
+		<a href="audit/display.do?auditId=${row.id}"><spring:message code="audit.view" /></a>
+	</display:column>
+	
+</display:table>
 </security:authorize>

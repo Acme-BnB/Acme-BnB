@@ -21,4 +21,15 @@
 		<put-attribute name="body" value="/views/audit/display.jsp" />
 	</definition>
 	
+	<definition name="audit/browse" extends="master.page">	
+		<put-attribute name="title" value="Browse audits" />
+		<put-attribute name="body" value="/views/audit/browse.jsp" />
+	</definition>
+	
+	<definition name="audit/list" extends="master.page">	
+		<put-attribute name="title" value="List audits" />
+		<put-attribute name="body" value="/views/audit/list.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>

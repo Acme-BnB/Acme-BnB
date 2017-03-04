@@ -40,6 +40,9 @@
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
 		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
 		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
+		<security:intercept-url pattern="/audit/browse.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/audit/display.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/auditor/audit/list.do" access="hasRole('AUDITOR')" />
 		<security:intercept-url pattern="/tenant/request/edit.do" access="hasRole('TENANT')" />
 		<security:intercept-url pattern="/tenant/request/create.do" access="hasRole('TENANT')" />
 		

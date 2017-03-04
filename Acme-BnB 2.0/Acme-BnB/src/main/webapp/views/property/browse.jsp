@@ -47,9 +47,12 @@
 	<display:column>
 		<a href="property/display.do?propertyId=${row.id}"><spring:message code="property.view" /></a>
 	</display:column>
-	
+<security:authorize access="isAuthenticated()">
+	<display:column>
+		<a href="audit/browse.do?propertyId=${row.id}"><spring:message code="property.view.audits" /></a>
+	</display:column>
+</security:authorize>	
 
-	
 </display:table>
 	<input type="button" name="orderByRequest" value="<spring:message code="property.order" />"
 			onclick="javascript: window.location.replace('property/browseByReq.do')" />
