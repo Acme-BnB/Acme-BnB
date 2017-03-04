@@ -2,6 +2,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -43,5 +44,8 @@ public interface TenantRepository extends JpaRepository<Tenant, Integer> {
 
 	@Query("select count(r) from Request r where r.status='ACCEPTED' group by r.tenant having count(r) >= all(select count(c) from Request c where c.status='ACCEPTED' group by c.tenant)")
 	Double findMaxNumberInvoiceToTheTenant();
+
+	@Query("select distinct r1.tenant, 1.0*(select count(r) from Request r where r.status='ACCEPTED' and r.tenant=r1.tenant)/count(r1) from Request r1 group by r1.tenant")
+	List<Object[]> maxMinRatio();
 
 }

@@ -103,6 +103,48 @@
 </div>
 
 <div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.mmrL" /></legend>
+		<div>
+			<display:table name="marL" id="row" class="displaytag" pagesize="5">
+				<spring:message code="administrator.marL" var="name"/>
+				<display:column title="${name}" >
+					<jstl:out value="${row.name}(${row.userAccount.username})"></jstl:out>
+				</display:column>
+			</display:table>
+		</div>
+		<div>
+			<display:table name="mirL" id="row" class="displaytag" pagesize="5">
+				<spring:message code="administrator.mirL" var="name"/>
+				<display:column title="${name}" >
+					<jstl:out value="${row.name}(${row.userAccount.username})"></jstl:out>
+				</display:column>
+			</display:table>
+		</div>
+	</fieldset>
+</div>
+
+<div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.mmrT" /></legend>
+		<div>
+			<display:table name="marT" id="row" class="displaytag" pagesize="5">
+				<spring:message code="administrator.marT" var="name"/>
+				<display:column title="${name}" >
+					<jstl:out value="${row.name}(${row.userAccount.username})"></jstl:out>
+				</display:column>
+			</display:table>
+		</div>
+		<div>
+			<display:table name="mirT" id="row" class="displaytag" pagesize="5">
+				<spring:message code="administrator.mirT" var="name"/>
+				<display:column title="${name}" >
+					<jstl:out value="${row.name}(${row.userAccount.username})"></jstl:out>
+				</display:column>
+			</display:table>
+		</div>
+	</fieldset>
+</div>
+
+<div>
 	<fieldset><legend class="dashLegend"><spring:message code="administrator.ammrF" /></legend>
 		<table id="ammrF" class="table">
 			<tr>
