@@ -93,7 +93,10 @@
 					</security:authorize>
 					<security:authorize access="hasRole('ADMIN')">
 						<li><a href="administrator/edit.do"><spring:message code="master.page.edit.personal" /></a></li>
-					</security:authorize>				
+					</security:authorize>	
+					<security:authorize access="hasRole('AUDITOR')">
+						<li><a href="auditor/edit.do"><spring:message code="master.page.edit.personal" /></a></li>
+					</security:authorize>			
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

@@ -118,12 +118,44 @@ public class AuditorService {
 		auditorRepository.delete(auditor);
 	}
 
+	// Other business methods ------------------------------------------
+
+	public Auditor findByPrincipal() {
+		Auditor result;
+		int userAccountId;
+
+		userAccountId = LoginService.getPrincipal().getId();
+		result = auditorRepository.findByUserAccountId(userAccountId);
+
+		return result;
+	}
+
 	// Form methods -----------------------------------------------------
 
 	public AuditorForm generateForm() {
 		AuditorForm result;
 
 		result = new AuditorForm();
+
+		return result;
+	}
+
+	public AuditorForm generateForm(Auditor auditor) {
+		AuditorForm result;
+
+		result = new AuditorForm();
+
+		result.setId(auditor.getId());
+		result.setUsername(auditor.getUserAccount().getUsername());
+		result.setPassword(auditor.getUserAccount().getPassword());
+		result.setPassword2(auditor.getUserAccount().getPassword());
+		result.setName(auditor.getName());
+		result.setAgreed(true);
+		result.setSurname(auditor.getSurname());
+		result.setPhone(auditor.getPhone());
+		result.setPicture(auditor.getPicture());
+		result.setEmail(auditor.getEmail());
+		result.setCompanyName(auditor.getCompanyName());
 
 		return result;
 	}
@@ -147,6 +179,23 @@ public class AuditorService {
 		authority.setAuthority(Authority.AUDITOR);
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
+
+		result.setName(auditorForm.getName());
+		result.setSurname(auditorForm.getSurname());
+		result.setEmail(auditorForm.getEmail());
+		result.setPhone(auditorForm.getPhone());
+		result.setPicture(auditorForm.getPicture());
+		result.setCompanyName(auditorForm.getCompanyName());
+
+		validator.validate(result, binding);
+
+		return result;
+	}
+
+	public Auditor reconstructEditPersonalData(AuditorForm auditorForm, BindingResult binding) {
+		Auditor result;
+
+		result = auditorRepository.findOne(auditorForm.getId());
 
 		result.setName(auditorForm.getName());
 		result.setSurname(auditorForm.getSurname());
