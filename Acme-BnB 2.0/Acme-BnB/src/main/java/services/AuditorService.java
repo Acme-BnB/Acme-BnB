@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -47,12 +46,11 @@ public class AuditorService {
 
 	public Auditor create() {
 
-		UserAccount userAccount = new UserAccount();
-		List<Authority> authorities = new ArrayList<Authority>();
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
 		Authority au = new Authority();
 		au.setAuthority("ADMIN");
-		authorities.add(au);
-		userAccount.setAuthorities(authorities);
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
 		Auditor result;
 		result = new Auditor();
@@ -130,7 +128,7 @@ public class AuditorService {
 		return result;
 	}
 
-	public Auditor reconstruct(AuditorForm auditorForm) {
+	public Auditor reconstruct(AuditorForm auditorForm, BindingResult binding) {
 		Auditor result = create();
 
 		String password;
@@ -157,25 +155,7 @@ public class AuditorService {
 		result.setPicture(auditorForm.getPicture());
 		result.setCompanyName(auditorForm.getCompanyName());
 
-		return result;
-	}
-
-	public Auditor reconstruct(Auditor auditor, BindingResult binding) {
-		Auditor result;
-
-		if (auditor.getId() == 0) {
-			result = auditor;
-		} else {
-			result = auditorRepository.findOne(auditor.getId());
-
-			result.setName(auditor.getName());
-			result.setSurname(auditor.getSurname());
-			result.setEmail(auditor.getEmail());
-			result.setPhone(auditor.getPhone());
-			result.setPicture(auditor.getPicture());
-
-			validator.validate(result, binding);
-		}
+		validator.validate(result, binding);
 
 		return result;
 	}
