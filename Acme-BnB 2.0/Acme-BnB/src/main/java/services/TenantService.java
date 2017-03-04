@@ -194,6 +194,7 @@ public class TenantService {
 
 		return result;
 	}
+
 	public Collection<Double> findAvgAcceptedAndDeniedPerTenant() {
 
 		Collection<Double> result = new ArrayList<Double>();

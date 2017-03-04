@@ -24,7 +24,7 @@
 	<jstl:choose>
 		<jstl:when test="${tipe eq 'personal' }">
 			<fieldset>
-				<legend align="left"><spring:message code="lessor.personal.info"/></legend>
+				<legend align="left"><spring:message code="tenant.personal.info"/></legend>
 					<br/>
 					<acme:textbox code="tenant.name" path="name" />
 					<br/>
@@ -39,7 +39,7 @@
 		</jstl:when>
 		<jstl:otherwise>
 			<fieldset>
-				<legend align="left"><spring:message code="lessor.account.info"/></legend>
+				<legend align="left"><spring:message code="tenant.account.info"/></legend>
 					<acme:textbox code="tenant.username" path="username" />
 						<br/>
 						<acme:password code="tenant.password" path="password"/>
@@ -56,7 +56,7 @@
 						<br/>
 			</fieldset>
 			<fieldset>
-				<legend align="left"><spring:message code="lessor.personal.info"/></legend>
+				<legend align="left"><spring:message code="tenant.personal.info"/></legend>
 					<br/>
 					<acme:textbox code="tenant.name" path="name" />
 					<br/>
