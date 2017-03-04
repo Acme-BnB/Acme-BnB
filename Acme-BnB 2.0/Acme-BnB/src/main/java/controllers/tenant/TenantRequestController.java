@@ -72,7 +72,7 @@ public class TenantRequestController {
 	
 	// Save --------------------------------
 		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-		public ModelAndView save(RequestForm requestForm, BindingResult binding) {
+		public ModelAndView save(@Valid RequestForm requestForm, BindingResult binding) {
 
 			ModelAndView result =  new ModelAndView();	
 			Request request;
@@ -81,11 +81,20 @@ public class TenantRequestController {
 				result = createEditModelAndView(requestForm);
 			} else {
 				try {
+					System.out.println(requestForm.getPropertyId());
 					request = requestService.reconstruct(requestForm, binding);
 					requestService.save(request);
 					result = browse();
 				} catch (Throwable oops) {
-						result = createEditModelAndView(requestForm, oops.getMessage()); 
+					String msgCode = "request.register.error";
+					if (oops.getMessage().equals("badCreditCard")) {
+						msgCode = "request.badCreditCard";
+						result = createEditModelAndView(requestForm, msgCode); 
+					}
+					if (oops.getMessage().equals("badProperty")) {
+						msgCode = "request.badProperty";
+						result = createEditModelAndView(requestForm, msgCode); 
+					}
 				}
 			}
 			return result;
@@ -103,11 +112,11 @@ public class TenantRequestController {
 			return result;
 		}
 
-		protected ModelAndView createEditModelAndView(RequestForm requestForm, String message) {
+		protected ModelAndView createEditModelAndView(@Valid RequestForm requestForm, String message) {
 			ModelAndView result;
 
 			result = new ModelAndView("request/edit");
-			result.addObject("request", requestForm);
+			result.addObject("requestForm", requestForm);
 
 			result.addObject("message", message);
 

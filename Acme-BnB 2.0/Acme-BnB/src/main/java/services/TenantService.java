@@ -18,7 +18,9 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
+import domain.CreditCard;
 import domain.Finder;
+import domain.Lessor;
 import domain.Request;
 import domain.SocialIdentity;
 import domain.Tenant;
@@ -255,4 +257,5 @@ public class TenantService {
 
 		return result;
 	}
+
 }

@@ -58,6 +58,7 @@ public class LessorControllerProfile {
 				Lessor lessor;
 				
 				lessor = lessorService.findByPrincipal();
+				lessor = lessorService.encryptCreditCard(lessor);
 				result=new ModelAndView("lessor/display");
 				result.addObject("lessor", lessor);
 				result.addObject("comments", lessor.getcomments());

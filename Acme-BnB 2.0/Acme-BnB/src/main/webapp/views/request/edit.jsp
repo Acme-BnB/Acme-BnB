@@ -22,17 +22,16 @@
 <security:authorize
 	access="hasRole('TENANT')">
 
-	<form:form	action="tenant/request/edit.do"	modelAttribute="request"> 
-		
-		<form:hidden path="id"/>
+	<form:form	action="tenant/request/edit.do"	modelAttribute="requestForm"> 
+
 		<form:hidden path="propertyId"/>
 		
 		<acme:textbox code="request.checkIn" path="checkIn"/>
+		<br/>
 		<acme:textbox code="request.checkOut" path="checkOut"/>
-		<form:checkbox path="smoker"/>
-		<form:label path="smoker">
-			<spring:message code="request.smoker" />
-		</form:label>
+		<br/>
+		<acme:checkbox code="request.smoker" path="smoker"/>
+		<br/>
 		<fieldset>
 		<legend align="left"><spring:message code="request.creditCard.info"/></legend>
 		<acme:textbox code="request.creditCard.holderName" path="creditCard.holderName"/>
@@ -47,6 +46,7 @@
 		<br/>	
 		<acme:textbox code="request.creditCard.cvv" path="creditCard.cvv"/>
 	</fieldset>
+	<br/>
 	<br/>
 	<acme:submit name="save" code="request.save"/>
 	<acme:cancel code="request.cancel" url="tenant/finder/display.do" />

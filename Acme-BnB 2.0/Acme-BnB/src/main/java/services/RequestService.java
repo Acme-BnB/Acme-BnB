@@ -49,9 +49,12 @@ public class RequestService {
 	// Simple CRUD methods ----------------------------------------------------
 
 	public Request create() {
-
+		
 		Request result;
+		
 		result = new Request();
+		result.setTenant(tenantService.findByPrincipal());
+		result.setStatus("PENDING");
 
 		return result;
 	}
@@ -140,15 +143,31 @@ public class RequestService {
 	
 	public Collection<Request> encryptCreditCard(Collection<Request> requests){
 		Collection<Request> result = new ArrayList<Request>();
+		Request request;
 		CreditCard caux;
 		String aux;
 		
 		for(Request r : requests){
-			caux = r.getCreditCard();
-			aux = "************"+caux.getNumber().substring(12);
+			request = new Request();
+			caux = new CreditCard();
+			
+			caux.setBrandName(r.getCreditCard().getBrandName());
+			caux.setCvv(r.getCreditCard().getCvv());
+			caux.setExpirationMonth(r.getCreditCard().getExpirationMonth());
+			caux.setExpirationYear(r.getCreditCard().getExpirationYear());
+			caux.setHolderName(r.getCreditCard().getHolderName());
+			aux = "************"+r.getCreditCard().getNumber().substring(12);
 			caux.setNumber(aux);
-			r.setCreditCard(caux);
-			result.add(r);
+			
+			request.setId(r.getId());
+			request.setCheckIn(r.getCheckIn());
+			request.setCheckOut(r.getCheckOut());
+			request.setProperty(r.getProperty());
+			request.setTenant(r.getTenant());
+			request.setSmoker(r.getSmoker());
+			request.setStatus(r.getStatus());
+			request.setCreditCard(caux);
+			result.add(request);
 		}
 	
 		return result;
@@ -166,66 +185,22 @@ public class RequestService {
 			
 			public Request reconstruct(RequestForm requestForm,  BindingResult binding){
 				Request result = create();
-				
-				Tenant tenant;
 				Property property;
 				
-				tenant = tenantService.findByPrincipal();
-				property = propertyService.findOne(requestForm.getPropertyId());
+				property = propertyService.findOne(Integer.valueOf(requestForm.getPropertyId()));
 				
-				//Assert.isTrue(check(requestForm.getCreditCard()));
-				System.out.println(requestForm.getPropertyId());
-				System.out.println(requestForm.getSmoker());
+				Assert.isTrue(check(requestForm.getCreditCard()),"badCreditCard");
+
 				result.setProperty(property);
-				//result.setId(requestForm.getId());
-				result.setTenant(tenant);
+				result.setCreditCard(requestForm.getCreditCard());
 				result.setCheckIn(requestForm.getCheckIn());
 				result.setCheckOut(requestForm.getCheckOut());
 				result.setSmoker(requestForm.getSmoker());
-				result.setStatus("PENDING");
 				
 			
 				validator.validate(result, binding);
 				
 				return result;
 			}
-			/*
-			public Request reconstruct(Request request, BindingResult binding){
-				Request result;
-				
-				if(request.getId() == 0){
-					Tenant tenant = tenantService.findByPrincipal();
-					
-					result = request;
-					result.setTenant(tenant);
-				}else{
-					result = requestRepository.findOne(request.getId());
-					
-					result.setName(property.getName());
-					result.setAddress(property.getAddress());
-					
-					Assert.isTrue(property.getRate()!=null, "nullRate");
-					
-					result.setRate(property.getRate());
-					
-					result.setRate(property.getRate());
-					result.setDescription(property.getDescription());
-					
-					validator.validate(result, binding);
-				}
-				
-				return result;
-			}
-			*/
-			/*
-			public RequestForm transform(Request request){
-				RequestForm result=generateForm();
-				result.setAddress(request.getAddress());
-				result.setName(request.getName());
-				result.setDescription(request.getDescription());
-				result.setRate(request.getRate());
-				return result;
-			}
-			*/
 
 }
