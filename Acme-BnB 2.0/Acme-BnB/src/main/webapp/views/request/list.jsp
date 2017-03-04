@@ -19,10 +19,10 @@
 	<display:table pagesize="5" class="displaytag" name="requests" id="row">
 	
 		<spring:message code="request.checkIn" var="checkInHeader" />
-		<display:column title="${checkInHeader}"	sortable="true"><fmt:formatDate value="${row.checkIn }" pattern="dd/MM/yyyy HH:mm" /></display:column>
+		<display:column title="${checkInHeader}"	sortable="true"><fmt:formatDate value="${row.checkIn }" pattern="dd/MM/yyyy" /></display:column>
 		
 		<spring:message code="request.checkOut" var="checkOutHeader" />
-		<display:column title="${checkOutHeader}"	sortable="true"><fmt:formatDate value="${row.checkOut }" pattern="dd/MM/yyyy HH:mm" /></display:column>
+		<display:column title="${checkOutHeader}"	sortable="true"><fmt:formatDate value="${row.checkOut }" pattern="dd/MM/yyyy" /></display:column>
 		
 		<spring:message code="request.smoker" var="smokereader" />
 		<display:column property="smoker" title="${smokerHeader}" sortable="true" />
@@ -46,6 +46,10 @@
 		<display:column>
 			<a href="tenant/display.do?tenantId=${row.tenant.id}"><jstl:out value="${row.tenant.name}" /></a>
 		</display:column>
+		
+		
+		
+	
 		
 	</display:table>
 </jstl:if>	

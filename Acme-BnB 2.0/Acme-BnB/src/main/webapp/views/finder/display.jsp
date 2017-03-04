@@ -73,5 +73,11 @@
 		<a href="property/display.do?propertyId=${row.id}"><spring:message code="property.view" /></a>
 	</display:column>
 	
+	<security:authorize access="hasRole('TENANT')">
+		<display:column>
+			<input type="button" name="requestProperty" value="<spring:message code="property.request" />"
+				onclick="javascript: window.location.replace('tenant/request/create.do?propertyId=${row.id}')" />
+		</display:column>
+	</security:authorize>
 	
 </display:table>

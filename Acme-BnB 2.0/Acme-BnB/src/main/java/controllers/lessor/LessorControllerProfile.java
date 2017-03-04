@@ -43,32 +43,6 @@ public class LessorControllerProfile {
 
 	//List--------------------------
 
-	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam int propertyId) {
-		ModelAndView result;
-		Property property;
-		Lessor lessor;
-
-		property = propertyService.findOne(propertyId);
-		lessor = property.getLessor();
-		result = new ModelAndView("lessor/display");
-		result.addObject("lessor", lessor);
-		result.addObject("comments", lessor.getcomments());
-		return result;
-	}
-
-	@RequestMapping(value = "/displayL", method = RequestMethod.GET)
-	public ModelAndView display() {
-		ModelAndView result;
-		Lessor lessor;
-
-		lessor = lessorService.findByPrincipal();
-		result = new ModelAndView("lessor/display");
-		result.addObject("lessor", lessor);
-		result.addObject("comments", lessor.getcomments());
-		return result;
-	}
-
 	@RequestMapping(value = "/displayByReq", method = RequestMethod.GET)
 	public ModelAndView displayByReq(@RequestParam int requestId) {
 		ModelAndView result;
@@ -91,13 +65,43 @@ public class LessorControllerProfile {
 		String tipe = "personal";
 
 		LessorForm lessorForm = lessorService.generateForm(lessor);
-
 		result = new ModelAndView("lessor/register");
 		result.addObject("lessorForm", lessorForm);
 		result.addObject("tipe", tipe);
 
 		return result;
 	}
+
+		//List--------------------------
+
+		@RequestMapping(value="/display", method=RequestMethod.GET)
+		public ModelAndView display(@RequestParam int propertyId) {
+				ModelAndView result;
+				Property property;
+				Lessor lessor;
+				
+				property = propertyService.findOne(propertyId);
+				lessor=property.getLessor();
+				result=new ModelAndView("lessor/display");
+				result.addObject("lessor", lessor);
+				result.addObject("comments", lessor.getcomments());
+				return result;
+			}
+		
+		@RequestMapping(value="/displayL", method=RequestMethod.GET)
+		public ModelAndView display() {
+				ModelAndView result;
+				Lessor lessor;
+				
+				lessor = lessorService.findByPrincipal();
+				lessor = lessorService.encryptCreditCard(lessor);
+				result=new ModelAndView("lessor/display");
+				result.addObject("lessor", lessor);
+				result.addObject("comments", lessor.getcomments());
+				return result;
+			}
+
+		
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid LessorForm lessorForm, BindingResult binding) {

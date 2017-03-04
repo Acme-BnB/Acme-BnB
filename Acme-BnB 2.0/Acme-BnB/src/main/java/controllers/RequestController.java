@@ -108,19 +108,4 @@ public class RequestController {
 						result.addObject("lessor", lessor);
 						return result;
 				}
-				//Browse--------------------------
-
-				@RequestMapping(value="/browse", method=RequestMethod.GET)
-				public ModelAndView browse() {
-						ModelAndView result;
-						Collection<Request> requests;
-						Tenant tenant;
-						tenant= tenantService.findByPrincipal();
-						requests = requestService.findByCreator(tenant);
-						
-						requests = requestService.encryptCreditCard(requests);
-						result=new ModelAndView("request/browse");
-						result.addObject("requests", requests);
-						return result;
-					}
 }

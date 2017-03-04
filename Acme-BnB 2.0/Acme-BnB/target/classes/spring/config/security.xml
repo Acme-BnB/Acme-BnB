@@ -31,6 +31,7 @@
 		<security:intercept-url pattern="/tenant/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/lessor/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/property/browse.do" access="permitAll" /> 
+		<security:intercept-url pattern="/property/browseByReq.do" access="permitAll" /> 
 		<security:intercept-url pattern="/lessor/register.do" access="permitAll" /> 
 		<security:intercept-url pattern="/tenant/register.do" access="permitAll" /> 
 		<security:intercept-url pattern="/property/display.do" access="permitAll" />
@@ -39,13 +40,19 @@
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
 		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
 		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
+		<security:intercept-url pattern="/tenant/request/edit.do" access="hasRole('TENANT')" />
+		<security:intercept-url pattern="/tenant/request/create.do" access="hasRole('TENANT')" />
+		
 		<security:intercept-url pattern="/lessor/displayByReq.do" access="hasRole('TENANT')" /> 
-		<security:intercept-url pattern="/request/browse.do" access="hasRole('TENANT')" />
+		<security:intercept-url pattern="/tenant/request/browse.do" access="hasRole('TENANT')" />
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
 		<security:intercept-url pattern="/misc/lopd.do" access="permitAll" /> 
 
+
+
 		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
+		
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 

@@ -308,4 +308,30 @@ public class LessorService {
 
 		return result;
 	}
+	
+	public Lessor encryptCreditCard(Lessor lessor){
+		Lessor result = new Lessor();
+		CreditCard caux = new CreditCard();
+		String aux;
+		
+		result.setId(lessor.getId());
+		result.setUserAccount(lessor.getUserAccount());
+		result.setComments(lessor.getcomments());
+		result.setEmail(lessor.getEmail());
+		result.setFeeAmount(lessor.getFeeAmount());
+		result.setName(lessor.getName());
+		result.setPhone(lessor.getPhone());
+		result.setPicture(lessor.getPicture());
+		
+		caux.setBrandName(lessor.getCreditCard().getBrandName());
+		caux.setCvv(lessor.getCreditCard().getCvv());
+		caux.setExpirationMonth(lessor.getCreditCard().getExpirationMonth());
+		caux.setExpirationYear(lessor.getCreditCard().getExpirationYear());
+		caux.setHolderName(lessor.getCreditCard().getHolderName());
+		aux = "************"+lessor.getCreditCard().getNumber().substring(12);
+		caux.setNumber(aux);
+		result.setCreditCard(caux);
+		
+		return result;
+	}
 }

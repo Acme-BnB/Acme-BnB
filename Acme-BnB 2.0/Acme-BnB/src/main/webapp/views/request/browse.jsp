@@ -9,7 +9,7 @@
  --%>
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -24,12 +24,12 @@
 	<!-- Action links -->
 	
 	<!-- Attributes -->
-	
-	<spring:message code="request.checkIn" var="checkInHeader"/>
-	<display:column property="checkIn" title="${checkInHeader}" sortable="false" />
 
-	<spring:message code="request.checkOut" var="checkOutHeader" />
-	<display:column property="checkOut" title="${checkOutHeader}" sortable="true" />
+	<spring:message code="request.checkIn" var="checkInHeader"/>
+	<display:column title="${checkInHeader}" sortable="true"><fmt:formatDate value="${row.checkIn }" pattern="dd/MM/yyyy" /></display:column>
+
+	<spring:message code="request.checkOut" var="checkOutHeader"/>
+	<display:column title="${checkOutHeader}" sortable="true"><fmt:formatDate value="${row.checkOut }" pattern="dd/MM/yyyy" /></display:column>
 
 	<spring:message code="request.smoker" var="smokerHeader" />
 	<display:column property="smoker" title="${smokerHeader}" sortable="false" />
