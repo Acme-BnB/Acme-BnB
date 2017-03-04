@@ -4,7 +4,10 @@ package services;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -334,4 +337,44 @@ public class LessorService {
 		
 		return result;
 	}
+
+
+	public Map<Lessor, Double> map() {
+		Map<Lessor, Double> map = new HashMap<Lessor, Double>();
+		List<Object[]> aux = lessorRepository.maxMinRatio();
+		for (Object[] o : aux) {
+			map.put((Lessor) o[0], (Double) o[1]);
+		}
+		return map;
+	}
+	public Collection<Lessor> maxRatioLessor() {
+		Collection<Lessor> result = new ArrayList<Lessor>();
+		Map<Lessor, Double> maxMinRatio = map();
+		Collection<Double> aux = maxMinRatio.values();
+		Double max = Collections.max(aux);
+		Collection<Lessor> lessors = maxMinRatio.keySet();
+		for (Lessor l : lessors) {
+			if (max == maxMinRatio.get(l)) {
+				result.add(l);
+			}
+		}
+
+		return result;
+	}
+
+	public Collection<Lessor> minRatioLessor() {
+		Collection<Lessor> result = new ArrayList<Lessor>();
+		Map<Lessor, Double> maxMinRatio = map();
+		Collection<Double> aux = maxMinRatio.values();
+		Double min = Collections.min(aux);
+		Collection<Lessor> lessors = maxMinRatio.keySet();
+		for (Lessor l : lessors) {
+			if (min == maxMinRatio.get(l)) {
+				result.add(l);
+			}
+
+		}
+		return result;
+	}
+
 }

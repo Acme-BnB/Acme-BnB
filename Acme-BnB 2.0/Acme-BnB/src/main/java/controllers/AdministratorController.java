@@ -109,6 +109,12 @@ public class AdministratorController extends AbstractController {
 		Collection<Tenant> tdmR = tenantService.findTenantMoreDeniedRequest();
 		Collection<Tenant> tpmR = tenantService.findTenantMorePendingRequest();
 
+		Collection<Lessor> marL = lessorService.maxRatioLessor();
+		Collection<Lessor> mirL = lessorService.minRatioLessor();
+
+		Collection<Tenant> marT = tenantService.maxRatioTenant();
+		Collection<Tenant> mirT = tenantService.minRatioTenant();
+
 		Collection<Double> ammrF = finderService.findAvgMinMaxResultPerFinder();
 
 		result = new ModelAndView("administrator/dashboard");
@@ -121,6 +127,12 @@ public class AdministratorController extends AbstractController {
 		result.addObject("tamR", tamR);
 		result.addObject("tdmR", tdmR);
 		result.addObject("tpmR", tpmR);
+
+		result.addObject("marL", marL);
+		result.addObject("mirL", mirL);
+
+		result.addObject("marT", marT);
+		result.addObject("mirT", mirT);
 
 		result.addObject("ammrF", ammrF);
 
