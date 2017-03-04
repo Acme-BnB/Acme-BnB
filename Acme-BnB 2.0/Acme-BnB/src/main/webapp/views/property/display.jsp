@@ -37,6 +37,34 @@
 		</tr>
 	</tbody>
 </table>
-
 	<input type="button" name="viewLessor" value="<spring:message code="property.view.lessor" />"
 			onclick="javascript: window.location.replace('lessor/display.do?propertyId=${property.id}')" />
+
+			
+<display:table name="${property.values}" id="row" class="displaytag" pagesize="5" requestURI="${requestURI}" >
+	
+	<spring:message code="property.attribute" var="attributeHeader" />
+	<display:column property="attribute.name" title="${attributeHeader}" sortable="false"/>
+	
+	<spring:message code="property.text" var="textHeader" />
+	<display:column property="text" title="${textHeader}" sortable="false"/>
+
+	<security:authorize access="hasRole('LESSOR')">
+		<jstl:if test="${property.lessor.userAccount.username == pageContext.request.remoteUser}">
+			<display:column>
+				<input type="button" name="editAttribute" value="<spring:message code="property.delete" />"
+					onclick="javascript: window.location.replace('lessor/value/delete.do?valueId=${row.id}')" />
+			</display:column>
+		</jstl:if>
+	</security:authorize>
+
+</display:table>
+	
+<security:authorize access="hasRole('LESSOR')">
+	<jstl:if test="${property.lessor.userAccount.username == pageContext.request.remoteUser}">
+
+		<input type="button" name="addAttribute" value="<spring:message code="property.addAttribute" />"
+				onclick="javascript: window.location.replace('lessor/value/create.do?propertyId=${property.id}')" />
+	</jstl:if>
+</security:authorize>
+	

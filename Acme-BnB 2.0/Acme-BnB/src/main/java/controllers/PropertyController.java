@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Lessor;
 import domain.Property;
 import domain.Request;
 
@@ -63,8 +62,6 @@ public class PropertyController extends AbstractController{
 		public ModelAndView display(@RequestParam int propertyId) {
 				ModelAndView result;
 				Property property;
-				
-				
 				property = propertyService.findOne(propertyId);
 				result=new ModelAndView("property/display");
 				result.addObject("property", property);
