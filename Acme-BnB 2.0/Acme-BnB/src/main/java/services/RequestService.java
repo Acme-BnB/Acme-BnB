@@ -203,4 +203,19 @@ public class RequestService {
 				return result;
 			}
 
+	public boolean checkDate(Request request){
+		boolean result = true;
+		Property property = request.getProperty();
+		Collection<Request> requests = property.getRequests();
+		
+		for(Request r : requests){
+			if((r.getStatus().compareTo("ACCEPTED")==0) && 
+					((request.getCheckIn().compareTo(r.getCheckIn())>=0&&request.getCheckIn().compareTo(r.getCheckOut())<0)
+					|| (request.getCheckOut().compareTo(r.getCheckIn())>0&&request.getCheckOut().compareTo(r.getCheckOut())<=0))){
+				result = false;
+			}
+		}
+		
+		return result;
+	}
 }

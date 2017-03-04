@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AttributeService;
-import services.PropertyService;
 import services.ValueService;
 
 import controllers.AbstractController;
@@ -60,24 +59,6 @@ public class LessorValueController extends AbstractController{
 
 		}
 
-/*		//Edition--------------------------
-
-		@RequestMapping(value = "/edit", method = RequestMethod.GET)
-		public ModelAndView edit(@RequestParam int propertyId) {
-
-			ModelAndView result;
-			Property property;
-
-			property = propertyService.findOne(propertyId);
-			//PropertyForm propertyForm = propertyService.transform(property);
-			Assert.notNull(property);
-			result = new ModelAndView("value/edit");
-			result.addObject("property", property);
-
-			return result;
-
-		}
-*/	
 		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 		public ModelAndView save(@Valid ValueForm valueForm, BindingResult binding) {
 
