@@ -31,6 +31,7 @@
 		<security:intercept-url pattern="/tenant/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/lessor/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/property/browse.do" access="permitAll" /> 
+		<security:intercept-url pattern="/property/browseByReq.do" access="permitAll" /> 
 		<security:intercept-url pattern="/lessor/register.do" access="permitAll" /> 
 		<security:intercept-url pattern="/tenant/register.do" access="permitAll" /> 
 		<security:intercept-url pattern="/property/display.do" access="permitAll" />

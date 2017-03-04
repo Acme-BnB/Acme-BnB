@@ -50,3 +50,5 @@
 	
 	
 </display:table>
+	<input type="button" name="orderByRequest" value="<spring:message code="property.order" />"
+			onclick="javascript: window.location.replace('property/browseByReq.do')" />

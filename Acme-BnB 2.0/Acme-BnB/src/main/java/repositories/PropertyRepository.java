@@ -52,5 +52,7 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
 
 	@Query("select p from Property p where p.lessor.userAccount = ?1")
 	Collection<Property> findByUserAccount(UserAccount userAccount);
-
+	
+	@Query("select p from Property p order by p.requests.size DESC")
+	Collection<Property>ordeByNumRequest();
 }

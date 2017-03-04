@@ -322,4 +322,9 @@ public class PropertyService {
 
 		return result;
 	}
+	public Collection<Property> orderByNumRequest(){
+		Collection<Property> result;
+		result=propertyRepository.ordeByNumRequest();
+		return result;
+	}
 }

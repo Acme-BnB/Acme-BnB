@@ -46,6 +46,18 @@ public class PropertyController extends AbstractController{
 			result.addObject("requestURI", "property/browse.do");
 			return result;
 		}
+		//Browse---------------------------------------------
+		
+		@RequestMapping(value="/browseByReq", method=RequestMethod.GET)
+		public ModelAndView browseByReq(){
+				ModelAndView result;
+				Collection<Property>properties;
+				properties=propertyService.orderByNumRequest();
+				result= new ModelAndView("property/browse");
+				result.addObject("properties",properties);
+				result.addObject("requestURI", "property/browse.do");
+				return result;
+				}
 		
 		@RequestMapping(value="/display", method=RequestMethod.GET)
 		public ModelAndView display(@RequestParam int propertyId) {
