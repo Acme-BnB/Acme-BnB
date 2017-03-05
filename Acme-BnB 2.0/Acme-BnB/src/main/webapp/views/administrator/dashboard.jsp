@@ -168,3 +168,35 @@
 		</table>
 	</fieldset>
 </div>
+
+<div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.mamAP" /></legend>
+		<table id="mamAP" class="table">
+			<tr>
+				<th><spring:message code="administrator.dashboard.min"/></th>
+				<jstl:if test="${not empty mamAP }">
+					<td><jstl:out value="${mamAP.get(0) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.avg"/></th>
+				<jstl:if test="${not empty mamAP }">
+					<td><jstl:out value="${mamAP.get(1) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.max"/></th>
+				<jstl:if test="${not empty mamAP }">
+					<td><jstl:out value="${mamAP.get(2) }" /></td>
+				</jstl:if>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+<div>
+	<display:table name="asd" id="row" class="displaytag" pagesize="5">
+		<spring:message code="administrator.asd" var="name"/>
+		<display:column title="${name}" property="name"/>
+	</display:table>
+</div>

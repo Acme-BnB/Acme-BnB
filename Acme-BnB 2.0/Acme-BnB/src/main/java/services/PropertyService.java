@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,75 +129,75 @@ public class PropertyService {
 
 		propertyRepository.delete(property);
 	}
-	
+
 	// Form methods --------------------------------
-	
-		public PropertyForm generateForm(){
-			PropertyForm result;
-			
-			result = new PropertyForm();
-			return result;
-		}
-		
-		public Property reconstruct(PropertyForm propertyForm,  BindingResult binding){
-			Property result = create();
-			
-			Lessor lessor;
-			
-			lessor = lessorService.findByPrincipal();
-			
-			result.setId(propertyForm.getId());
+
+	public PropertyForm generateForm() {
+		PropertyForm result;
+
+		result = new PropertyForm();
+		return result;
+	}
+
+	public Property reconstruct(PropertyForm propertyForm, BindingResult binding) {
+		Property result = create();
+
+		Lessor lessor;
+
+		lessor = lessorService.findByPrincipal();
+
+		result.setId(propertyForm.getId());
+		result.setLessor(lessor);
+		result.setName(propertyForm.getName());
+
+		Assert.isTrue(propertyForm.getRate() == null, "nullRate");
+
+		result.setRate(propertyForm.getRate());
+
+		result.setDescription(propertyForm.getDescription());
+		result.setAddress(propertyForm.getAddress());
+
+		validator.validate(result, binding);
+
+		return result;
+	}
+
+	public Property reconstruct(Property property, BindingResult binding) {
+		Property result;
+
+		if (property.getId() == 0) {
+			Lessor lessor = lessorService.findByPrincipal();
+
+			result = property;
 			result.setLessor(lessor);
-			result.setName(propertyForm.getName());
-			
-			Assert.isTrue(propertyForm.getRate()==null, "nullRate");
-			
-			result.setRate(propertyForm.getRate());
-			
-			result.setDescription(propertyForm.getDescription());
-			result.setAddress(propertyForm.getAddress());
-		
-			validator.validate(result, binding);
-			
-			return result;
-		}
-		
-		public Property reconstruct(Property property, BindingResult binding){
-			Property result;
-			
-			if(property.getId() == 0){
-				Lessor lessor = lessorService.findByPrincipal();
-				
-				result = property;
-				result.setLessor(lessor);
-			}else{
-				result = propertyRepository.findOne(property.getId());
-				
-				result.setName(property.getName());
-				result.setAddress(property.getAddress());
-				
-				Assert.isTrue(property.getRate()!=null, "nullRate");
-				
-				result.setRate(property.getRate());
-				
-				result.setRate(property.getRate());
-				result.setDescription(property.getDescription());
-				
-				validator.validate(result, binding);
-			}
-			
-			return result;
-		}
-		
-		public PropertyForm transform(Property property){
-			PropertyForm result=generateForm();
-			result.setAddress(property.getAddress());
+		} else {
+			result = propertyRepository.findOne(property.getId());
+
 			result.setName(property.getName());
-			result.setDescription(property.getDescription());
+			result.setAddress(property.getAddress());
+
+			Assert.isTrue(property.getRate() != null, "nullRate");
+
 			result.setRate(property.getRate());
-			return result;
+
+			result.setRate(property.getRate());
+			result.setDescription(property.getDescription());
+
+			validator.validate(result, binding);
 		}
-		
+
+		return result;
+	}
+
+	public PropertyForm transform(Property property) {
+		PropertyForm result = generateForm();
+		result.setAddress(property.getAddress());
+		result.setName(property.getName());
+		result.setDescription(property.getDescription());
+		result.setRate(property.getRate());
+		return result;
+	}
+
 	// Other business services
 
 	public Collection<Double> findMinAvgMaxAuditsPerProperty() {
@@ -217,42 +218,42 @@ public class PropertyService {
 		return result;
 	}
 
-	public Collection<Property> findPropertiesOfALessorOrderByNumberAudit() {
+	public Collection<Property> findPropertiesOfALessorOrderByNumberAudit(int id) {
 		Collection<Property> result;
 
-		result = propertyRepository.findPropertiesOfALessorOrderByNumberAudit();
+		result = propertyRepository.findPropertiesOfALessorOrderByNumberAudit(id);
 
 		return result;
 	}
 
-	public Collection<Property> findPropertiesOfALessorOrderByNumberRequest() {
+	public Collection<Property> findPropertiesOfALessorOrderByNumberRequest(int id) {
 		Collection<Property> result;
 
-		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequest();
+		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequest(id);
 
 		return result;
 	}
 
-	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestAccepted() {
+	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestAccepted(int id) {
 		Collection<Property> result;
 
-		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequestAccepted();
+		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequestAccepted(id);
 
 		return result;
 	}
 
-	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestDenied() {
+	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestDenied(int id) {
 		Collection<Property> result;
 
-		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequestDenied();
+		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequestDenied(id);
 
 		return result;
 	}
 
-	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestPending() {
+	public Collection<Property> findPropertiesOfALessorOrderByNumberRequestPending(int id) {
 		Collection<Property> result;
 
-		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequestPending();
+		result = propertyRepository.findPropertiesOfALessorOrderByNumberRequestPending(id);
 
 		return result;
 	}
@@ -273,44 +274,44 @@ public class PropertyService {
 		return result;
 	}
 
-	public Collection<Property> findByKey(String key,String destinationCity) {
+	public Collection<Property> findByKey(String key, String destinationCity) {
 		Collection<Property> result;
 
-		result = propertyRepository.findByKey(key,destinationCity);
+		result = propertyRepository.findByKey(key, destinationCity);
 
 		return result;
 	}
-	public void findByFinder(Finder finder){
-		Collection<Property> result=new ArrayList<Property>();
+	public void findByFinder(Finder finder) {
+		Collection<Property> result = new ArrayList<Property>();
 		Collection<Property> aux;
-		if(finder.getKeyword()==null){
-			aux=propertyRepository.findByDestination(finder.getDestinationCity());
-		}else{
-			aux=propertyRepository.findByKey(finder.getKeyword(), finder.getDestinationCity());
+		if (finder.getKeyword() == null) {
+			aux = propertyRepository.findByDestination(finder.getDestinationCity());
+		} else {
+			aux = propertyRepository.findByKey(finder.getKeyword(), finder.getDestinationCity());
 		}
-		if(finder.getMinPrice()==null && finder.getMaxPrice()==null){
-			result=aux;
-		}else if(finder.getMinPrice()==null){
-			for(Property p:aux){
-				if(p.getRate()<=finder.getMaxPrice()){
+		if (finder.getMinPrice() == null && finder.getMaxPrice() == null) {
+			result = aux;
+		} else if (finder.getMinPrice() == null) {
+			for (Property p : aux) {
+				if (p.getRate() <= finder.getMaxPrice()) {
 					result.add(p);
 				}
 			}
-		}else if(finder.getMaxPrice()==null){
-			for(Property p:aux){
-				if(p.getRate()>=finder.getMinPrice()){
+		} else if (finder.getMaxPrice() == null) {
+			for (Property p : aux) {
+				if (p.getRate() >= finder.getMinPrice()) {
 					result.add(p);
 				}
 			}
-		}else{
-			for(Property p:aux){
-				if(p.getRate()>=finder.getMinPrice() && p.getRate()<=finder.getMaxPrice()){
+		} else {
+			for (Property p : aux) {
+				if (p.getRate() >= finder.getMinPrice() && p.getRate() <= finder.getMaxPrice()) {
 					result.add(p);
 				}
 			}
 		}
 		finder.setResults(result);
-		
+
 	}
 
 	public Collection<Property> findByUserAccount() {
@@ -322,9 +323,9 @@ public class PropertyService {
 
 		return result;
 	}
-	public Collection<Property> orderByNumRequest(){
+	public Collection<Property> orderByNumRequest() {
 		Collection<Property> result;
-		result=propertyRepository.ordeByNumRequest();
+		result = propertyRepository.ordeByNumRequest();
 		return result;
 	}
 }
