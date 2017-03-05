@@ -14,8 +14,6 @@ import services.LessorService;
 import services.RequestService;
 import domain.Lessor;
 import domain.Request;
-import domain.Tenant;
-import services.TenantService;
 
 @Controller
 @RequestMapping("/request")
@@ -30,9 +28,6 @@ public class RequestController {
 		
 		@Autowired
 		private FeeService feeService;
-
-		@Autowired
-		private TenantService tenantService;
 
 
 

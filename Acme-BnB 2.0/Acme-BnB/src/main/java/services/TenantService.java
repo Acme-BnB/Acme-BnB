@@ -21,9 +21,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
-import domain.CreditCard;
 import domain.Finder;
-import domain.Lessor;
 import domain.Request;
 import domain.SocialIdentity;
 import domain.Tenant;
@@ -86,19 +84,13 @@ public class TenantService {
 
 	public Collection<Tenant> findAll() {
 		Collection<Tenant> result;
-
 		result = tenantRepository.findAll();
-		Assert.notNull(result);
-
 		return result;
 	}
 
 	public Tenant findOne(int tenantId) {
 		Tenant result;
-
 		result = tenantRepository.findOne(tenantId);
-		Assert.notNull(result);
-
 		return result;
 	}
 

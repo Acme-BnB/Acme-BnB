@@ -37,6 +37,8 @@
 		<value>/views/socialIdentity/messages</value>
 		<value>/views/fee/messages</value>
 		<value>/views/value/messages</value>
+		<value>/views/comment/messages</value>
+		
 	</util:list>
 
 </beans>

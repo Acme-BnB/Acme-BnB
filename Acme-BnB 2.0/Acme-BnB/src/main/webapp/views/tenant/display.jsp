@@ -37,7 +37,8 @@
 	</tbody>
 </table>
 			
-<display:table pagesize="10" class="displaytag" keepStatus="true" name="comments" id="row">	
+<display:table pagesize="10" class="displaytag" keepStatus="true" name="comments" id="row" requestURI="${requestURI}">	
+		
 	<spring:message code="tenant.comment.title" var="titleHeader"/>
 	<display:column title="${titleHeader }" property="title"/>
 	
@@ -52,7 +53,7 @@
 </display:table>
 
 <security:authorize access="hasAnyRole('LESSOR','TENANT')">
-	<input type="button" name="addComment"
-			value="Boton"/>
+	<input type="button" name="comment" value="<spring:message code="tenant.comment" />"
+			onclick="javascript: window.location.replace('commentator/comment/create.do?commentableId=${tenant.id}')" />
 <br/>
 </security:authorize>
