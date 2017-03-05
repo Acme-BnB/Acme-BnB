@@ -1,6 +1,9 @@
 
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +12,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Credentials;
+import services.ActorService;
 import services.AdministratorService;
+import services.AttributeService;
+import services.FinderService;
+import services.InvoiceService;
+import services.LessorService;
+import services.PropertyService;
+import services.RequestService;
+import services.TenantService;
 import domain.Administrator;
+import domain.Attribute;
+import domain.Lessor;
+import domain.Property;
+import domain.Tenant;
 import forms.AdministratorForm;
 
 @Controller
@@ -24,6 +40,30 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private LessorService			lessorService;
+
+	@Autowired
+	private TenantService			tenantService;
+
+	@Autowired
+	private FinderService			finderService;
+
+	@Autowired
+	private PropertyService			propertyService;
+
+	@Autowired
+	private AttributeService		attributeService;
+
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private RequestService			requestService;
+
+	@Autowired
+	private InvoiceService			invoiceService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -75,6 +115,110 @@ public class AdministratorController extends AbstractController {
 
 	}
 
+	// Dashboard -----------------------------------------------
+
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public ModelAndView dashboard() {
+
+		ModelAndView result;
+
+		//Request
+		Collection<Double> adrL = lessorService.findAvgAcceptedAndDeniedPerLessor();
+		Collection<Double> adrT = tenantService.findAvgAcceptedAndDeniedPerTenant();
+
+		Collection<Lessor> lamR = lessorService.findLessorsMoreApprovedRequest();
+		Collection<Lessor> ldmR = lessorService.findLessorsMoreDeniedRequest();
+		Collection<Lessor> lpmR = lessorService.findLessorsMorePendingRequest();
+		Collection<Tenant> tamR = tenantService.findTenantMoreApprovedRequest();
+		Collection<Tenant> tdmR = tenantService.findTenantMoreDeniedRequest();
+		Collection<Tenant> tpmR = tenantService.findTenantMorePendingRequest();
+
+		Collection<Lessor> marL = lessorService.maxRatioLessor();
+		Collection<Lessor> mirL = lessorService.minRatioLessor();
+
+		Collection<Tenant> marT = tenantService.maxRatioTenant();
+		Collection<Tenant> mirT = tenantService.minRatioTenant();
+
+		Collection<Double> ammrF = finderService.findAvgMinMaxResultPerFinder();
+
+		Collection<Double> mamAP = propertyService.findMinAvgMaxAuditsPerProperty();
+		Collection<Attribute> asd = attributeService.findAttributesOrderByNumberTimesUsed();
+
+		Collection<Double> mamSi = actorService.minAvgMaxSocialIdentitiesPerActor();
+		Collection<Double> mamIi = requestService.minAvgMAxInvoicesIssued();
+		Double aMI = invoiceService.findTotalAmountOfInvoice();
+		Collection<Double> oMVSzL = new ArrayList<Double>();
+		oMVSzL.add(propertyService.findAvgRequestForPropertiesWithOneOrMoreAudit());
+		oMVSzL.add(propertyService.findAvgRequestForPropertiesWithZeroAudit());
+
+		result = new ModelAndView("administrator/dashboard");
+
+		result.addObject("adrL", adrL);
+		result.addObject("adrT", adrT);
+		result.addObject("lamR", lamR);
+		result.addObject("ldmR", ldmR);
+		result.addObject("lpmR", lpmR);
+		result.addObject("tamR", tamR);
+		result.addObject("tdmR", tdmR);
+		result.addObject("tpmR", tpmR);
+
+		result.addObject("marL", marL);
+		result.addObject("mirL", mirL);
+
+		result.addObject("marT", marT);
+		result.addObject("mirT", mirT);
+
+		result.addObject("ammrF", ammrF);
+
+		result.addObject("mamAP", mamAP);
+		result.addObject("asd", asd);
+
+		result.addObject("mamSi", mamSi);
+		result.addObject("mamIi", mamIi);
+		result.addObject("aMI", aMI);
+		result.addObject("oMVSzL", oMVSzL);
+
+		return result;
+
+	}
+	@RequestMapping(value = "/lessor", method = RequestMethod.GET)
+	public ModelAndView listLessor() {
+
+		ModelAndView result;
+
+		Collection<Lessor> lessors = lessorService.findAll();
+
+		result = new ModelAndView("administrator/lessor");
+		result.addObject("lessor", lessors);
+
+		return result;
+
+	}
+
+	@RequestMapping(value = "/dashboardLessor", method = RequestMethod.GET)
+	public ModelAndView dashboardLessor(@RequestParam int lessorId) {
+
+		ModelAndView result;
+		String lessor = lessorService.findOne(lessorId).getUserAccount().getUsername();
+
+		Collection<Property> psA = propertyService.findPropertiesOfALessorOrderByNumberAudit(lessorId);
+		Collection<Property> psR = propertyService.findPropertiesOfALessorOrderByNumberRequest(lessorId);
+		Collection<Property> psAp = propertyService.findPropertiesOfALessorOrderByNumberRequestAccepted(lessorId);
+		Collection<Property> psDn = propertyService.findPropertiesOfALessorOrderByNumberRequestDenied(lessorId);
+		Collection<Property> psPn = propertyService.findPropertiesOfALessorOrderByNumberRequestPending(lessorId);
+
+		result = new ModelAndView("administrator/dashboardLessor");
+
+		result.addObject("psA", psA);
+		result.addObject("psR", psR);
+		result.addObject("psAp", psAp);
+		result.addObject("psDn", psDn);
+		result.addObject("psPn", psPn);
+		result.addObject("lessor", lessor);
+
+		return result;
+
+	}
 	// Ancillary methods ---------------------------------------
 
 	protected ModelAndView createEditModelAndView(AdministratorForm administratorForm) {

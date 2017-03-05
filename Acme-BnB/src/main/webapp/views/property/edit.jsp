@@ -21,11 +21,10 @@
 
 <security:authorize
 	access="hasRole('LESSOR')">
-
+	<jstl:if test="${property.id==0 || property.lessor.userAccount.username == pageContext.request.remoteUser}">
 	<form:form	action="lessor/property/edit.do"	modelAttribute="property"> 
 		
 		<form:hidden path="id"/>
-		<form:hidden path="version"/>
 		
 		<acme:textbox code="property.name" path="name"/>
 		<acme:textbox code="property.rate" path="rate"/>
@@ -33,14 +32,15 @@
 		<acme:textbox code="property.address" path="address"/>
 		
 		<acme:submit name="save" code="property.save"/>
-		<jstl:if test="${property.id != 0}">
+		<jstl:if test="${id!=0}">
 			<acme:submit name="delete" code="property.delete"/>
 		</jstl:if>
-		<acme:cancel code="property.cancel" url="lessor/property/display.do"/>
+		
+		<acme:cancel code="property.cancel" url="lessor/property/list.do"/>
 		
 		
 	</form:form>
-
+	</jstl:if>
 </security:authorize>
 
 

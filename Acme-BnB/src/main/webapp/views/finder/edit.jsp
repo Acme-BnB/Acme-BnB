@@ -23,22 +23,14 @@
 	access="hasRole('TENANT')">
 
 	<form:form	action="tenant/finder/edit.do"	modelAttribute="finder"> 
-		
-		<form:hidden path="id"/>
-		<form:hidden path="version"/>
-		<form:hidden path="lastTimeSearched"/>
-		
-		<acme:textbox code="finder.destinationCity" path="destinationCity"/>
-		<acme:textbox code="finder.minPrice" path="minPrice"/>
-		<acme:textbox code="finder.maxPrice" path="maxPrice"/>
-		<acme:textbox code="finder.keyword" path="keyword"/>
-		
-		<acme:submit name="save" code="finder.save"/>
-		<jstl:if test="${finder.id != 0}">
-			<acme:submit name="delete" code="finder.delete"/>
-		</jstl:if>
-		<acme:cancel code="finder.cancel" url="tenant/finder/display.do"/>
-		
+
+			<acme:textbox code="finder.destinationCity" path="destinationCity"/>
+			<acme:textbox code="finder.minPrice" path="minPrice"/>
+			<acme:textbox code="finder.maxPrice" path="maxPrice"/>
+			<acme:textbox code="finder.keyword" path="keyword"/>
+			
+			<acme:submit name="save" code="finder.save"/>
+			<acme:cancel code="finder.cancel" url="tenant/finder/display.do"/>
 		
 	</form:form>
 

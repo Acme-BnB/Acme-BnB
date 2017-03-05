@@ -116,6 +116,7 @@ public class AttachmentService {
 				Audit audit = auditService.findOne(attachmentForm.getAuditId());
 				
 				result = create(audit);
+				result.setId(attachmentForm.getId());
 				result.setUrl(attachmentForm.getUrl());
 				
 				validator.validate(result, binding);

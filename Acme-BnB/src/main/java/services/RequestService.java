@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -8,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.RequestRepository;
-import security.LoginService;
-import security.UserAccount;
 import domain.CreditCard;
+import domain.Property;
 import domain.Request;
+import domain.Tenant;
+import forms.RequestForm;
 
 @Service
 @Transactional
@@ -24,8 +28,17 @@ public class RequestService {
 	@Autowired
 	private RequestRepository	requestRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private TenantService		tenantService;
+
+	@Autowired
+	private PropertyService		propertyService;
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -38,7 +51,10 @@ public class RequestService {
 	public Request create() {
 
 		Request result;
+
 		result = new Request();
+		result.setTenant(tenantService.findByPrincipal());
+		result.setStatus("PENDING");
 
 		return result;
 	}
@@ -66,7 +82,7 @@ public class RequestService {
 		Assert.notNull(request);
 
 		Request result;
-		
+
 		Assert.isTrue(check(request.getCreditCard()));
 
 		result = requestRepository.save(request);
@@ -81,32 +97,139 @@ public class RequestService {
 
 		requestRepository.delete(request);
 	}
-	
-	public static boolean check(CreditCard creditCard){
+
+	public static boolean check(CreditCard creditCard) {
 		boolean validador = false;
-        Calendar fecha = Calendar.getInstance();
-        int mes = fecha.get(Calendar.MONTH)+1;
-        int año = fecha.get(Calendar.YEAR);
-        
-        if(creditCard.getExpirationYear()>año){
-        	validador=true;
-        }else if(creditCard.getExpirationYear()==año){
-        	if(creditCard.getExpirationYear()>=mes){
-        		validador=true;
-        	}
-        }
-        
-        return validador;
+		int sum = 0;
+		Calendar fecha = Calendar.getInstance();
+		String numero = creditCard.getNumber();
+		int mes = fecha.get(Calendar.MONTH) + 1;
+		int año = fecha.get(Calendar.YEAR);
+
+		if (creditCard.getExpirationYear() > año) {
+			validador = true;
+		} else if (creditCard.getExpirationYear() == año) {
+			if (creditCard.getExpirationMonth() >= mes) {
+				validador = true;
+			}
+		}
+
+		if (validador) {
+			validador = false;
+			for (int i = numero.length() - 1; i >= 0; i--) {
+				int n = Integer.parseInt(numero.substring(i, i + 1));
+				if (validador) {
+					n *= 2;
+					if (n > 9) {
+						n = (n % 10) + 1;
+					}
+				}
+				sum += n;
+				validador = !validador;
+			}
+			if (sum % 10 == 0) {
+				validador = true;
+			}
+		}
+
+		return validador;
 	}
 
-	public Collection<Request> findByCreator() {
+	public Collection<Request> findByCreator(Tenant tenant) {
 		Collection<Request> result;
-		UserAccount userAccount;
+		result = requestRepository.findByCreator(tenant);
+		return result;
+	}
 
-		userAccount = LoginService.getPrincipal();
-		result = requestRepository.findByCreator(userAccount);
+	public Collection<Request> encryptCreditCard(Collection<Request> requests) {
+		Collection<Request> result = new ArrayList<Request>();
+		Request request;
+		CreditCard caux;
+		String aux;
+
+		for (Request r : requests) {
+			request = new Request();
+			caux = new CreditCard();
+
+			caux.setBrandName(r.getCreditCard().getBrandName());
+			caux.setCvv(r.getCreditCard().getCvv());
+			caux.setExpirationMonth(r.getCreditCard().getExpirationMonth());
+			caux.setExpirationYear(r.getCreditCard().getExpirationYear());
+			caux.setHolderName(r.getCreditCard().getHolderName());
+			aux = "************" + r.getCreditCard().getNumber().substring(12);
+			caux.setNumber(aux);
+
+			request.setId(r.getId());
+			request.setCheckIn(r.getCheckIn());
+			request.setCheckOut(r.getCheckOut());
+			request.setProperty(r.getProperty());
+			request.setTenant(r.getTenant());
+			request.setSmoker(r.getSmoker());
+			request.setStatus(r.getStatus());
+			request.setCreditCard(caux);
+			result.add(request);
+		}
 
 		return result;
 	}
 
+	// Dashboard -------------------------------------------------
+
+	public Collection<Double> minAvgMAxInvoicesIssued() {
+		Double min = requestRepository.minInvoicesIssuedToTenants();
+		Double avg = requestRepository.avgInvoicesIssuedToTenants();
+		Double max = requestRepository.maxInvoicesIssuedToTenants();
+
+		Collection<Double> result = new ArrayList<Double>();
+
+		result.add(min);
+		result.add(avg);
+		result.add(max);
+
+		return result;
+	}
+
+	// Form methods --------------------------------
+
+	public RequestForm generateForm() {
+		RequestForm result;
+
+		result = new RequestForm();
+
+		return result;
+	}
+
+	public Request reconstruct(RequestForm requestForm, BindingResult binding) {
+		Request result = create();
+		Property property;
+
+		property = propertyService.findOne(Integer.valueOf(requestForm.getPropertyId()));
+
+		Assert.isTrue(check(requestForm.getCreditCard()), "badCreditCard");
+
+		result.setProperty(property);
+		result.setCreditCard(requestForm.getCreditCard());
+		result.setCheckIn(requestForm.getCheckIn());
+		result.setCheckOut(requestForm.getCheckOut());
+		result.setSmoker(requestForm.getSmoker());
+
+		validator.validate(result, binding);
+
+		return result;
+	}
+
+	public boolean checkDate(Request request) {
+		boolean result = true;
+		Property property = request.getProperty();
+		Collection<Request> requests = property.getRequests();
+
+		for (Request r : requests) {
+			if ((r.getStatus().compareTo("ACCEPTED") == 0)
+				&& ((request.getCheckIn().compareTo(r.getCheckIn()) >= 0 && request.getCheckIn().compareTo(r.getCheckOut()) < 0) || (request.getCheckOut().compareTo(r.getCheckIn()) > 0 && request.getCheckOut().compareTo(r.getCheckOut()) <= 0))) {
+				result = false;
+			}
+		}
+
+		return result;
+	}
 }

@@ -18,6 +18,12 @@
 <jstl:if test="${lessor.userAccount.username == pageContext.request.remoteUser}">
 	<display:table pagesize="5" class="displaytag" name="requests" id="row">
 	
+		<spring:message code="request.property.name" var="nameHeader" />
+		<display:column property="property.name" title="${nameHeader}" sortable="false" />
+		
+		<spring:message code="request.property.address" var="addressHeader" />
+		<display:column property="property.address" title="${addressHeader}" sortable="false" />
+		
 		<spring:message code="request.checkIn" var="checkInHeader" />
 		<display:column title="${checkInHeader}"	sortable="true"><fmt:formatDate value="${row.checkIn }" pattern="dd/MM/yyyy" /></display:column>
 		

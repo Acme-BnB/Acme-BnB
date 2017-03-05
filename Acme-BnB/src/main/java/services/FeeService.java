@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.FeeRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Fee;
+import forms.FeeForm;
 
 @Service
 @Transactional
@@ -23,8 +26,10 @@ public class FeeService {
 	@Autowired
 	private FeeRepository	feeRepository;
 
-
 	// Supporting services ----------------------------------------------------
+	@Autowired
+	private Validator		validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -95,6 +100,27 @@ public class FeeService {
 		Assert.isTrue(feeRepository.exists(fee.getId()));
 
 		feeRepository.delete(fee);
+	}
+
+	// Other bussines methods ---------------------------
+
+	public FeeForm generateForm(Fee fee) {
+		FeeForm feeForm = new FeeForm();
+
+		feeForm.setId(fee.getId());
+		feeForm.setValue(fee.getValue());
+
+		return feeForm;
+	}
+
+	public Fee reconstruct(FeeForm feeForm, BindingResult binding) {
+		Fee result = findOne(feeForm.getId());
+
+		result.setValue(feeForm.getValue());
+
+		validator.validate(result, binding);
+
+		return result;
 	}
 
 }

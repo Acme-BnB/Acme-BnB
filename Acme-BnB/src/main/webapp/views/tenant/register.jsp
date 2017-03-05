@@ -18,36 +18,62 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="${requestURI}" modelAttribute="tenantForm">
-
+	<jstl:if test="${tenantForm.id==0 || tenantForm.username == pageContext.request.remoteUser}">
 	<form:hidden path="id"/>
-	<form:hidden path="version"/>
+
+	<jstl:choose>
+		<jstl:when test="${tipe eq 'personal' }">
+			<fieldset>
+				<legend align="left"><spring:message code="tenant.personal.info"/></legend>
+					<br/>
+					<acme:textbox code="tenant.name" path="name" />
+					<br/>
+					<acme:textbox code="tenant.surname" path="surname"/>
+					<br/>
+					<acme:textbox code="tenant.email" path="email"/>
+					<br/>
+					<acme:textbox code="tenant.phone" path="phone"/>
+					<br/>
+					<acme:textbox code="tenant.picture" path="picture"/>
+			</fieldset>
+		</jstl:when>
+		<jstl:otherwise>
+			<fieldset>
+				<legend align="left"><spring:message code="tenant.account.info"/></legend>
+					<acme:textbox code="tenant.username" path="username" />
+						<br/>
+						<acme:password code="tenant.password" path="password"/>
+						<br/>
+						
+						<acme:password code="tenant.password2" path="password2"/>
+						<br/>
+						<form:checkbox path="agreed"/>
+						<form:label path="agreed">
+							<spring:message code="tenant.register.agree" />
+							<a href="misc/lopd.do"><spring:message code="tenant.register.agree.2"/></a>
+						</form:label>
+						<form:errors path="agreed" cssClass="error" />
+						<br/>
+			</fieldset>
+			<fieldset>
+				<legend align="left"><spring:message code="tenant.personal.info"/></legend>
+					<br/>
+					<acme:textbox code="tenant.name" path="name" />
+					<br/>
+					<acme:textbox code="tenant.surname" path="surname"/>
+					<br/>
+					<acme:textbox code="tenant.email" path="email"/>
+					<br/>
+					<acme:textbox code="tenant.phone" path="phone"/>
+					<br/>
+					<acme:textbox code="tenant.picture" path="picture"/>
+			</fieldset>
+		</jstl:otherwise>
+	</jstl:choose>
 	
-	<acme:textbox code="tenant.username" path="username" />
-	<br/>
-	<acme:password code="tenant.password" path="password"/>
-	<br/>
 	
-	<acme:password code="tenant.password2" path="password2"/>
 	<br/>
-	<form:checkbox path="agreed"/>
-	<form:label path="agreed">
-		<spring:message code="tenant.register.agree" />
-		<a href="misc/lopd.do"><spring:message code="tenant.register.agree.2"/></a>
-	</form:label>
-	<form:errors path="agreed" cssClass="error" />
-	<br/><br/>
-	<acme:textbox code="tenant.name" path="name" />
-	<br/>
-	<acme:textbox code="tenant.surname" path="surname"/>
-	<br/>
-	<acme:textbox code="tenant.email" path="email"/>
-	<br/>
-	<acme:textbox code="tenant.phone" path="phone"/>
-	<br/>
-	<acme:textbox code="tenant.picture" path="picture"/>
-	<br/>
-	
 	<acme:submit name="save" code="tenant.save"/>
 	<acme:cancel url="welcome/index.do" code="tenant.cancel"/>
-
+</jstl:if>
 </form:form>

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.AttributeRepository;
 import security.Authority;
@@ -15,6 +17,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Attribute;
 import domain.Value;
+import forms.AttributeForm;
 
 @Service
 @Transactional
@@ -24,6 +27,9 @@ public class AttributeService {
 
 	@Autowired
 	private AttributeRepository	attributeRepository;
+
+	@Autowired
+	private Validator			validator;
 
 
 	// Supporting services ----------------------------------------------------
@@ -110,6 +116,52 @@ public class AttributeService {
 		Assert.isTrue(attribute.getId() != 0);
 
 		attributeRepository.delete(attribute);
+	}
+	public AttributeForm generateForm() {
+		AttributeForm result;
+
+		result = new AttributeForm();
+		return result;
+	}
+
+	public Attribute reconstruct(AttributeForm attributeForm, BindingResult binding) {
+		Attribute result = create();
+
+		result.setId(attributeForm.getId());
+		result.setName(attributeForm.getName());
+		validator.validate(result, binding);
+
+		return result;
+	}
+
+	public Attribute reconstruct(Attribute attribute, BindingResult binding) {
+		Attribute result;
+
+		if (attribute.getId() == 0) {
+			result = attribute;
+
+		} else {
+			result = attributeRepository.findOne(attribute.getId());
+
+			result.setName(attribute.getName());
+
+			validator.validate(result, binding);
+		}
+
+		return result;
+	}
+
+	public AttributeForm transform(Attribute attribute) {
+		AttributeForm result = generateForm();
+		result.setName(attribute.getName());
+		return result;
+	}
+
+	// Other businnes methods ----------------------------------------------------
+
+	public Collection<Attribute> findAttributesOrderByNumberTimesUsed() {
+		Collection<Attribute> result = attributeRepository.findAttributesOrderByNumberTimesUsed();
+		return result;
 	}
 
 }

@@ -58,7 +58,7 @@
 </security:authorize>
 </display:table>
 
-	<jstl:if test="${row.audit.draft == true && audit.auditor.userAccount.username == pageContext.request.remoteUser}">
+	<jstl:if test="${audit.draft == true && audit.auditor.userAccount.username == pageContext.request.remoteUser}">
 			<input type="button" name="create" value="<spring:message code="audit.attachment" />"
 			onclick="javascript: window.location.replace('auditor/attachment/create.do?auditId=${audit.id}')" />
 	</jstl:if>

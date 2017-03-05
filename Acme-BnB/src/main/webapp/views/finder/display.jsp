@@ -43,3 +43,41 @@
 	</security:authorize>
 
 </display:table>
+
+<display:table pagesize="5" class="displaytag" keepStatus="true" name="properties" requestURI="${requestURI}" id="row">
+	
+	<!-- Action links -->
+	
+	<!-- Attributes -->
+	
+	<spring:message code="property.name" var="nameHeader"/>
+	<display:column property="name" title="${nameHeader}" sortable="false" />
+
+	<spring:message code="property.rate" var="rateHeader" />
+	<display:column property="rate" title="${rateHeader}" sortable="true" />
+
+	<spring:message code="property.description" var="descriptionHeader" />
+	<display:column property="description" title="${descriptionHeader}" sortable="false" />
+
+	<spring:message code="property.address" var="addressHeader" />
+	<display:column property="address" title="${addressHeader}" sortable="false"  />
+
+	<spring:message code="property.lessor" var="lessor"/>
+	<display:column property="lessor.name" title="${lessor}" sortable="true"/>
+	
+	<display:column>
+		<a href="lessor/display.do?propertyId=${row.id}"><spring:message code="property.view.lessor" /></a>
+	</display:column>
+	
+	<display:column>
+		<a href="property/display.do?propertyId=${row.id}"><spring:message code="property.view" /></a>
+	</display:column>
+	
+	<security:authorize access="hasRole('TENANT')">
+		<display:column>
+			<input type="button" name="requestProperty" value="<spring:message code="property.request" />"
+				onclick="javascript: window.location.replace('tenant/request/create.do?propertyId=${row.id}')" />
+		</display:column>
+	</security:authorize>
+	
+</display:table>

@@ -3,7 +3,10 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -18,6 +21,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
+import domain.Finder;
 import domain.Request;
 import domain.SocialIdentity;
 import domain.Tenant;
@@ -31,6 +35,9 @@ public class TenantService {
 
 	@Autowired
 	private TenantRepository	tenantRepository;
+
+	@Autowired
+	private FinderService		finderService;
 
 	// Supporting services ----------------------------------------------------
 
@@ -56,34 +63,34 @@ public class TenantService {
 		userAccount.addAuthority(a);
 		Tenant result = new Tenant();
 		result.setUserAccount(userAccount);
+		Finder f;
+		f = finderService.create();
+		Finder f2 = finderService.save2(f);
 
 		Collection<SocialIdentity> socialIdentities = new ArrayList<SocialIdentity>();
 		Collection<Request> request = new ArrayList<Request>();
 		Collection<Comment> writtenComments = new ArrayList<Comment>();
+		Collection<Comment> comments = new ArrayList<Comment>();
 
+		result.setFinder(f2);
 		result.setIsCommentable(true);
 		result.setSocialIdentities(socialIdentities);
 		result.setRequests(request);
 		result.setWrittenComments(writtenComments);
-
+		result.setComments(comments);
+		result.setIsCommentable(true);
 		return result;
 	}
 
 	public Collection<Tenant> findAll() {
 		Collection<Tenant> result;
-
 		result = tenantRepository.findAll();
-		Assert.notNull(result);
-
 		return result;
 	}
 
 	public Tenant findOne(int tenantId) {
 		Tenant result;
-
 		result = tenantRepository.findOne(tenantId);
-		Assert.notNull(result);
-
 		return result;
 	}
 
@@ -185,12 +192,90 @@ public class TenantService {
 		return result;
 	}
 
+	public Collection<Double> findAvgAcceptedAndDeniedPerTenant() {
+
+		Collection<Double> result = new ArrayList<Double>();
+
+		Double a = tenantRepository.findAvgAcceptedRequestPerTenant();
+		Double d = tenantRepository.findAvgDeniedRequestPerTenant();
+
+		if (a == null || a == 0) {
+			result.add(0.0);
+		} else {
+			result.add(a);
+		}
+		if (d == null || d == 0) {
+			result.add(0.0);
+		} else {
+			result.add(d);
+		}
+
+		return result;
+	}
+
+	public Map<Tenant, Double> map() {
+		Map<Tenant, Double> map = new HashMap<Tenant, Double>();
+		List<Object[]> aux = tenantRepository.maxMinRatio();
+		for (Object[] o : aux) {
+			map.put((Tenant) o[0], (Double) o[1]);
+		}
+		return map;
+	}
+	public Collection<Tenant> maxRatioTenant() {
+		Collection<Tenant> result = new ArrayList<Tenant>();
+		Map<Tenant, Double> maxMinRatio = map();
+		Collection<Double> aux = maxMinRatio.values();
+		Double max = Collections.max(aux);
+		Collection<Tenant> tenants = maxMinRatio.keySet();
+		for (Tenant t : tenants) {
+			if (max == maxMinRatio.get(t)) {
+				result.add(t);
+			}
+		}
+
+		return result;
+	}
+
+	public Collection<Tenant> minRatioTenant() {
+		Collection<Tenant> result = new ArrayList<Tenant>();
+		Map<Tenant, Double> maxMinRatio = map();
+		Collection<Double> aux = maxMinRatio.values();
+		Double min = Collections.min(aux);
+		Collection<Tenant> tenants = maxMinRatio.keySet();
+		for (Tenant t : tenants) {
+			if (min == maxMinRatio.get(t)) {
+				result.add(t);
+			}
+
+		}
+		return result;
+	}
+
 	// Form methods -------------------------------------------------
 
 	public TenantForm generateForm() {
 		TenantForm result;
 
 		result = new TenantForm();
+		return result;
+	}
+
+	public TenantForm generateForm(Tenant tenant) {
+		TenantForm result;
+
+		result = new TenantForm();
+
+		result.setId(tenant.getId());
+		result.setUsername(tenant.getUserAccount().getUsername());
+		result.setPassword(tenant.getUserAccount().getPassword());
+		result.setPassword2(tenant.getUserAccount().getPassword());
+		result.setName(tenant.getName());
+		result.setAgreed(true);
+		result.setSurname(tenant.getSurname());
+		result.setPhone(tenant.getPhone());
+		result.setPicture(tenant.getPicture());
+		result.setEmail(tenant.getEmail());
+
 		return result;
 	}
 
@@ -226,23 +311,20 @@ public class TenantService {
 		return result;
 	}
 
-	public Tenant reconstruct(Tenant tenant, BindingResult binding) {
+	public Tenant reconstructEditPersonalData(TenantForm tenantForm, BindingResult binding) {
 		Tenant result;
 
-		if (tenant.getId() == 0) {
-			result = tenant;
-		} else {
-			result = tenantRepository.findOne(tenant.getId());
+		result = tenantRepository.findOne(tenantForm.getId());
 
-			result.setName(tenant.getName());
-			result.setSurname(tenant.getSurname());
-			result.setEmail(tenant.getEmail());
-			result.setPhone(tenant.getPhone());
-			result.setPicture(tenant.getPicture());
+		result.setName(tenantForm.getName());
+		result.setSurname(tenantForm.getSurname());
+		result.setEmail(tenantForm.getEmail());
+		result.setPhone(tenantForm.getPhone());
+		result.setPicture(tenantForm.getPicture());
 
-			validator.validate(result, binding);
-		}
+		validator.validate(result, binding);
 
 		return result;
 	}
+
 }

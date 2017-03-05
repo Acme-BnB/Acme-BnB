@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -47,12 +46,11 @@ public class AuditorService {
 
 	public Auditor create() {
 
-		UserAccount userAccount = new UserAccount();
-		List<Authority> authorities = new ArrayList<Authority>();
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
 		Authority au = new Authority();
 		au.setAuthority("ADMIN");
-		authorities.add(au);
-		userAccount.setAuthorities(authorities);
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
 		Auditor result;
 		result = new Auditor();
@@ -120,6 +118,18 @@ public class AuditorService {
 		auditorRepository.delete(auditor);
 	}
 
+	// Other business methods ------------------------------------------
+
+	public Auditor findByPrincipal() {
+		Auditor result;
+		int userAccountId;
+
+		userAccountId = LoginService.getPrincipal().getId();
+		result = auditorRepository.findByUserAccountId(userAccountId);
+
+		return result;
+	}
+
 	// Form methods -----------------------------------------------------
 
 	public AuditorForm generateForm() {
@@ -130,7 +140,27 @@ public class AuditorService {
 		return result;
 	}
 
-	public Auditor reconstruct(AuditorForm auditorForm) {
+	public AuditorForm generateForm(Auditor auditor) {
+		AuditorForm result;
+
+		result = new AuditorForm();
+
+		result.setId(auditor.getId());
+		result.setUsername(auditor.getUserAccount().getUsername());
+		result.setPassword(auditor.getUserAccount().getPassword());
+		result.setPassword2(auditor.getUserAccount().getPassword());
+		result.setName(auditor.getName());
+		result.setAgreed(true);
+		result.setSurname(auditor.getSurname());
+		result.setPhone(auditor.getPhone());
+		result.setPicture(auditor.getPicture());
+		result.setEmail(auditor.getEmail());
+		result.setCompanyName(auditor.getCompanyName());
+
+		return result;
+	}
+
+	public Auditor reconstruct(AuditorForm auditorForm, BindingResult binding) {
 		Auditor result = create();
 
 		String password;
@@ -157,25 +187,24 @@ public class AuditorService {
 		result.setPicture(auditorForm.getPicture());
 		result.setCompanyName(auditorForm.getCompanyName());
 
+		validator.validate(result, binding);
+
 		return result;
 	}
 
-	public Auditor reconstruct(Auditor auditor, BindingResult binding) {
+	public Auditor reconstructEditPersonalData(AuditorForm auditorForm, BindingResult binding) {
 		Auditor result;
 
-		if (auditor.getId() == 0) {
-			result = auditor;
-		} else {
-			result = auditorRepository.findOne(auditor.getId());
+		result = auditorRepository.findOne(auditorForm.getId());
 
-			result.setName(auditor.getName());
-			result.setSurname(auditor.getSurname());
-			result.setEmail(auditor.getEmail());
-			result.setPhone(auditor.getPhone());
-			result.setPicture(auditor.getPicture());
+		result.setName(auditorForm.getName());
+		result.setSurname(auditorForm.getSurname());
+		result.setEmail(auditorForm.getEmail());
+		result.setPhone(auditorForm.getPhone());
+		result.setPicture(auditorForm.getPicture());
+		result.setCompanyName(auditorForm.getCompanyName());
 
-			validator.validate(result, binding);
-		}
+		validator.validate(result, binding);
 
 		return result;
 	}

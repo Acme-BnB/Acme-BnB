@@ -23,7 +23,7 @@ public class LessorForm {
 
 	// Attributes ----------------------------------------------------
 
-	private int			id, version;
+	private int			id;
 
 	private String		username;
 	private String		password;
@@ -53,13 +53,6 @@ public class LessorForm {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 	@Size(min = 5, max = 32)

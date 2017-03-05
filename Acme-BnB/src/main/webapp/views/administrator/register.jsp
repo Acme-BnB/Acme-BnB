@@ -20,31 +20,57 @@
 <form:form action="${requestURI}" modelAttribute="administratorForm">
 
 	<form:hidden path="id"/>
-	<form:hidden path="version"/>
 	
-	<acme:textbox code="administrator.username" path="username" />
-	<br/>
-	<acme:password code="administrator.password" path="password"/>
-	<br/>
-	<acme:password code="administrator.password2" path="password2"/>
-	<br/>
-	<acme:textbox code="administrator.name" path="name" />
-	<br/>
-	<acme:textbox code="administrator.surname" path="surname"/>
-	<br/>
-	<acme:textbox code="administrator.email" path="email"/>
-	<br/>
-	<acme:textbox code="administrator.phone" path="phone"/>
-	<br/>
-	<acme:textbox code="administrator.picture" path="picture"/>
-	<br/>
-	<form:checkbox path="agreed"/>
-	<form:label path="agreed">
-		<spring:message code="administrator.register.agree" />
-		<a href="misc/lopd.do"><spring:message code="administrator.register.agree.2"/></a>
-	</form:label>
-	<form:errors path="agreed" cssClass="error" />
-	<br/>
+	<jstl:choose>
+		<jstl:when test="${tipe eq 'personal' }">
+			<fieldset>
+				<legend align="left"><spring:message code="administrator.personal.info"/></legend>
+					<acme:textbox code="administrator.name" path="name" />
+					<br/>
+					<acme:textbox code="administrator.surname" path="surname"/>
+					<br/>
+					<acme:textbox code="administrator.email" path="email"/>
+					<br/>
+					<acme:textbox code="administrator.phone" path="phone"/>
+					<br/>
+					<acme:textbox code="administrator.picture" path="picture"/>
+					<br/>
+			</fieldset>
+		</jstl:when>
+		<jstl:otherwise>
+			<fieldset>
+				<legend align="left"><spring:message code="administrator.account.info"/></legend>
+					<acme:textbox code="administrator.username" path="username" />
+					<br/>
+					<acme:password code="administrator.password" path="password"/>
+					<br/>
+					<acme:password code="administrator.password2" path="password2"/>
+					<br/>
+					<form:checkbox path="agreed"/>
+					<form:label path="agreed">
+						<spring:message code="administrator.register.agree" />
+						<a href="misc/lopd.do"><spring:message code="administrator.register.agree.2"/></a>
+					</form:label>
+					<form:errors path="agreed" cssClass="error" />
+					<br/>
+			</fieldset>
+			<fieldset>
+				<legend align="left"><spring:message code="administrator.personal.info"/></legend>
+					<br/>
+					<acme:textbox code="administrator.name" path="name" />
+					<br/>
+					<acme:textbox code="administrator.surname" path="surname"/>
+					<br/>
+					<acme:textbox code="administrator.email" path="email"/>
+					<br/>
+					<acme:textbox code="administrator.phone" path="phone"/>
+					<br/>
+					<acme:textbox code="administrator.picture" path="picture"/>
+					<br/>
+			</fieldset>
+		</jstl:otherwise>
+	</jstl:choose>
+	
 	<acme:submit name="save" code="administrator.save"/>
 	<acme:cancel url="welcome/index.do" code="administrator.cancel"/>
 
