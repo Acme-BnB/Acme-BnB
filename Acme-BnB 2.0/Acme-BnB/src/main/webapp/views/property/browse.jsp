@@ -15,6 +15,9 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 
 
 <!-- Listing grid -->
@@ -55,8 +58,9 @@
 
 <security:authorize access="hasRole('AUDITOR')">
 	<display:column>
-		<a href="auditor/audit/create.do?propertyId=${row.id}"><spring:message code="property.add.audit" /></a>
+		<a href="auditor/audit/create.do?propertyId=${row.id}"><spring:message code="property.add.audit" /></a>		
 	</display:column>
+		
 </security:authorize>	
 
 </display:table>

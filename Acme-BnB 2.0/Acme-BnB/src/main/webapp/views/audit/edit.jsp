@@ -33,9 +33,9 @@
 	<br/>
 	<br/>
 	<acme:submit name="save" code="audit.save"/>
-	<jstl:if test="${auditForm.id !=0} ">
+	<jstl:if test="${id!=0}">
 			<acme:submit name="delete" code="audit.delete"/>
-	</jstl:if>
+		</jstl:if>
 	
 	<acme:cancel code="audit.cancel" url="auditor/audit/display.do" />
 		
