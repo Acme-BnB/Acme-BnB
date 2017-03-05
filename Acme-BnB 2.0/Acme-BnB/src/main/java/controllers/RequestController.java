@@ -14,6 +14,7 @@ import services.FeeService;
 import services.InvoiceService;
 import services.LessorService;
 import services.RequestService;
+import services.TenantService;
 import domain.Invoice;
 import domain.Lessor;
 import domain.Request;
@@ -35,6 +36,9 @@ public class RequestController {
 
 	@Autowired
 	private InvoiceService	invoiceService;
+
+	@Autowired
+	private TenantService	tenantService;
 
 
 	//Constructor----------------------

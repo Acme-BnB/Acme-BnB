@@ -46,16 +46,21 @@
 	
 	<spring:message code="attachment.url" var="url"/>
 	<display:column property="url" title="${url}" sortable="false" />	
+	
 <security:authorize
 	access="hasRole('AUDITOR')">
 	
-	<jstl:if test="${audit.auditor.userAccount.username == pageContext.request.remoteUser}">
+	<jstl:if test="${row.audit.draft == true && audit.auditor.userAccount.username == pageContext.request.remoteUser}">
 	<display:column>
-	<a href="auditor/attachment/delete.do?attachmentId=${row.id}"><spring:message code="audit.view.delete.Attachment" /></a>
+	<a href="auditor/attachment/delete.do?attachmentId=${row.id}"><spring:message code="audit.delete.Attachment" /></a>
 	</display:column>	
 	</jstl:if>
 </security:authorize>
 </display:table>
 
+	<jstl:if test="${row.audit.draft == true && audit.auditor.userAccount.username == pageContext.request.remoteUser}">
+			<input type="button" name="create" value="<spring:message code="audit.attachment" />"
+			onclick="javascript: window.location.replace('auditor/attachment/create.do?auditId=${audit.id}')" />
+	</jstl:if>
 
 </security:authorize>

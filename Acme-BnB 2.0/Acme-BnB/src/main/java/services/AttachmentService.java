@@ -60,18 +60,14 @@ public class AttachmentService {
 
 		public Collection<Attachment> findAll() {
 			Collection<Attachment> result;
-
 			result = attachmentRepository.findAll();
-			Assert.notNull(result);
 
 			return result;
 		}
 
 		public Attachment findOne(int attachmentId) {
 			Attachment result;
-
 			result = attachmentRepository.findOne(attachmentId);
-			Assert.notNull(result);
 
 			return result;
 		}
@@ -84,23 +80,12 @@ public class AttachmentService {
 			au.setAuthority("AUDITOR");
 			Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-			Assert.notNull(attachment);
-
-			Attachment result;
-
-			result = attachmentRepository.save(attachment);
-
-			return result;
-		}
-
-		public Attachment save2(Attachment attachment) {
-
-			Assert.notNull(attachment);
 			Attachment result;
 			result = attachmentRepository.save(attachment);
 
 			return result;
 		}
+
 
 		public void delete(Attachment attachment) {
 

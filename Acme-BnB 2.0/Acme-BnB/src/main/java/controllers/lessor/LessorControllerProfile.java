@@ -1,6 +1,8 @@
 
 package controllers.lessor;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import services.LessorService;
 import services.PropertyService;
 import services.RequestService;
+import services.SocialIdentityService;
 import domain.Lessor;
 import domain.Property;
 import domain.Request;
+import domain.SocialIdentity;
 import forms.LessorForm;
 
 @Controller
@@ -26,13 +30,15 @@ public class LessorControllerProfile {
 	//Services-------------------------
 
 	@Autowired
-	private LessorService	lessorService;
+	private LessorService			lessorService;
 
 	@Autowired
-	private PropertyService	propertyService;
+	private PropertyService			propertyService;
 
 	@Autowired
-	private RequestService	requestService;
+	private RequestService			requestService;
+
+	private SocialIdentityService	socialIdentityService;
 
 
 	//Constructor----------------------
@@ -74,53 +80,59 @@ public class LessorControllerProfile {
 		return result;
 	}
 
-		//List--------------------------
+	//List--------------------------
 
-		@RequestMapping(value="/display", method=RequestMethod.GET)
-		public ModelAndView display(@RequestParam int propertyId) {
-				ModelAndView result;
-				Property property;
-				Lessor lessor;
-				
-				property = propertyService.findOne(propertyId);
-				lessor=property.getLessor();
-				lessor = lessorService.encryptCreditCard(lessor);
-				result=new ModelAndView("lessor/display");
-				result.addObject("lessor", lessor);
-				result.addObject("comments", lessor.getcomments());
-				result.addObject("requestURI", "lessor/display.do");
-				return result;
-			}
-		
-		@RequestMapping(value="/displayL", method=RequestMethod.GET)
-		public ModelAndView display() {
-				ModelAndView result;
-				Lessor lessor;
-				
-				lessor = lessorService.findByPrincipal();
-				lessor = lessorService.encryptCreditCard(lessor);
-				result=new ModelAndView("lessor/display");
-				result.addObject("lessor", lessor);
-				result.addObject("comments", lessor.getcomments());
-				result.addObject("requestURI", "lessor/displayL.do");
-				return result;
-			}
-		
-		@RequestMapping(value="/displayById", method=RequestMethod.GET)
-		public ModelAndView displayById(@RequestParam int lessorId) {
-				ModelAndView result;
-				Lessor lessor;
-				
-				lessor = lessorService.findOne(lessorId);
-				lessor = lessorService.encryptCreditCard(lessor);
-				result=new ModelAndView("lessor/display");
-				result.addObject("lessor", lessor);
-				result.addObject("comments", lessor.getcomments());
-				result.addObject("requestURI", "lessor/displayById.do");
-				return result;
-			}
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam int propertyId) {
+		ModelAndView result;
+		Property property;
+		Lessor lessor;
 
-		
+		property = propertyService.findOne(propertyId);
+		lessor = property.getLessor();
+		lessor = lessorService.encryptCreditCard(lessor);
+		result = new ModelAndView("lessor/display");
+		result.addObject("lessor", lessor);
+		result.addObject("comments", lessor.getcomments());
+		result.addObject("requestURI", "lessor/display.do");
+		return result;
+	}
+
+	@RequestMapping(value = "/displayL", method = RequestMethod.GET)
+	public ModelAndView display() {
+		ModelAndView result;
+		Lessor lessor;
+
+		lessor = lessorService.findByPrincipal();
+		lessor = lessorService.encryptCreditCard(lessor);
+		result = new ModelAndView("lessor/display");
+		result.addObject("lessor", lessor);
+		result.addObject("comments", lessor.getcomments());
+		result.addObject("requestURI", "lessor/displayL.do");
+		Collection<SocialIdentity> socialIdentities;
+		socialIdentities = socialIdentityService.findByPrincipal2();
+
+		result.addObject("socialIdentities", socialIdentities);
+		return result;
+	}
+
+	@RequestMapping(value = "/displayById", method = RequestMethod.GET)
+	public ModelAndView displayById(@RequestParam int lessorId) {
+		ModelAndView result;
+		Lessor lessor;
+
+		lessor = lessorService.findOne(lessorId);
+		lessor = lessorService.encryptCreditCard(lessor);
+		result = new ModelAndView("lessor/display");
+		result.addObject("lessor", lessor);
+		result.addObject("comments", lessor.getcomments());
+		result.addObject("requestURI", "lessor/displayById.do");
+		Collection<SocialIdentity> socialIdentities;
+		socialIdentities = socialIdentityService.findByPrincipal2();
+
+		result.addObject("socialIdentities", socialIdentities);
+		return result;
+	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid LessorForm lessorForm, BindingResult binding) {
