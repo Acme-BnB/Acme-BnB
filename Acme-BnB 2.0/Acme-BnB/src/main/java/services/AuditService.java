@@ -19,9 +19,11 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Audit;
 import domain.Auditor;
+import domain.Finder;
 import domain.Property;
 
 import forms.AuditForm;
+import forms.FinderForm;
 
 
 @Service
@@ -138,7 +140,7 @@ public class AuditService {
 	public Collection<Audit> findByCreator(Auditor t) {
 		Collection<Audit> result;
 		result = auditRepository.findByCreator(t);
-		System.out.println(result);
+		
 		return result;
 	}
 	// Form methods --------------------------------
@@ -151,20 +153,33 @@ public class AuditService {
 				}
 				
 		public Audit reconstruct(AuditForm auditForm,  BindingResult binding){
-				Audit result = create();
-				Property property;					
-				property = propertyService.findOne(Integer.valueOf(auditForm.getPropertyId()));
-				
-				result.setProperty(property);
+				Audit result;
+				if(auditForm.getId() == 0){
+					result = create();
+					Property property;					
+					property = propertyService.findOne(Integer.valueOf(auditForm.getPropertyId()));
+					result.setProperty(property);
+				}else{
+					result=findOne(auditForm.getId());
+					
+				}
 				result.setText(auditForm.getText());
-				result.setDraft(auditForm.getDraft());
+				result.setDraft(true);
 				Date d=new Date(System.currentTimeMillis()-1000);
 				result.setWrittenMoment(d);
-					
-				
 				validator.validate(result, binding);
-					
 				return result;				
 				}
+		
+		public AuditForm transform(Audit audit){
+			AuditForm result=generateForm();
+			result.setId(audit.getId());
+			result.setDraft(audit.getDraft());
+			result.setPropertyId(audit.getProperty().getId());
+			result.setText(audit.getText());
+			result.setWrittenMoment(audit.getWrittenMoment());
+			return result;
+		}
+		
 
 }

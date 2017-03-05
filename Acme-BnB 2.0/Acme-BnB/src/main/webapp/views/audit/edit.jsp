@@ -28,12 +28,15 @@
 		<form:hidden path="id"/>
 		<acme:textarea code="audit.text" path="text"/>
 		<br/>
-		<acme:checkbox code="audit.draft" path="draft"/>
-		<br/>
+		
 		
 	<br/>
 	<br/>
 	<acme:submit name="save" code="audit.save"/>
+	<jstl:if test="${id!=0}">
+			<acme:submit name="delete" code="audit.delete"/>
+		</jstl:if>
+	
 	<acme:cancel code="audit.cancel" url="auditor/audit/display.do" />
 		
 		

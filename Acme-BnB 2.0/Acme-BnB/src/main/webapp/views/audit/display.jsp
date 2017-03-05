@@ -30,12 +30,23 @@
 		</tr>
 		<tr>
 			<th><spring:message code="audit.text"/></th>
+			
 		</tr>
 		<tr>
 			<td><jstl:out value="${audit.text}"/></td>
+			
 		</tr>
 	</tbody>
 </table>
+<display:table pagesize="5" class="displaytag" keepStatus="true" name="attachments" requestURI="${requestURI}" id="row">
+	
+	<!-- Action links -->
+	
+	<!-- Attributes -->
+	
+	<spring:message code="attachment.url" var="url"/>
+	<display:column property="url" title="${url}" sortable="false" />		
+</display:table>
 
 
 </security:authorize>

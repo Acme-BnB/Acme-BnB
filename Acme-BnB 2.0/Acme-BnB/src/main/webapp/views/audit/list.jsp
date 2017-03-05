@@ -38,7 +38,7 @@
 		<display:column>
 				<jstl:if test="${row.draft == true}">
 					<input type="button" name="final" value="<spring:message code="audit.final" />"
-			onclick="javascript: window.location.replace('audit/final.do?auditId=${row.id}')" />
+			onclick="javascript: window.location.replace('auditor/audit/final.do?auditId=${row.id}')" />
 				</jstl:if>
 		
 		</display:column>
@@ -50,6 +50,12 @@
 	<display:column>
 	<jstl:if test="${row.draft == true}">
 		<a href="auditor/audit/edit.do?auditId=${row.id}"><spring:message code="audit.view.edit" /></a>
+	</jstl:if>
+	</display:column>
+	
+	<display:column>
+	<jstl:if test="${row.draft == true}">
+		<a href="auditor/attachment/create.do?auditId=${row.id}"><spring:message code="audit.view.attachment" /></a>
 	</jstl:if>
 	</display:column>
 		
