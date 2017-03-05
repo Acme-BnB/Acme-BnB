@@ -44,20 +44,10 @@
 		</display:column>
 		
 	<display:column>
-		<a href="audit/display.do?auditId=${row.id}"><spring:message code="audit.view" /></a>
+		<input type="button" name="view" value="<spring:message code="audit.view" />"
+			onclick="javascript: window.location.replace('audit/display.do?auditId=${row.id}')" />
 	</display:column>
 	
-	<display:column>
-	<jstl:if test="${row.draft == true}">
-		<a href="auditor/audit/edit.do?auditId=${row.id}"><spring:message code="audit.view.edit" /></a>
-	</jstl:if>
-	</display:column>
-	
-	<display:column>
-	<jstl:if test="${row.draft == true}">
-		<a href="auditor/attachment/create.do?auditId=${row.id}"><spring:message code="audit.view.attachment" /></a>
-	</jstl:if>
-	</display:column>
 		
 	</display:table>
 </security:authorize>

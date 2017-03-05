@@ -57,6 +57,7 @@ public class AuditorAttachmentController extends AbstractController{
 		} else {
 			try {
 				attachment = attachmentService.reconstruct(attachmentForm, binding);
+				attachmentService.save(attachment);
 				result = new ModelAndView("audit/display");
 				result.addObject("audit", attachment.getAudit());
 				result.addObject("attachments", attachment.getAudit().getAttachments());

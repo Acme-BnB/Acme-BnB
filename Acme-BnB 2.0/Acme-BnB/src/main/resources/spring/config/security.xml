@@ -46,7 +46,11 @@
 		
 	
 		<security:intercept-url pattern="/auditor/audit/**" access="hasRole('AUDITOR')" />
-		
+		<security:intercept-url pattern="/auditor/attachment/delete.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/auditor/attachment/create.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/auditor/attachment/edit.do" access="hasRole('AUDITOR')" />
+	
+	
 		<security:intercept-url pattern="/tenant/request/create.do" access="hasRole('TENANT')" />
 		
 		<security:intercept-url pattern="/lessor/displayByReq.do" access="hasRole('TENANT')" /> 
