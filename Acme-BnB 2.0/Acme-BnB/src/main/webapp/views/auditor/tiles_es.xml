@@ -20,6 +20,11 @@
 		<put-attribute name="title" value="Registrar un auditor" />
 		<put-attribute name="body" value="/views/auditor/register.jsp" />
 	</definition>
+	
+	<definition name="auditor/display" extends="master.page">	
+		<put-attribute name="title" value="Mostrar un auditor" />
+		<put-attribute name="body" value="/views/auditor/display.jsp" />
+	</definition>
 
 	<definition name="auditor/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar perfil de auditor" />

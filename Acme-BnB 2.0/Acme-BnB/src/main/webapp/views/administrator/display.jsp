@@ -13,30 +13,30 @@
 	<tbody>
 		<tr>
 			<td>
-				<img src="${tenant.picture}" width="100" height="100" >
+				<img src="${administrator.picture}" width="100" height="100" >
 				
 			</td>
 		</tr>
 		<tr>
-			<th><spring:message code="tenant.name"/></th>
-			<th><spring:message code="tenant.surname"/></th>
+			<th><spring:message code="administrator.name"/></th>
+			<th><spring:message code="administrator.surname"/></th>
 			
 		</tr>
 		<tr>
-			<td><jstl:out value="${tenant.name}"/></td>
-			<td><jstl:out value="${tenant.surname}"/></td>
+			<td><jstl:out value="${administrator.name}"/></td>
+			<td><jstl:out value="${administrator.surname}"/></td>
 		</tr>
 		<tr>
-			<th><spring:message code="tenant.email"/></th>
-			<th><spring:message code="tenant.phone"/></th>
+			<th><spring:message code="administrator.email"/></th>
+			<th><spring:message code="administrator.phone"/></th>
 		</tr>
 		<tr>
-			<td><jstl:out value="${tenant.email}"/></td>
-			<td><jstl:out value="${tenant.phone}"/></td>
+			<td><jstl:out value="${administrator.email}"/></td>
+			<td><jstl:out value="${administrator.phone}"/></td>
 		</tr>
 	</tbody>
 </table>
-
+	
 <display:table name="socialIdentities"
 	id="row"
 	class="displaytag"
@@ -56,23 +56,3 @@
 	</security:authorize>
 
 </display:table>
-			
-<display:table pagesize="10" class="displaytag" keepStatus="true" name="comments" id="row">	
-	<spring:message code="tenant.comment.title" var="titleHeader"/>
-	<display:column title="${titleHeader }" property="title"/>
-	
-	<spring:message code="tenant.comment.postedMoment" var="postedMomentHeader"/>
-	<display:column title="${postedMomentHeader}" sortable="true"><fmt:formatDate value="${row.postedMoment }" pattern="dd/MM/yyyy HH:mm" /></display:column>
-	
-	<spring:message code="tenant.comment.text" var="textHeader"/>
-	<display:column title="${textHeader }" property="text"/>
-	
-	<spring:message code="tenant.comment.stars" var="starsHeader"/>
-	<display:column title="${starsHeader }" property="stars"/>
-</display:table>
-
-<security:authorize access="hasAnyRole('LESSOR','TENANT')">
-	<input type="button" name="addComment"
-			value="Boton"/>
-<br/>
-</security:authorize>

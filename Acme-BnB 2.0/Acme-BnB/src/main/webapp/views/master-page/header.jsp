@@ -91,6 +91,13 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+			<li><a class="fNiv"><spring:message	code="master.page.socialIdentity" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="socialIdentity/list.do"><spring:message code="master.page.socialIdentity.list"/></a></li>
+					<li><a href="socialIdentity/create.do"><spring:message code="master.page.socialIdentity.create"/></a></li>
+				</ul>
+			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 
@@ -107,9 +114,11 @@
 						<li><a href="tenant/edit.do"><spring:message code="master.page.edit.personal" /></a></li>
 					</security:authorize>
 					<security:authorize access="hasRole('ADMIN')">
+						<li><a href="administrator/displayAd.do"><spring:message code="master.page.profile" /></a></li>
 						<li><a href="administrator/edit.do"><spring:message code="master.page.edit.personal" /></a></li>
 					</security:authorize>	
 					<security:authorize access="hasRole('AUDITOR')">
+						<li><a href="auditor/displayA.do"><spring:message code="master.page.profile" /></a></li>
 						<li><a href="auditor/edit.do"><spring:message code="master.page.edit.personal" /></a></li>
 					</security:authorize>			
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
