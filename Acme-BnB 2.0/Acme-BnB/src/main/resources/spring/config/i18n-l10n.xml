@@ -38,6 +38,7 @@
 		<value>/views/fee/messages</value>
 		<value>/views/value/messages</value>
 		<value>/views/comment/messages</value>
+		<value>/views/vat/messages</value>
 		
 	</util:list>
 

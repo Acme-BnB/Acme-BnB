@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.FeeService;
+import services.VatService;
 import controllers.AbstractController;
-import domain.Fee;
-import forms.FeeForm;
+import domain.Vat;
+import forms.VatForm;
 
 @Controller
-@RequestMapping("/administrator/fee")
-public class AdministratorFeeController extends AbstractController {
+@RequestMapping("/administrator/vat")
+public class AdministratorVatController extends AbstractController {
 
 	// Services ---------------------------------------------
 
 	@Autowired
-	private FeeService	feeService;
+	private VatService	vatService;
 
 
 	// Constructor ------------------------------------------
 
-	public AdministratorFeeController() {
+	public AdministratorVatController() {
 		super();
 	}
 
@@ -36,31 +36,31 @@ public class AdministratorFeeController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit() {
 		ModelAndView result;
-		Fee fee = feeService.findOne(1);
+		Vat vat = vatService.findOne(2);
 
-		FeeForm feeForm = feeService.generateForm(fee);
+		VatForm vatForm = vatService.generateForm(vat);
 
-		result = new ModelAndView("fee/edit");
-		result.addObject("feeForm", feeForm);
+		result = new ModelAndView("vat/edit");
+		result.addObject("vatForm", vatForm);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid FeeForm feeForm, BindingResult binding) {
+	public ModelAndView save(@Valid VatForm vatForm, BindingResult binding) {
 		ModelAndView result;
-		Fee fee;
+		Vat vat;
 
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(feeForm);
+			result = createEditModelAndView(vatForm);
 		} else {
 			try {
-				fee = feeService.reconstruct(feeForm, binding);
-				feeService.save(fee);
+				vat = vatService.reconstruct(vatForm, binding);
+				vatService.save(vat);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (Throwable oops) {
 				String msgCode = "lessor.register.error";
-				result = createEditModelAndView(feeForm, msgCode);
+				result = createEditModelAndView(vatForm, msgCode);
 			}
 		}
 
@@ -69,20 +69,20 @@ public class AdministratorFeeController extends AbstractController {
 
 	// Ancillary methods ---------------------------------------
 
-	protected ModelAndView createEditModelAndView(FeeForm feeForm) {
+	protected ModelAndView createEditModelAndView(VatForm vatForm) {
 		ModelAndView result;
 
-		result = createEditModelAndView(feeForm, null);
+		result = createEditModelAndView(vatForm, null);
 
 		return result;
 
 	}
 
-	protected ModelAndView createEditModelAndView(FeeForm feeForm, String message) {
+	protected ModelAndView createEditModelAndView(VatForm vatForm, String message) {
 		ModelAndView result;
 
-		result = new ModelAndView("fee/edit");
-		result.addObject("feeForm", feeForm);
+		result = new ModelAndView("vat/edit");
+		result.addObject("feeForm", vatForm);
 		result.addObject("message", message);
 
 		return result;
