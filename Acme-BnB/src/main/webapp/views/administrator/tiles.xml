@@ -21,9 +21,28 @@
 		<put-attribute name="body" value="/views/administrator/register.jsp" />
 	</definition>
 	
-	<definition name="administrator/action-2" extends="master.page">	
-		<put-attribute name="title" value="Administrator: Action 2" />
-		<put-attribute name="body" value="/views/administrator/action-2.jsp" />
+	<definition name="administrator/dashboard" extends="master.page">	
+		<put-attribute name="title" value="Show Dashboard" />
+		<put-attribute name="body" value="/views/administrator/dashboard.jsp" />
 	</definition>
 	
+	<definition name="administrator/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit administrador profile" />
+		<put-attribute name="body" value="/views/administrator/register.jsp" />
+	</definition>
+	
+	<definition name="administrator/dashboardLessor" extends="master.page">	
+		<put-attribute name="title" value="Show Dashboard of Lessor Information" />
+		<put-attribute name="body" value="/views/administrator/dashboardLessor.jsp" />
+	</definition>
+	
+	<definition name="administrator/lessor" extends="master.page">	
+		<put-attribute name="title" value="Lessor list" />
+		<put-attribute name="body" value="/views/administrator/list.jsp" />
+	</definition>
+	
+	<definition name="administrator/display" extends="master.page"> 
+	 	 <put-attribute name="title" value="Display administrator" />
+	 	 <put-attribute name="body" value="/views/administrator/display.jsp" />
+	 </definition>
 </tiles-definitions>

@@ -15,6 +15,9 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 
 
 <!-- Listing grid -->
@@ -43,10 +46,22 @@
 	<display:column>
 		<a href="lessor/display.do?propertyId=${row.id}"><spring:message code="property.view.lessor" /></a>
 	</display:column>
-	
 	<display:column>
 		<a href="property/display.do?propertyId=${row.id}"><spring:message code="property.view" /></a>
 	</display:column>
 	
-	
+<security:authorize access="isAuthenticated()">
+	<display:column>
+		<a href="audit/browse.do?propertyId=${row.id}"><spring:message code="property.view.audits" /></a>
+	</display:column>
+</security:authorize>
+
+<security:authorize access="hasRole('AUDITOR')">
+	<display:column>
+		<a href="auditor/audit/create.do?propertyId=${row.id}"><spring:message code="property.add.audit" /></a>		
+	</display:column>
+</security:authorize>	
+
 </display:table>
+	<input type="button" name="orderByRequest" value="<spring:message code="property.order" />"
+			onclick="javascript: window.location.replace('property/browseByReq.do')" />

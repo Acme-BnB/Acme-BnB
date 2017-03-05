@@ -41,7 +41,7 @@ public class Property extends DomainEntity {
 	}
 
 	@Min(0)
-	@Digits(fraction = 2, integer = 2)
+	@Digits(fraction = 2, integer = 3)
 	public Double getRate() {
 		return rate;
 	}

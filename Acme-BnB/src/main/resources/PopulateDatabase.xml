@@ -684,59 +684,49 @@
 	<!-- Request -->
 	
 	<bean id="request1" class="domain.Request">
-		<property name="checkIn" value="05/05/2016 16:00" />
-		<property name="checkOut" value="05/08/2016 16:00" />	
-		<property name="smoker" value="true" />
+		<property name="checkIn" value="05/05/2016" />
+		<property name="checkOut" value="05/08/2016"/>	
+		<property name="smoker" value="true"/>
 		<property name="creditCard" ref="creditCard1" />
 		<property name="status" value="PENDING"/>
-		<property name="invoice" ref="invoice1"/>
 		<property name="property" ref="property1"/>
 		<property name="tenant" ref="tenant1"/>
 	</bean>
 	
 	<bean id="request2" class="domain.Request">
-		<property name="checkIn" value="08/08/2016 16:00" />
-		<property name="checkOut" value="09/08/2016 16:00" />	
+		<property name="checkIn" value="08/08/2016" />
+		<property name="checkOut" value="09/08/2016" />	
 		<property name="smoker" value="true" />
 		<property name="creditCard" ref="creditCard1" />
 		<property name="status" value="ACCEPTED"/>
-		<property name="invoice" ref="invoice2"/>
+		<property name="invoice" ref="invoice1"/>
 		<property name="property" ref="property1"/>
 		<property name="tenant" ref="tenant1"/>
 	</bean>
 	
 	<bean id="request3" class="domain.Request">
-		<property name="checkIn" value="08/08/2016 16:00" />
-		<property name="checkOut" value="09/08/2016 16:00" />	
+		<property name="checkIn" value="08/08/2016" />
+		<property name="checkOut" value="09/08/2016" />	
 		<property name="smoker" value="true" />
 		<property name="creditCard" ref="creditCard1" />
 		<property name="status" value="ACCEPTED"/>
-		<property name="invoice" ref="invoice3"/>
+		<property name="invoice" ref="invoice2"/>
 		<property name="property" ref="property2"/>
 		<property name="tenant" ref="tenant2"/>
 	</bean>
 	
 	<bean id="request4" class="domain.Request">
-		<property name="checkIn" value="08/08/2016 16:00" />
-		<property name="checkOut" value="09/08/2016 16:00" />	
+		<property name="checkIn" value="08/08/2016" />
+		<property name="checkOut" value="09/08/2016" />	
 		<property name="smoker" value="true" />
 		<property name="creditCard" ref="creditCard1" />
 		<property name="status" value="ACCEPTED"/>
-		<property name="invoice" ref="invoice4"/>
+		<property name="invoice" ref="invoice3"/>
 		<property name="property" ref="property3"/>
 		<property name="tenant" ref="tenant1"/>
 	</bean>
 
-	<bean id="request5" class="domain.Request">
-		<property name="checkIn" value="10/10/2016 16:00" />
-		<property name="checkOut" value="20/10/2016 16:00" />	
-		<property name="smoker" value="true" />
-		<property name="creditCard" ref="creditCard1" />
-		<property name="status" value="ACCEPTED"/>
-		<property name="invoice" ref="invoice4"/>
-		<property name="property" ref="property3"/>
-		<property name="tenant" ref="tenant1"/>
-	</bean>
+	
 	
 	<!-- Audit -->
 	
@@ -767,11 +757,12 @@
 	<!-- Invoice -->
 	
 	<bean id="invoice1" class="domain.Invoice">
-		<property name="issuedMoment" value="08/05/2016 10:56" />
-		<property name="vatNumber" value="ES78451578" />	
-		<property name="information" value="Factura 30" />
-		<property name="detail" value="Tienes que pagar 100 euros" />
+		<property name="issuedMoment" value="05/05/2016 10:56" />
+		<property name="vatNumber" value="ES78451578" />		
+		<property name="information" value="Factura 28" />
+		<property name="detail" value="Tienes que pagar 40 euros" />
 		<property name="amountDue" value="40.0" />
+		
 	</bean>
 	
 	<bean id="invoice2" class="domain.Invoice">
@@ -784,15 +775,6 @@
 	</bean>
 	
 	<bean id="invoice3" class="domain.Invoice">
-		<property name="issuedMoment" value="05/05/2016 10:56" />
-		<property name="vatNumber" value="ES78451578" />		
-		<property name="information" value="Factura 28" />
-		<property name="detail" value="Tienes que pagar 40 euros" />
-		<property name="amountDue" value="40.0" />
-		
-	</bean>
-	
-	<bean id="invoice4" class="domain.Invoice">
 		<property name="issuedMoment" value="05/05/2016 10:56" />
 		<property name="vatNumber" value="ES78451578" />	
 		<property name="information" value="Factura 65" />

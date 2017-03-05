@@ -6,12 +6,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.Credentials;
 import services.AuditorService;
 import domain.Auditor;
 import forms.AuditorForm;
@@ -35,13 +33,12 @@ public class AuditorRegisterController extends AbstractController {
 	// Creation ------------------------------------------------
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView create(@Valid @ModelAttribute Credentials credentials) {
+	public ModelAndView create() {
 		ModelAndView result;
 		AuditorForm auditorForm;
 
 		auditorForm = auditorService.generateForm();
 		result = createEditModelAndView(auditorForm);
-		result.addObject("credentials", credentials);
 
 		return result;
 	}
@@ -50,14 +47,14 @@ public class AuditorRegisterController extends AbstractController {
 	public ModelAndView save(@Valid AuditorForm auditorForm, BindingResult binding) {
 		ModelAndView result;
 		Auditor auditor;
-		Credentials credentials = new Credentials();
+
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(auditorForm);
 		} else {
 			try {
-				auditor = auditorService.reconstruct(auditorForm);
+				auditor = auditorService.reconstruct(auditorForm, binding);
 				auditorService.save(auditor);
-				result = new ModelAndView("redirect:../security/login.do");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (Throwable oops) {
 				String msgCode = "auditor.register.error";
 				if (oops.getMessage().equals("notEqualPassword")) {
@@ -67,7 +64,7 @@ public class AuditorRegisterController extends AbstractController {
 						msgCode = "auditor.register.agreedNotAccepted";
 					}
 				}
-				result = createEditModelAndView(auditorForm, msgCode, credentials);
+				result = createEditModelAndView(auditorForm, msgCode);
 			}
 		}
 
@@ -79,21 +76,19 @@ public class AuditorRegisterController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(AuditorForm auditorForm) {
 		ModelAndView result;
-		Credentials credentials = new Credentials();
 
-		result = createEditModelAndView(auditorForm, null, credentials);
+		result = createEditModelAndView(auditorForm, null);
 
 		return result;
 
 	}
 
-	protected ModelAndView createEditModelAndView(AuditorForm auditorForm, String message, @Valid @ModelAttribute Credentials credentials) {
+	protected ModelAndView createEditModelAndView(AuditorForm auditorForm, String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("auditor/register");
 		result.addObject("auditorForm", auditorForm);
 		result.addObject("message", message);
-		result.addObject("credentials", credentials);
 
 		return result;
 

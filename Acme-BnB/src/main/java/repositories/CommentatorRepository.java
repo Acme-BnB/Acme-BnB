@@ -14,8 +14,8 @@ public interface CommentatorRepository extends JpaRepository<Commentator, Intege
 	@Query("select c from Commentator c where c.name like %?1%")
 	Collection<Commentator> findByKey(String key);
 	
-	@Query("select c from Commentator c where c.userAccount.id=?1")
-	Commentator findByUserAccountId(int id);
+	@Query("select c from Commentator c where c.userAccount.username like ?1")
+	Commentator findByUserAccount(String userName);
 	
 	
 }

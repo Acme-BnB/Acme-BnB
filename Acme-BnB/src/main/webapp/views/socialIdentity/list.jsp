@@ -16,3 +16,27 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<display:table name="socialIdentities"
+	id="row"
+	class="displaytag"
+	pagesize="5"
+	requestURI="${requestURI}" >
+	
+	<security:authorize access="isAuthenticated()">
+						
+	<spring:message code="socialIdentity.nick" var="nickHeader" />
+	<display:column property="nick" title="${nickHeader}" sortable="true"/>
+	
+	<spring:message code="socialIdentity.socialNetwork" var="socialNetworkHeader" />
+	<display:column property="socialNetwork" title="${socialNetworkHeader}" sortable="true"/>
+	
+	<spring:message code="socialIdentity.profileURL" var="profileURLHeader" />
+	<display:column property="profileURL" title="${profileURLHeader}" sortable="false"/>
+	
+	<display:column>
+		<a href="socialIdentity/edit.do?socialIdentityId=${row.id}"><spring:message code="socialIdentity.edit" /></a>
+	</display:column>			
+		
+	</security:authorize>
+
+</display:table>

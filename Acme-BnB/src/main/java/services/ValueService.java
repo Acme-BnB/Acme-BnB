@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ValueRepository;
+import domain.Property;
 import domain.Value;
+import forms.ValueForm;
 
 @Service
 @Transactional
@@ -23,6 +27,12 @@ public class ValueService {
 
 	// Supporting services ----------------------------------------------------
 
+	@Autowired
+	private Validator validator;
+	
+	@Autowired
+	private PropertyService propertyService;
+	
 	// Constructors -----------------------------------------------------------
 
 	public ValueService() {
@@ -75,4 +85,45 @@ public class ValueService {
 
 		valueRepository.delete(value);
 	}
+	
+	// Form methods ------------------------------------------------
+
+		public ValueForm generateForm() {
+			ValueForm result;
+
+			result = new ValueForm();
+			return result;
+		}
+
+		public ValueForm generateForm(Value value) {
+			ValueForm result;
+
+			result = new ValueForm();
+
+			result.setAttribute(value.getAttribute());
+			result.setText(value.getText());
+			result.setPropertyId(value.getProperty().getId());
+
+			return result;
+		}
+
+		public Value reconstruct(ValueForm valueForm, BindingResult binding) {
+
+			Value result = create();
+			
+			Property property;
+			
+			property = propertyService.findOne(valueForm.getPropertyId());
+
+			result.setAttribute(valueForm.getAttribute());
+			result.setText(valueForm.getText());
+			result.setProperty(property);
+
+			validator.validate(result, binding);
+
+			return result;
+
+		}
+
+
 }

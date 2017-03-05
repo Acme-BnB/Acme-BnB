@@ -35,6 +35,14 @@
 		<value>/views/attribute/messages</value>
 		<value>/views/request/messages</value>
 		<value>/views/socialIdentity/messages</value>
+		<value>/views/fee/messages</value>
+		<value>/views/value/messages</value>
+		<value>/views/comment/messages</value>
+		<value>/views/attachment/messages</value>
+		<value>/views/vat/messages</value>
+		<value>/views/invoice/messages</value>
+		
+		
 	</util:list>
 
 </beans>
