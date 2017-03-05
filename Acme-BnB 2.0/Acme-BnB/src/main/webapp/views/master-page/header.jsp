@@ -22,7 +22,13 @@
 		<li><a href="property/browse.do"><spring:message code="master.page.browseProperty" /></a></li>
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
-		<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
+		<li><a class="fNiv"><spring:message	code="master.page.administrator.dashboard2" /></a>
+				<ul>
+					<li class="arrow"></li>
+						<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
+						<li><a href="administrator/lessor.do"><spring:message code="master.page.administrator.dashboard.lessor"/></a></li>
+				</ul>
+		</li>
 		<li><a href="administrator/fee/edit.do"><spring:message code="master.page.administrator.fee" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>

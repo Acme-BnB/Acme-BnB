@@ -27,9 +27,9 @@ public class AttributeService {
 
 	@Autowired
 	private AttributeRepository	attributeRepository;
-	
+
 	@Autowired
-	private Validator	validator;
+	private Validator			validator;
 
 
 	// Supporting services ----------------------------------------------------
@@ -117,45 +117,50 @@ public class AttributeService {
 
 		attributeRepository.delete(attribute);
 	}
-	public AttributeForm generateForm(){
+	public AttributeForm generateForm() {
 		AttributeForm result;
-		
+
 		result = new AttributeForm();
 		return result;
 	}
-	
-	public Attribute reconstruct(AttributeForm attributeForm,  BindingResult binding){
+
+	public Attribute reconstruct(AttributeForm attributeForm, BindingResult binding) {
 		Attribute result = create();
-		
-		
+
 		result.setId(attributeForm.getId());
 		result.setName(attributeForm.getName());
 		validator.validate(result, binding);
-		
+
 		return result;
 	}
-	
-	public Attribute reconstruct(Attribute attribute, BindingResult binding){
+
+	public Attribute reconstruct(Attribute attribute, BindingResult binding) {
 		Attribute result;
-		
-		if(attribute.getId() == 0){
+
+		if (attribute.getId() == 0) {
 			result = attribute;
-			
-		}else{
+
+		} else {
 			result = attributeRepository.findOne(attribute.getId());
-			
+
 			result.setName(attribute.getName());
-			
-			
+
 			validator.validate(result, binding);
 		}
-		
+
 		return result;
 	}
-	
-	public AttributeForm transform(Attribute attribute){
-		AttributeForm result=generateForm();
+
+	public AttributeForm transform(Attribute attribute) {
+		AttributeForm result = generateForm();
 		result.setName(attribute.getName());
+		return result;
+	}
+
+	// Other businnes methods ----------------------------------------------------
+
+	public Collection<Attribute> findAttributesOrderByNumberTimesUsed() {
+		Collection<Attribute> result = attributeRepository.findAttributesOrderByNumberTimesUsed();
 		return result;
 	}
 

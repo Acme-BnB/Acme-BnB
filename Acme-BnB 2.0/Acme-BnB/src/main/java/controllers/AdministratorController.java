@@ -1,6 +1,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -11,15 +12,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Credentials;
+import services.ActorService;
 import services.AdministratorService;
+import services.AttributeService;
 import services.FinderService;
+import services.InvoiceService;
 import services.LessorService;
+import services.PropertyService;
+import services.RequestService;
 import services.TenantService;
 import domain.Administrator;
+import domain.Attribute;
 import domain.Lessor;
+import domain.Property;
 import domain.Tenant;
 import forms.AdministratorForm;
 
@@ -40,6 +49,21 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private FinderService			finderService;
+
+	@Autowired
+	private PropertyService			propertyService;
+
+	@Autowired
+	private AttributeService		attributeService;
+
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private RequestService			requestService;
+
+	@Autowired
+	private InvoiceService			invoiceService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -117,6 +141,16 @@ public class AdministratorController extends AbstractController {
 
 		Collection<Double> ammrF = finderService.findAvgMinMaxResultPerFinder();
 
+		Collection<Double> mamAP = propertyService.findMinAvgMaxAuditsPerProperty();
+		Collection<Attribute> asd = attributeService.findAttributesOrderByNumberTimesUsed();
+
+		Collection<Double> mamSi = actorService.minAvgMaxSocialIdentitiesPerActor();
+		Collection<Double> mamIi = requestService.minAvgMAxInvoicesIssued();
+		Double aMI = invoiceService.findTotalAmountOfInvoice();
+		Collection<Double> oMVSzL = new ArrayList<Double>();
+		oMVSzL.add(propertyService.findAvgRequestForPropertiesWithOneOrMoreAudit());
+		oMVSzL.add(propertyService.findAvgRequestForPropertiesWithZeroAudit());
+
 		result = new ModelAndView("administrator/dashboard");
 
 		result.addObject("adrL", adrL);
@@ -136,10 +170,55 @@ public class AdministratorController extends AbstractController {
 
 		result.addObject("ammrF", ammrF);
 
+		result.addObject("mamAP", mamAP);
+		result.addObject("asd", asd);
+
+		result.addObject("mamSi", mamSi);
+		result.addObject("mamIi", mamIi);
+		result.addObject("aMI", aMI);
+		result.addObject("oMVSzL", oMVSzL);
+
+		return result;
+
+	}
+	@RequestMapping(value = "/lessor", method = RequestMethod.GET)
+	public ModelAndView listLessor() {
+
+		ModelAndView result;
+
+		Collection<Lessor> lessors = lessorService.findAll();
+
+		result = new ModelAndView("administrator/lessor");
+		result.addObject("lessor", lessors);
+
 		return result;
 
 	}
 
+	@RequestMapping(value = "/dashboardLessor", method = RequestMethod.GET)
+	public ModelAndView dashboardLessor(@RequestParam int lessorId) {
+
+		ModelAndView result;
+		String lessor = lessorService.findOne(lessorId).getUserAccount().getUsername();
+
+		Collection<Property> psA = propertyService.findPropertiesOfALessorOrderByNumberAudit(lessorId);
+		Collection<Property> psR = propertyService.findPropertiesOfALessorOrderByNumberRequest(lessorId);
+		Collection<Property> psAp = propertyService.findPropertiesOfALessorOrderByNumberRequestAccepted(lessorId);
+		Collection<Property> psDn = propertyService.findPropertiesOfALessorOrderByNumberRequestDenied(lessorId);
+		Collection<Property> psPn = propertyService.findPropertiesOfALessorOrderByNumberRequestPending(lessorId);
+
+		result = new ModelAndView("administrator/dashboardLessor");
+
+		result.addObject("psA", psA);
+		result.addObject("psR", psR);
+		result.addObject("psAp", psAp);
+		result.addObject("psDn", psDn);
+		result.addObject("psPn", psPn);
+		result.addObject("lessor", lessor);
+
+		return result;
+
+	}
 	// Ancillary methods ---------------------------------------
 
 	protected ModelAndView createEditModelAndView(AdministratorForm administratorForm) {

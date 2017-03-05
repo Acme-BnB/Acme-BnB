@@ -86,10 +86,7 @@ public class LessorService {
 
 	public Lessor findOne(int lessorId) {
 		Lessor result;
-
 		result = lessorRepository.findOne(lessorId);
-		Assert.notNull(result);
-
 		return result;
 	}
 

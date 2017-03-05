@@ -16,4 +16,13 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 	@Query("select a from Actor a join a.userAccount us where us.username = ?1")
 	Actor findActorByUsername(String username);
 
+	@Query("select min(a.socialIdentities.size) from Actor a")
+	Double findMinSocialIdentitiesPerACtor();
+
+	@Query("select avg(a.socialIdentities.size) from Actor a")
+	Double findAvgSocialIdentitiesPerACtor();
+
+	@Query("select max(a.socialIdentities.size) from Actor a")
+	Double findMaxSocialIdentitiesPerACtor();
+
 }

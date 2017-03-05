@@ -54,6 +54,7 @@ public class LessorControllerProfile {
 		result = new ModelAndView("lessor/display");
 		result.addObject("lessor", lessor);
 		result.addObject("comments", lessor.getcomments());
+		result.addObject("requestURI", "lessor/displayByReq.do");
 		return result;
 	}
 
@@ -87,6 +88,7 @@ public class LessorControllerProfile {
 				result=new ModelAndView("lessor/display");
 				result.addObject("lessor", lessor);
 				result.addObject("comments", lessor.getcomments());
+				result.addObject("requestURI", "lessor/display.do");
 				return result;
 			}
 		
@@ -100,6 +102,21 @@ public class LessorControllerProfile {
 				result=new ModelAndView("lessor/display");
 				result.addObject("lessor", lessor);
 				result.addObject("comments", lessor.getcomments());
+				result.addObject("requestURI", "lessor/displayL.do");
+				return result;
+			}
+		
+		@RequestMapping(value="/displayById", method=RequestMethod.GET)
+		public ModelAndView displayById(@RequestParam int lessorId) {
+				ModelAndView result;
+				Lessor lessor;
+				
+				lessor = lessorService.findOne(lessorId);
+				lessor = lessorService.encryptCreditCard(lessor);
+				result=new ModelAndView("lessor/display");
+				result.addObject("lessor", lessor);
+				result.addObject("comments", lessor.getcomments());
+				result.addObject("requestURI", "lessor/displayById.do");
 				return result;
 			}
 

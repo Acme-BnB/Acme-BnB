@@ -43,6 +43,7 @@ public class TenantControllerProfile {
 		result = new ModelAndView("tenant/display");
 		result.addObject("tenant", tenant);
 		result.addObject("comments", tenant.getcomments());
+		result.addObject("requestURI", "tenant/display.do");
 		return result;
 	}
 
@@ -55,6 +56,7 @@ public class TenantControllerProfile {
 		result = new ModelAndView("tenant/display");
 		result.addObject("tenant", tenant);
 		result.addObject("comments", tenant.getcomments());
+		result.addObject("requestURI", "tenant/displayT.do");
 		return result;
 	}
 
