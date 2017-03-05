@@ -1,6 +1,8 @@
 
 package controllers.tenant;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.SocialIdentityService;
 import services.TenantService;
+import domain.SocialIdentity;
 import domain.Tenant;
 import forms.TenantForm;
 
@@ -22,7 +26,10 @@ public class TenantControllerProfile {
 	//Services-------------------------
 
 	@Autowired
-	private TenantService	tenantService;
+	private TenantService			tenantService;
+
+	@Autowired
+	private SocialIdentityService	socialIdentityService;
 
 
 	//Constructor----------------------
@@ -52,8 +59,12 @@ public class TenantControllerProfile {
 		ModelAndView result;
 		Tenant tenant;
 
+		Collection<SocialIdentity> socialIdentities;
+		socialIdentities = socialIdentityService.findByPrincipal2();
+
 		tenant = tenantService.findByPrincipal();
 		result = new ModelAndView("tenant/display");
+		result.addObject("socialIdentities", socialIdentities);
 		result.addObject("tenant", tenant);
 		result.addObject("comments", tenant.getcomments());
 		result.addObject("requestURI", "tenant/displayT.do");

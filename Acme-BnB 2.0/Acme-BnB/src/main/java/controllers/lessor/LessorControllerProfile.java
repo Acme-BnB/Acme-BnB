@@ -1,6 +1,7 @@
 
 package controllers.lessor;
 
+import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 import services.LessorService;
 import services.PropertyService;
 import services.RequestService;
+import services.SocialIdentityService;
 import domain.Lessor;
 import domain.Property;
 import domain.Request;
+import domain.SocialIdentity;
 import forms.LessorForm;
 
 @Controller
@@ -33,6 +36,7 @@ public class LessorControllerProfile {
 
 	@Autowired
 	private RequestService	requestService;
+	private SocialIdentityService	socialIdentityService;
 
 
 	//Constructor----------------------
@@ -119,8 +123,11 @@ public class LessorControllerProfile {
 				result.addObject("requestURI", "lessor/displayById.do");
 				return result;
 			}
+		Collection<SocialIdentity> socialIdentities;
+		socialIdentities = socialIdentityService.findByPrincipal2();
 
 		
+		result.addObject("socialIdentities", socialIdentities);
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid LessorForm lessorForm, BindingResult binding) {

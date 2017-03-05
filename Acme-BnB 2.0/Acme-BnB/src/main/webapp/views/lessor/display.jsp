@@ -68,7 +68,27 @@
 		</table>
 	</jstl:if>	
 	
-<display:table pagesize="10" class="displaytag" keepStatus="true" name="comments" id="row" requestURI="${requestURI}">	
+<display:table name="socialIdentities"
+	id="row"
+	class="displaytag"
+	pagesize="10" >
+	
+	<security:authorize access="isAuthenticated()">
+						
+	<spring:message code="socialIdentity.nick" var="nickHeader" />
+	<display:column property="nick" title="${nickHeader}" sortable="true"/>
+	
+	<spring:message code="socialIdentity.socialNetwork" var="socialNetworkHeader" />
+	<display:column property="socialNetwork" title="${socialNetworkHeader}" sortable="true"/>
+	
+	<spring:message code="socialIdentity.profileURL" var="profileURLHeader" />
+	<display:column property="profileURL" title="${profileURLHeader}" sortable="false"/>		
+		
+	</security:authorize>
+
+</display:table>
+	
+<display:table pagesize="10" class="displaytag" keepStatus="true" name="comments" id="row">	
 	<spring:message code="lessor.comment.title" var="titleHeader"/>
 	<display:column title="${titleHeader }" property="title"/>
 	
@@ -83,7 +103,7 @@
 </display:table>
 
 <security:authorize access="hasAnyRole('LESSOR','TENANT')">
-	<input type="button" name="comment" value="<spring:message code="lessor.comment" />"
-			onclick="javascript: window.location.replace('commentator/comment/create.do?commentableId=${lessor.id}')" />
+	<input type="button" name="addComment"
+			value="Boton"/>
 <br/>
 </security:authorize>
