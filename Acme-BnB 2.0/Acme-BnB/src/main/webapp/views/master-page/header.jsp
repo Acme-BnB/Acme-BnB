@@ -30,6 +30,7 @@
 				</ul>
 		</li>
 		<li><a href="administrator/fee/edit.do"><spring:message code="master.page.administrator.fee" /></a></li>
+		<li><a href="administrator/vat/edit.do"><spring:message code="master.page.administrator.vat" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
