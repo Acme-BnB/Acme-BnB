@@ -51,6 +51,7 @@
 		
 		<security:intercept-url pattern="/lessor/displayByReq.do" access="hasRole('TENANT')" /> 
 		<security:intercept-url pattern="/tenant/request/browse.do" access="hasRole('TENANT')" />
+		<security:intercept-url pattern="/invoice/display.do" access="hasRole('TENANT')" />
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
 		<security:intercept-url pattern="/misc/lopd.do" access="permitAll" /> 
 

@@ -54,5 +54,11 @@
 		<a href="property/displayByRequest.do?requestId=${row.id}"><spring:message code="request.view.property" /></a>
 	</display:column>
 	
+	<display:column>
+			<jstl:if test="${ row.status == 'ACCEPTED'}">
+				<a href="invoice/display.do?requestId=${row.id }"><spring:message code="request.invoice" /></a>
+			</jstl:if>
+		</display:column>
+	
 	
 </display:table>
