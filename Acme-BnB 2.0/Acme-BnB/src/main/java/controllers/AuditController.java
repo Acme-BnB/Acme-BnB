@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Attachment;
 import domain.Audit;
 import domain.Property;
 
@@ -52,8 +53,10 @@ public class AuditController extends AbstractController{
 			public ModelAndView display(@RequestParam int auditId){
 				ModelAndView result;
 				Audit audit=auditService.findOne(auditId);
+				Collection<Attachment>attachments=audit.getAttachments();
 				result=new ModelAndView("audit/display");
 				result.addObject("audit",audit);
+				result.addObject("attachments",attachments);
 				result.addObject("requestURI", "audit/display.do");
 				return result;
 			}
