@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import repositories.AttachmentRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Attachment;
 import domain.Audit;
+import forms.AttachmentForm;
 
 @Service
 @Transactional
@@ -25,6 +27,14 @@ public class AttachmentService {
 
 		// Supporting services ----------------------------------------------------
 
+		@Autowired
+		private AuditService	auditService;
+
+		@Autowired
+		private Validator		validator;
+
+
+		
 		// Constructors -----------------------------------------------------------
 
 		public AttachmentService() {
@@ -106,5 +116,26 @@ public class AttachmentService {
 			attachmentRepository.delete(attachment);
 		}
 
+	// Form methods --------------------------------
+	
+		public AttachmentForm generateForm(int auditId){
+				AttachmentForm result;
+				result = new AttachmentForm();
+				result.setAuditId(auditId);
+				
+				return result;
+				}
+				
+		public Attachment reconstruct(AttachmentForm attachmentForm,  BindingResult binding){
+				Attachment result;
+				Audit audit = auditService.findOne(attachmentForm.getAuditId());
+				
+				result = create(audit);
+				result.setUrl(attachmentForm.getUrl());
+				
+				validator.validate(result, binding);
+				return result;				
+				}
+		
 	}
 
