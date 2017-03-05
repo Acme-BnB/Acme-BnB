@@ -20,7 +20,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%> 
 
 <!-- RECIPE PART -->
-<h1><spring:message code="administrator.requestPart2"/></h1>
+<h1><jstl:out value="${lessor }"/></h1>
 
 <security:authorize access="hasRole('ADMIN')">
 	<div>

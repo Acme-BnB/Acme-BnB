@@ -175,6 +175,7 @@ public class AdministratorController extends AbstractController {
 	public ModelAndView dashboardLessor(@RequestParam int lessorId) {
 
 		ModelAndView result;
+		String lessor = lessorService.findOne(lessorId).getUserAccount().getUsername();
 
 		Collection<Property> psA = propertyService.findPropertiesOfALessorOrderByNumberAudit(lessorId);
 		Collection<Property> psR = propertyService.findPropertiesOfALessorOrderByNumberRequest(lessorId);
@@ -189,6 +190,7 @@ public class AdministratorController extends AbstractController {
 		result.addObject("psAp", psAp);
 		result.addObject("psDn", psDn);
 		result.addObject("psPn", psPn);
+		result.addObject("lessor", lessor);
 
 		return result;
 
