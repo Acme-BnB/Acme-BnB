@@ -320,8 +320,10 @@ public class LessorService {
 		result.setEmail(lessor.getEmail());
 		result.setFeeAmount(lessor.getFeeAmount());
 		result.setName(lessor.getName());
+		result.setSurname(lessor.getSurname());
 		result.setPhone(lessor.getPhone());
 		result.setPicture(lessor.getPicture());
+		result.setSocialIdentities(lessor.getSocialIdentities());
 		
 		caux.setBrandName(lessor.getCreditCard().getBrandName());
 		caux.setCvv(lessor.getCreditCard().getCvv());
