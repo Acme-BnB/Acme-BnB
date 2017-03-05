@@ -18,6 +18,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="${requestURI}" modelAttribute="auditorForm">
+	<jstl:if test="${auditorForm.id==0 || auditorForm.username == pageContext.request.remoteUser}">
 
 	<form:hidden path="id"/>
 	<jstl:choose>
@@ -84,5 +85,5 @@
 	
 	<acme:submit name="save" code="auditor.save"/>
 	<acme:cancel url="welcome/index.do" code="auditor.cancel"/>
-
+	</jstl:if>
 </form:form>

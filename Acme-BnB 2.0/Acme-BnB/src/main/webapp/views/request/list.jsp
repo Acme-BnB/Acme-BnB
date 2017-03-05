@@ -46,10 +46,5 @@
 		<display:column>
 			<a href="tenant/display.do?tenantId=${row.tenant.id}"><jstl:out value="${row.tenant.name}" /></a>
 		</display:column>
-		
-		
-		
-	
-		
 	</display:table>
 </jstl:if>	

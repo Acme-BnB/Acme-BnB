@@ -18,7 +18,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="${requestURI}" modelAttribute="lessorForm">
-
+	<jstl:if test="${lessorForm.id==0 || lessorForm.username == pageContext.request.remoteUser}">
 	<form:hidden path="id"/>
 
 	<jstl:choose>
@@ -106,6 +106,6 @@
 	<br/>
 	<acme:submit name="save" code="lessor.save"/>
 	<acme:cancel code="lessor.cancel" url="welcome/index.do" />
-
+	</jstl:if>
 </form:form>
 

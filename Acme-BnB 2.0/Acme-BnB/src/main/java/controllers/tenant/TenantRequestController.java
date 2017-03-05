@@ -52,6 +52,8 @@ public class TenantRequestController {
 			requests = requestService.encryptCreditCard(requests);
 			result=new ModelAndView("request/browse");
 			result.addObject("requests", requests);
+			result.addObject("requestURI", "tenant/request/browse.do");
+			
 			return result;
 		}
 	

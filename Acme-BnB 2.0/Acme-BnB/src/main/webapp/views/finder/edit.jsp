@@ -24,14 +24,13 @@
 
 	<form:form	action="tenant/finder/edit.do"	modelAttribute="finder"> 
 
-		<acme:textbox code="finder.destinationCity" path="destinationCity"/>
-		<acme:textbox code="finder.minPrice" path="minPrice"/>
-		<acme:textbox code="finder.maxPrice" path="maxPrice"/>
-		<acme:textbox code="finder.keyword" path="keyword"/>
-		
-		<acme:submit name="save" code="finder.save"/>
-		<acme:cancel code="finder.cancel" url="tenant/finder/display.do"/>
-		
+			<acme:textbox code="finder.destinationCity" path="destinationCity"/>
+			<acme:textbox code="finder.minPrice" path="minPrice"/>
+			<acme:textbox code="finder.maxPrice" path="maxPrice"/>
+			<acme:textbox code="finder.keyword" path="keyword"/>
+			
+			<acme:submit name="save" code="finder.save"/>
+			<acme:cancel code="finder.cancel" url="tenant/finder/display.do"/>
 		
 	</form:form>
 

@@ -23,12 +23,13 @@
 	access="hasRole('AUDITOR')">
 
 	<form:form	action="auditor/attachment/edit.do"	modelAttribute="attachmentForm"> 
-		<form:hidden path="auditId"/>
-		<acme:textbox code="attachment.url" path="url"/>
-		
-		<acme:submit name="save" code="attachment.save"/>
-		<acme:cancel code="attachment.cancel" url="auditor/audit/list.do"/>
-		
+		<jstl:if test="${attachmentForm.id==0 || attachmentForm.auditor.username == pageContext.request.remoteUser}">
+			<form:hidden path="auditId"/>
+			<acme:textbox code="attachment.url" path="url"/>
+			
+			<acme:submit name="save" code="attachment.save"/>
+			<acme:cancel code="attachment.cancel" url="auditor/audit/list.do"/>
+		</jstl:if>
 		
 	</form:form>
 
