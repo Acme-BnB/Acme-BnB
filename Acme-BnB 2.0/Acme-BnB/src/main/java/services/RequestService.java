@@ -28,18 +28,18 @@ public class RequestService {
 	@Autowired
 	private RequestRepository	requestRepository;
 
-
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private TenantService tenantService;
-	
+	private TenantService		tenantService;
+
 	@Autowired
-	private PropertyService propertyService;
-	
+	private PropertyService		propertyService;
+
 	@Autowired
-	private Validator validator;
-	
+	private Validator			validator;
+
+
 	// Constructors -----------------------------------------------------------
 
 	public RequestService() {
@@ -49,9 +49,9 @@ public class RequestService {
 	// Simple CRUD methods ----------------------------------------------------
 
 	public Request create() {
-		
+
 		Request result;
-		
+
 		result = new Request();
 		result.setTenant(tenantService.findByPrincipal());
 		result.setStatus("PENDING");
@@ -82,7 +82,7 @@ public class RequestService {
 		Assert.notNull(request);
 
 		Request result;
-		
+
 		Assert.isTrue(check(request.getCreditCard()));
 
 		result = requestRepository.save(request);
@@ -97,7 +97,7 @@ public class RequestService {
 
 		requestRepository.delete(request);
 	}
-	
+
 	public static boolean check(CreditCard creditCard) {
 		boolean validador = false;
 		int sum = 0;
@@ -140,25 +140,25 @@ public class RequestService {
 		result = requestRepository.findByCreator(tenant);
 		return result;
 	}
-	
-	public Collection<Request> encryptCreditCard(Collection<Request> requests){
+
+	public Collection<Request> encryptCreditCard(Collection<Request> requests) {
 		Collection<Request> result = new ArrayList<Request>();
 		Request request;
 		CreditCard caux;
 		String aux;
-		
-		for(Request r : requests){
+
+		for (Request r : requests) {
 			request = new Request();
 			caux = new CreditCard();
-			
+
 			caux.setBrandName(r.getCreditCard().getBrandName());
 			caux.setCvv(r.getCreditCard().getCvv());
 			caux.setExpirationMonth(r.getCreditCard().getExpirationMonth());
 			caux.setExpirationYear(r.getCreditCard().getExpirationYear());
 			caux.setHolderName(r.getCreditCard().getHolderName());
-			aux = "************"+r.getCreditCard().getNumber().substring(12);
+			aux = "************" + r.getCreditCard().getNumber().substring(12);
 			caux.setNumber(aux);
-			
+
 			request.setId(r.getId());
 			request.setCheckIn(r.getCheckIn());
 			request.setCheckOut(r.getCheckOut());
@@ -169,53 +169,67 @@ public class RequestService {
 			request.setCreditCard(caux);
 			result.add(request);
 		}
-	
+
 		return result;
 	}
-	
+
+	// Dashboard -------------------------------------------------
+
+	public Collection<Double> minAvgMAxInvoicesIssued() {
+		Double min = requestRepository.minInvoicesIssuedToTenants();
+		Double avg = requestRepository.avgInvoicesIssuedToTenants();
+		Double max = requestRepository.maxInvoicesIssuedToTenants();
+
+		Collection<Double> result = new ArrayList<Double>();
+
+		result.add(min);
+		result.add(avg);
+		result.add(max);
+
+		return result;
+	}
+
 	// Form methods --------------------------------
-	
-			public RequestForm generateForm(){
-				RequestForm result;
-				
-				result = new RequestForm();
-				
-				return result;
-			}
-			
-			public Request reconstruct(RequestForm requestForm,  BindingResult binding){
-				Request result = create();
-				Property property;
-				
-				property = propertyService.findOne(Integer.valueOf(requestForm.getPropertyId()));
-				
-				Assert.isTrue(check(requestForm.getCreditCard()),"badCreditCard");
 
-				result.setProperty(property);
-				result.setCreditCard(requestForm.getCreditCard());
-				result.setCheckIn(requestForm.getCheckIn());
-				result.setCheckOut(requestForm.getCheckOut());
-				result.setSmoker(requestForm.getSmoker());
-				
-			
-				validator.validate(result, binding);
-				
-				return result;
-			}
+	public RequestForm generateForm() {
+		RequestForm result;
 
-	public boolean checkDate(Request request){
+		result = new RequestForm();
+
+		return result;
+	}
+
+	public Request reconstruct(RequestForm requestForm, BindingResult binding) {
+		Request result = create();
+		Property property;
+
+		property = propertyService.findOne(Integer.valueOf(requestForm.getPropertyId()));
+
+		Assert.isTrue(check(requestForm.getCreditCard()), "badCreditCard");
+
+		result.setProperty(property);
+		result.setCreditCard(requestForm.getCreditCard());
+		result.setCheckIn(requestForm.getCheckIn());
+		result.setCheckOut(requestForm.getCheckOut());
+		result.setSmoker(requestForm.getSmoker());
+
+		validator.validate(result, binding);
+
+		return result;
+	}
+
+	public boolean checkDate(Request request) {
 		boolean result = true;
 		Property property = request.getProperty();
 		Collection<Request> requests = property.getRequests();
-		
-		for(Request r : requests){
-			if((r.getStatus().compareTo("ACCEPTED")==0) && 
-					((request.getCheckIn().compareTo(r.getCheckIn())>=0&&request.getCheckIn().compareTo(r.getCheckOut())<0)
-					|| (request.getCheckOut().compareTo(r.getCheckIn())>0&&request.getCheckOut().compareTo(r.getCheckOut())<=0))){
+
+		for (Request r : requests) {
+			if ((r.getStatus().compareTo("ACCEPTED") == 0)
+				&& ((request.getCheckIn().compareTo(r.getCheckIn()) >= 0 && request.getCheckIn().compareTo(r.getCheckOut()) < 0) || (request.getCheckOut().compareTo(r.getCheckIn()) > 0 && request.getCheckOut().compareTo(r.getCheckOut()) <= 0))) {
 				result = false;
 			}
 		}
-		
+
 		return result;
 	}
 }

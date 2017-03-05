@@ -168,3 +168,117 @@
 		</table>
 	</fieldset>
 </div>
+
+<div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.mamAP" /></legend>
+		<table id="mamAP" class="table">
+			<tr>
+				<th><spring:message code="administrator.dashboard.min"/></th>
+				<jstl:if test="${not empty mamAP }">
+					<td><jstl:out value="${mamAP.get(0) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.avg"/></th>
+				<jstl:if test="${not empty mamAP }">
+					<td><jstl:out value="${mamAP.get(1) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.max"/></th>
+				<jstl:if test="${not empty mamAP }">
+					<td><jstl:out value="${mamAP.get(2) }" /></td>
+				</jstl:if>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+<div>
+	<display:table name="asd" id="row" class="displaytag" pagesize="5">
+		<spring:message code="administrator.asd" var="name"/>
+		<display:column title="${name}" property="name"/>
+	</display:table>
+</div>
+
+<div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.mamSi" /></legend>
+		<table id="mamSi" class="table">
+			<tr>
+				<th><spring:message code="administrator.dashboard.min"/></th>
+				<jstl:if test="${not empty mamSi }">
+					<td><jstl:out value="${mamSi.get(0) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.avg"/></th>
+				<jstl:if test="${not empty mamSi }">
+					<td><jstl:out value="${mamSi.get(1) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.max"/></th>
+				<jstl:if test="${not empty mamSi }">
+					<td><jstl:out value="${mamSi.get(2) }" /></td>
+				</jstl:if>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+<div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.mamIi" /></legend>
+		<table id="mamIi" class="table">
+			<tr>
+				<th><spring:message code="administrator.dashboard.min"/></th>
+				<jstl:if test="${not empty mamIi }">
+					<td><jstl:out value="${mamIi.get(0) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.avg"/></th>
+				<jstl:if test="${not empty mamIi }">
+					<td><jstl:out value="${mamIi.get(1) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.max"/></th>
+				<jstl:if test="${not empty mamIi }">
+					<td><jstl:out value="${mamIi.get(2) }" /></td>
+				</jstl:if>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+<div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.aMi" /></legend>
+		<table id="aMi" class="table">
+			<tr>
+				<th><spring:message code="administrator.dashboard.aMi"/></th>
+				<jstl:if test="${not empty aMi }">
+					<td><jstl:out value="${aMi }" /></td>
+				</jstl:if>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+<div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.oMVSzL" /></legend>
+		<table id="oMVSzL" class="table">
+			<tr>
+				<th><spring:message code="administrator.dashboard.oM"/></th>
+				<jstl:if test="${not empty oMVSzL }">
+					<td><jstl:out value="${oMVSzL.get(0) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.zL"/></th>
+				<jstl:if test="${not empty oMVSzL }">
+					<td><jstl:out value="${oMVSzL.get(1) }" /></td>
+				</jstl:if>
+			</tr>
+		</table>
+	</fieldset>
+</div>

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +91,20 @@ public class ActorService {
 		Actor actor = actorRepository.findActorByUsername(username);
 		Assert.notNull(actor);
 		return actor;
+	}
+
+	public Collection<Double> minAvgMaxSocialIdentitiesPerActor() {
+		Double min = actorRepository.findMinSocialIdentitiesPerACtor();
+		Double avg = actorRepository.findAvgSocialIdentitiesPerACtor();
+		Double max = actorRepository.findMaxSocialIdentitiesPerACtor();
+
+		Collection<Double> result = new ArrayList<Double>();
+
+		result.add(min);
+		result.add(avg);
+		result.add(max);
+
+		return result;
 	}
 
 }

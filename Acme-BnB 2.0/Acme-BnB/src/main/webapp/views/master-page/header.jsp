@@ -22,12 +22,18 @@
 		<li><a href="property/browse.do"><spring:message code="master.page.browseProperty" /></a></li>
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
-		<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
+		<li><a class="fNiv"><spring:message	code="master.page.administrator.dashboard2" /></a>
+				<ul>
+					<li class="arrow"></li>
+						<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
+						<li><a href="administrator/lessor.do"><spring:message code="master.page.administrator.dashboard.lessor"/></a></li>
+				</ul>
+		</li>
 		<li><a href="administrator/fee/edit.do"><spring:message code="master.page.administrator.fee" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-<%-- 					<li><a href="auditor/register.do"><spring:message code="master.page.administrator.register" /></a></li>				 --%>
+					<li><a href="auditor/register.do"><spring:message code="master.page.administrator.register" /></a></li>				
 					<li><a href="administrator/attribute/list.do"><spring:message code="master.page.administrator.attribute.list" /></a></li>
 					<li><a href="administrator/attribute/create.do"><spring:message code="master.page.administrator.attribute.create" /></a></li>			
 				</ul>
@@ -51,6 +57,15 @@
 					<li><a href="lessor/property/list.do"><spring:message code="master.page.lessor.property.list" /></a></li>
 					<li><a href="lessor/property/create.do"><spring:message code="master.page.lessor.property.create" /></a></li>	
 					<li><a href="request/list.do"><spring:message code="master.page.lessor.request.list" /></a></li>		
+				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('AUDITOR')">
+			<li><a class="fNiv"><spring:message	code="master.page.auditor" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="auditor/audit/list.do"><spring:message code="master.page.auditor.audit.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

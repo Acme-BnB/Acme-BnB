@@ -1,5 +1,5 @@
 <%--
- * display.jsp
+ * list.jsp
  *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
@@ -16,26 +16,17 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="isAuthenticated()">
+<display:table name="lessor" id="row" class="displaytag"  pagesize="5" requestURI="${requestURI}" >
 	
-<table id="row" class="table">
-	<tbody>
-		<tr>
-			<th><spring:message code="audit.auditor"/></th>
-			<th><spring:message code="audit.writtenMoment"/></th>
-		</tr>
-		<tr>
-			<td><jstl:out value="${audit.auditor.name}"/></td>
-			<td><jstl:out value="${audit.writtenMoment}"/></td>
-		</tr>
-		<tr>
-			<th><spring:message code="audit.text"/></th>
-		</tr>
-		<tr>
-			<td><jstl:out value="${audit.text}"/></td>
-		</tr>
-	</tbody>
-</table>
+	<security:authorize access="hasRole('ADMIN')">
+						
+	<spring:message code="administrator.lessor.username" var="nameHeader" />
+	<display:column property="userAccount.username" title="${nameHeader}" sortable="true"/>
+	
+	<display:column>
+		<a href="administrator/dashboardLessor.do?lessorId=${row.id}"><spring:message code="administrator.dasboard.lessor" /></a>
+	</display:column>			
+		
+	</security:authorize>
 
-
-</security:authorize>
+</display:table>

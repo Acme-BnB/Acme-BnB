@@ -35,7 +35,5 @@
 		<put-attribute name="title" value="Edit Personal Data" />
 		<put-attribute name="body" value="/views/lessor/register.jsp" />
 	</definition>
-	
-
-	
+		
 </tiles-definitions>
