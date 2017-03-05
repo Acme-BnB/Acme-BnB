@@ -1,6 +1,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Credentials;
+import services.ActorService;
 import services.AdministratorService;
 import services.AttributeService;
 import services.FinderService;
+import services.InvoiceService;
 import services.LessorService;
 import services.PropertyService;
+import services.RequestService;
 import services.TenantService;
 import domain.Administrator;
 import domain.Attribute;
@@ -51,6 +55,15 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private AttributeService		attributeService;
+
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private RequestService			requestService;
+
+	@Autowired
+	private InvoiceService			invoiceService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -131,6 +144,13 @@ public class AdministratorController extends AbstractController {
 		Collection<Double> mamAP = propertyService.findMinAvgMaxAuditsPerProperty();
 		Collection<Attribute> asd = attributeService.findAttributesOrderByNumberTimesUsed();
 
+		Collection<Double> mamSi = actorService.minAvgMaxSocialIdentitiesPerActor();
+		Collection<Double> mamIi = requestService.minAvgMAxInvoicesIssued();
+		Double aMI = invoiceService.findTotalAmountOfInvoice();
+		Collection<Double> oMVSzL = new ArrayList<Double>();
+		oMVSzL.add(propertyService.findAvgRequestForPropertiesWithOneOrMoreAudit());
+		oMVSzL.add(propertyService.findAvgRequestForPropertiesWithZeroAudit());
+
 		result = new ModelAndView("administrator/dashboard");
 
 		result.addObject("adrL", adrL);
@@ -153,10 +173,14 @@ public class AdministratorController extends AbstractController {
 		result.addObject("mamAP", mamAP);
 		result.addObject("asd", asd);
 
+		result.addObject("mamSi", mamSi);
+		result.addObject("mamIi", mamIi);
+		result.addObject("aMI", aMI);
+		result.addObject("oMVSzL", oMVSzL);
+
 		return result;
 
 	}
-
 	@RequestMapping(value = "/lessor", method = RequestMethod.GET)
 	public ModelAndView listLessor() {
 
