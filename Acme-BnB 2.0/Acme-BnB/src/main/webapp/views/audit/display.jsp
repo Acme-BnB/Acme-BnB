@@ -45,7 +45,16 @@
 	<!-- Attributes -->
 	
 	<spring:message code="attachment.url" var="url"/>
-	<display:column property="url" title="${url}" sortable="false" />		
+	<display:column property="url" title="${url}" sortable="false" />	
+<security:authorize
+	access="hasRole('AUDITOR')">
+	
+	<jstl:if test="${audit.auditor.userAccount.username == pageContext.request.remoteUser}">
+	<display:column>
+	<a href="auditor/attachment/delete.do?attachmentId=${row.id}"><spring:message code="audit.view.delete.Attachment" /></a>
+	</display:column>	
+	</jstl:if>
+</security:authorize>
 </display:table>
 
 
