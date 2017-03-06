@@ -54,7 +54,7 @@
 		<property name="isCommentable" value="false"/>
 		<property name="socialIdentities">
 			<list>
-				<ref bean="socialIdentity1"></ref>
+			
 			</list>
 		</property>
 	</bean>
@@ -65,7 +65,7 @@
 		<property name="name" value="Country" />
 		<property name="values">
 			<list>
-				<ref bean="value1"></ref>
+				
 			</list>
 		</property>
 	</bean>
@@ -74,7 +74,7 @@
 		<property name="name" value="Province" />
 		<property name="values">
 			<list>
-				<ref bean="value2"></ref>
+				
 			</list>
 		</property>
 	</bean>
@@ -83,7 +83,7 @@
 		<property name="name" value="State" />
 		<property name="values">
 			<list>
-				<ref bean="value3"></ref>
+				
 			</list>
 		</property>
 	</bean>
@@ -92,7 +92,7 @@
 		<property name="name" value="City" />
 		<property name="values">
 			<list>
-				<ref bean="value4"></ref>
+				
 			</list>
 		</property>
 	</bean>
@@ -101,7 +101,7 @@
 		<property name="name" value="Capacity" />
 		<property name="values">
 			<list>
-				<ref bean="value5"></ref>
+				
 			</list>
 		</property>
 	</bean>
