@@ -30,11 +30,19 @@
 		<spring:message code="request.checkOut" var="checkOutHeader" />
 		<display:column title="${checkOutHeader}"	sortable="true"><fmt:formatDate value="${row.checkOut }" pattern="dd/MM/yyyy" /></display:column>
 		
-		<spring:message code="request.smoker" var="smokereader" />
-		<display:column property="smoker" title="${smokerHeader}" sortable="true" />
-	
-		<spring:message code="request.creditCard.number" var="creditCard.numberHeader" />
-		<display:column property="creditCard.number" title="${creditCard.numberHeader}" sortable="false" />
+		<spring:message code="request.smoker" var="smokerHeader" />
+		<display:column title="${smokerHeader}">
+			<jstl:if test="${row.smoker==true}">
+				<spring:message code="request.smoker.yes" var="yesH" />
+				<jstl:out value="${yesH}"/>
+			</jstl:if>
+			<jstl:if test="${row.smoker==false}">
+				<spring:message code="request.smoker.no" var="noH" />
+				<jstl:out value="${noH}"/>
+			</jstl:if>
+		</display:column>
+		<spring:message code="request.creditCard.number" var="creditCardnumberHeader" />
+		<display:column property="creditCard.number" title="${creditCardnumberHeader}" sortable="false" />
 	
 		<spring:message code="request.status" var="statusHeader" />
 		<display:column property="status" title="${statusHeader}" sortable="false"  />
@@ -48,8 +56,8 @@
 				</jstl:if>
 		
 		</display:column>
-		
-		<display:column>
+		<spring:message code="request.tenant" var="tenantHeader"/>
+		<display:column title="${tenantHeader}">
 			<a href="tenant/display.do?tenantId=${row.tenant.id}"><jstl:out value="${row.tenant.name}" /></a>
 		</display:column>
 	</display:table>

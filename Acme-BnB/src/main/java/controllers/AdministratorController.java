@@ -177,6 +177,7 @@ public class AdministratorController extends AbstractController {
 		result.addObject("mamIi", mamIi);
 		result.addObject("aMI", aMI);
 		result.addObject("oMVSzL", oMVSzL);
+		result.addObject("requestURI", "administrator/dashboard.do");
 
 		return result;
 

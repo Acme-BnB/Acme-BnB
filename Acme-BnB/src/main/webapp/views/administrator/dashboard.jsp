@@ -196,7 +196,7 @@
 </div>
 
 <div>
-	<display:table name="asd" id="row" class="displaytag" pagesize="5">
+	<display:table name="asd" id="row" class="displaytag" pagesize="5" requestURI="${requestURI}">
 		<spring:message code="administrator.asd" var="name"/>
 		<display:column title="${name}" property="name"/>
 	</display:table>
@@ -257,8 +257,8 @@
 		<table id="aMi" class="table">
 			<tr>
 				<th><spring:message code="administrator.dashboard.aMi"/></th>
-				<jstl:if test="${not empty aMi }">
-					<td><jstl:out value="${aMi }" /></td>
+				<jstl:if test="${not empty aMI }">
+					<td><jstl:out value="${aMI }" /></td>
 				</jstl:if>
 			</tr>
 		</table>
