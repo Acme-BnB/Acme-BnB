@@ -57,6 +57,8 @@ public class RequestController {
 				result=new ModelAndView("request/list");
 				result.addObject("requests", requests);
 				result.addObject("lessor", lessor);
+				result.addObject("requestURI", "request/list.do");
+
 				return result;
 		}
 		
@@ -77,15 +79,23 @@ public class RequestController {
 				
 				request = requestService.save(request);
 				lessor= request.getProperty().getLessor();
-				lessor.setFeeAmount(lessor.getFeeAmount()+feeService.findOne(1).getValue());
+				lessor.setFeeAmount(lessor.getFeeAmount().doubleValue()+feeService.findOne(1).getValue().doubleValue());
 				lessor = lessorService.save2(lessor);
-				
+								
 				requests = lessorService.findRequestPerLessor(lessor);
 				
+				for(Request r : requests){
+					if(r.getStatus().compareTo("PENDING")==0&&!requestService.checkDate(r)){
+						r.setStatus("DENIED");
+						requestService.save(r);
+					}
+				}
+
 				requests = requestService.encryptCreditCard(requests);
 				result=new ModelAndView("request/list");
 				result.addObject("requests", requests);
 				result.addObject("lessor", lessor);
+				result.addObject("requestURI", "request/list.do");
 				return result;
 		}
 		
@@ -109,6 +119,8 @@ public class RequestController {
 						result=new ModelAndView("request/list");
 						result.addObject("requests", requests);
 						result.addObject("lessor", lessor);
+						result.addObject("requestURI", "request/list.do");
+
 						return result;
 				}
 }

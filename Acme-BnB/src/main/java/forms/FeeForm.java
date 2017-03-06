@@ -4,6 +4,7 @@ package forms;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 
 @Embeddable
@@ -33,6 +34,7 @@ public class FeeForm {
 	}
 
 	@Min(0)
+	@Digits(fraction = 2, integer = 3)
 	public Double getValue() {
 		return value;
 	}

@@ -52,7 +52,9 @@
 	
 <security:authorize access="isAuthenticated()">
 	<display:column>
-		<a href="audit/browse.do?propertyId=${row.id}"><spring:message code="property.view.audits" /></a>
+		<jstl:if test="${ row.audits.size() != 0}">
+			<a href="audit/browse.do?propertyId=${row.id}"><spring:message code="property.view.audits" /></a>
+		</jstl:if>
 	</display:column>
 </security:authorize>
 

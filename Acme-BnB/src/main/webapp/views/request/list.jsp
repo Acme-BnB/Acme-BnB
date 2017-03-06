@@ -16,7 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <jstl:if test="${lessor.userAccount.username == pageContext.request.remoteUser}">
-	<display:table pagesize="5" class="displaytag" name="requests" id="row">
+	<display:table pagesize="5" class="displaytag" name="requests" id="row" requestURI="${requestURI}">
 	
 		<spring:message code="request.property.name" var="nameHeader" />
 		<display:column property="property.name" title="${nameHeader}" sortable="false" />
