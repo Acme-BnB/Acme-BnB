@@ -18,6 +18,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%> 
+<security:authorize access="hasRole('ADMIN')">
 
 <!-- RECIPE PART -->
 <h1><jstl:out value="${lessor }"/></h1>
@@ -112,4 +113,5 @@
 			</display:table>
 		</fieldset>
 	</div>
+</security:authorize>
 </security:authorize>

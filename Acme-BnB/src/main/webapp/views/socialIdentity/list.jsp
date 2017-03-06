@@ -15,15 +15,14 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-
+<security:authorize
+	access="isAuthenticated()">
 <display:table name="socialIdentities"
 	id="row"
 	class="displaytag"
 	pagesize="5"
 	requestURI="${requestURI}" >
-	
-	<security:authorize access="isAuthenticated()">
-						
+							
 	<spring:message code="socialIdentity.nick" var="nickHeader" />
 	<display:column property="nick" title="${nickHeader}" sortable="true"/>
 	
@@ -37,6 +36,5 @@
 		<a href="socialIdentity/edit.do?socialIdentityId=${row.id}"><spring:message code="socialIdentity.edit" /></a>
 	</display:column>			
 		
-	</security:authorize>
-
 </display:table>
+</security:authorize>

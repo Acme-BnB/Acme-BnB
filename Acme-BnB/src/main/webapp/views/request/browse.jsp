@@ -16,6 +16,9 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<security:authorize access="hasRole('TENANT')">
+	<jstl:if test="${tenantUsername == pageContext.request.remoteUser}">
+
 
 <!-- Listing grid -->
 
@@ -61,3 +64,5 @@
   	</display:column>
 	
 </display:table>
+</jstl:if>
+</security:authorize>

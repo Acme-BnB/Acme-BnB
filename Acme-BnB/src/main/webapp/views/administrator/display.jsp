@@ -9,6 +9,8 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<security:authorize access="hasRole('ADMIN')">
+
 <table id="row" class="table">
 	<tbody>
 		<tr>
@@ -41,9 +43,7 @@
 	id="row"
 	class="displaytag"
 	pagesize="10" >
-	
-	<security:authorize access="isAuthenticated()">
-						
+							
 	<spring:message code="socialIdentity.nick" var="nickHeader" />
 	<display:column property="nick" title="${nickHeader}" sortable="true"/>
 	
@@ -53,6 +53,7 @@
 	<spring:message code="socialIdentity.profileURL" var="profileURLHeader" />
 	<display:column property="profileURL" title="${profileURLHeader}" sortable="false"/>		
 		
-	</security:authorize>
 
 </display:table>
+
+</security:authorize>

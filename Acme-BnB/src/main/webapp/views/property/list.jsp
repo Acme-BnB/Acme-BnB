@@ -16,13 +16,14 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<security:authorize access="hasRole('LESSOR')">
+
 <display:table name="properties"
 	id="row"
 	class="displaytag"
 	pagesize="5"
 	requestURI="${requestURI}" >
 	
-	<security:authorize access="hasRole('LESSOR')">
 						
 	<spring:message code="property.name" var="nameHeader" />
 	<display:column property="name" title="${nameHeader}" sortable="true"/>
@@ -44,7 +45,6 @@
 		<a href="property/display.do?propertyId=${row.id}"><spring:message code="property.view" /></a>
 	</display:column>			
 	
-	
-	</security:authorize>
-
 </display:table>
+
+</security:authorize>

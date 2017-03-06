@@ -42,9 +42,7 @@
  	class="displaytag"
  	pagesize="10" 
  	requestURI="${requestURI}">
- 
-	 <security:authorize access="isAuthenticated()">
-	      
+ 	      
 		 <spring:message code="socialIdentity.nick" var="nickHeader" />
 		 <display:column property="nick" title="${nickHeader}" sortable="true"/>
 		 
@@ -54,8 +52,6 @@
 		 <spring:message code="socialIdentity.profileURL" var="profileURLHeader" />
 		 <display:column property="profileURL" title="${profileURLHeader}" sortable="false"/>  
 		  
-	 </security:authorize>
-
 </display:table>			
 			
 			

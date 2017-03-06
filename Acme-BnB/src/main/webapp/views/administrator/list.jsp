@@ -16,17 +16,18 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<display:table name="lessor" id="row" class="displaytag"  pagesize="5" requestURI="${requestURI}" >
-	
-	<security:authorize access="hasRole('ADMIN')">
-						
-	<spring:message code="administrator.lessor.username" var="nameHeader" />
-	<display:column property="userAccount.username" title="${nameHeader}" sortable="true"/>
-	
-	<display:column>
-		<a href="administrator/dashboardLessor.do?lessorId=${row.id}"><spring:message code="administrator.dasboard.lessor" /></a>
-	</display:column>			
-		
-	</security:authorize>
+<security:authorize access="hasRole('ADMIN')">
 
-</display:table>
+	<display:table name="lessor" id="row" class="displaytag"  pagesize="5" requestURI="${requestURI}" >
+		
+							
+		<spring:message code="administrator.lessor.username" var="nameHeader" />
+		<display:column property="userAccount.username" title="${nameHeader}" sortable="true"/>
+		
+		<display:column>
+			<a href="administrator/dashboardLessor.do?lessorId=${row.id}"><spring:message code="administrator.dasboard.lessor" /></a>
+		</display:column>			
+			
+	</display:table>
+
+</security:authorize>

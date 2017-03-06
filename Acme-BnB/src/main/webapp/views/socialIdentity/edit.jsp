@@ -21,7 +21,8 @@
 
 <security:authorize
 	access="isAuthenticated()">
-
+	<jstl:if test="${socialIdentity.id==0 || socialIdentity.actor.userAccount.username == pageContext.request.remoteUser}">
+	
 	<form:form	action="socialIdentity/edit.do"	modelAttribute="socialIdentity"> 
 		
 		<form:hidden path="id"/>
@@ -38,7 +39,7 @@
 		
 		
 	</form:form>
-
+</jstl:if>
 </security:authorize>
 
 

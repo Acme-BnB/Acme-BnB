@@ -17,6 +17,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<security:authorize access="hasAnyRole('ADMIN', 'AUDITOR')">
+
 <form:form action="${requestURI}" modelAttribute="auditorForm">
 	<jstl:if test="${auditorForm.id==0 || auditorForm.username == pageContext.request.remoteUser}">
 
@@ -87,3 +89,4 @@
 	<acme:cancel url="welcome/index.do" code="auditor.cancel"/>
 	</jstl:if>
 </form:form>
+</security:authorize>
