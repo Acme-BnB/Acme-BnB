@@ -12,65 +12,54 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
-import domain.Vat;
+import domain.Audit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class VatServiceTest extends AbstractTest {
+public class AuditServiceTest extends AbstractTest {
 
 	// Service under test -----------------------------------------------
 
 	@Autowired
-	private VatService	vatService;
+	private AuditService	auditService;
 
 
 	// Test ------------------------------------------------------------
 
 	@Test
 	public void testCreate() {
-		Vat vat;
-		super.authenticate("admin");
-		vat = vatService.create();
-		Assert.notNull(vat);
+		Audit audit;
+		super.authenticate("auditor1");
+		audit = auditService.create();
+		Assert.notNull(audit);
 		super.authenticate(null);
 	}
 
 	@Test
 	public void testFindAll() {
-		Collection<Vat> vats;
-		vats = vatService.findAll();
-		Assert.notEmpty(vats);
+		Collection<Audit> audits;
+		audits = auditService.findAll();
+		Assert.notEmpty(audits);
 	}
 
 	@Test
 	public void testFindOne() {
-		Vat vat = vatService.findOne(2);
-		Assert.notNull(vat);
+		Audit audit = auditService.findOne(51);
+		Assert.notNull(audit);
 	}
 
 	@Test
 	public void testSave() {
-		Vat vat;
-		super.authenticate("admin");
-		vat = vatService.create();
-		Assert.notNull(vat);
-		vat.setValue("IT-78451578");
-		Vat compare = vatService.save(vat);
-		Assert.isTrue(compare.getValue().equals("IT-78451578"));
-		super.authenticate(null);
+		Audit audit;
+		super.authenticate("auditor1");
+		audit = auditService.findOne(51);
+		Assert.notNull(audit);
+		audit.setText("Esto es un test de save");
+		auditService.save(audit);
+		Assert.isTrue(audit.getText().equals("Esto es un test de save"));
 	}
 
-	@Test
-	public void TestDelete() {
-		Vat vat;
-		super.authenticate("admin");
-		vat = vatService.findOne(2);
-		vatService.delete(vat);
-		Collection<Vat> vats = vatService.findAll();
-		Assert.isTrue(!vats.contains(vat));
-		super.authenticate(null);
-	}
 }
