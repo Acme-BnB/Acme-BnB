@@ -232,6 +232,11 @@
 				<ref bean="comment1"/>
 			</list>
 		</property>
+		<property name="comments">
+			<list>
+			<ref bean="comment3"/>
+			</list>
+		</property>
 		<property name="socialIdentities">
 			<list>
 				<ref bean="socialIdentity2"></ref>
@@ -258,6 +263,16 @@
 		<property name="userAccount" ref="userAccount3"/>
 		<property name="socialIdentities">
 			<list>
+			</list>
+		</property>
+		<property name="writtenComments">
+			<list>
+				<ref bean="comment2"/>
+			</list>
+		</property>
+		<property name="comments">
+			<list>
+			<ref bean="comment4"/>
 			</list>
 		</property>
 		<property name="rProperties">
@@ -296,9 +311,9 @@
 		<property name="minPrice" value="10" />	
 		<property name="maxPrice" value="20" />
 		<property name="keyword" value="finca" />
+		<property name="lastTimeSearched" value="05/05/2016" />
 		<property name="results">
 			<list>
-			<ref bean="property1"/>
 			</list>
 		</property>
 	</bean>
@@ -308,9 +323,9 @@
 		<property name="minPrice" value="" />	
 		<property name="maxPrice" value="" />
 		<property name="keyword" value="casa" />
+		<property name="lastTimeSearched" value="05/05/2016" />
 		<property name="results">
 			<list>
-				<ref bean="property3"/>
 			</list>
 		</property>
 	</bean>
@@ -320,6 +335,7 @@
 		<property name="minPrice" value="10" />	
 		<property name="maxPrice" value="100" />
 		<property name="keyword" value="" />
+		<property name="lastTimeSearched" value="05/05/2016" />
 		<property name="results">
 			<list>
 			</list>
@@ -339,6 +355,13 @@
 		<property name="comments">
 			<list>
 			<ref bean="comment1"/>
+			<ref bean="comment2"/>
+			</list>
+		</property>
+		<property name="writtenComments">
+			<list>
+				<ref bean="comment3"/>
+				<ref bean="comment4"/>
 			</list>
 		</property>
 		<property name="socialIdentities">
@@ -435,6 +458,7 @@
 		</property>
 		<property name="audits">
 			<list>
+				<ref bean="audit2"></ref>
 			</list>
 		</property>
 	</bean>
@@ -454,6 +478,7 @@
 		</property>
 		<property name="audits">
 			<list>
+				<ref bean="audit3"></ref>
 			</list>
 		</property>
 	</bean>
@@ -488,6 +513,20 @@
 		<property name="socialNetwork" value="Facebook"/>
 		<property name="profileURL" value="http://facebook.com"/>
 		<property name="actor" ref="auditor1"/>
+	</bean>
+	
+	<bean id="socialIdentity5" class="domain.SocialIdentity">
+		<property name="nick" value="superLessor24"/>
+		<property name="socialNetwork" value="Facebook"/>
+		<property name="profileURL" value="http://facebook.com"/>
+		<property name="actor" ref="lessor1"/>
+	</bean>
+	
+	<bean id="socialIdentity6" class="domain.SocialIdentity">
+		<property name="nick" value="MeGaLeSsoR"/>
+		<property name="socialNetwork" value="Instagram"/>
+		<property name="profileURL" value="http://instagram.com"/>
+		<property name="actor" ref="lessor2"/>
 	</bean>
 	
 	<!-- Attribute -->
@@ -574,11 +613,11 @@
 		<property name="requests">
 			<list>
 				<ref bean="request3"/>
-				
 			</list>
 		</property>
 		<property name="audits">
 			<list>
+				<ref bean="audit2"></ref>
 			</list>
 		</property>
 		<property name="values">
@@ -602,6 +641,7 @@
 		</property>
 		<property name="audits">
 			<list>
+				<ref bean="audit3"></ref>
 			</list>
 		</property>
 		<property name="values">
@@ -725,6 +765,16 @@
 		<property name="property" ref="property3"/>
 		<property name="tenant" ref="tenant1"/>
 	</bean>
+	
+	<bean id="request5" class="domain.Request">
+		<property name="checkIn" value="08/08/2016" />
+		<property name="checkOut" value="09/08/2016" />	
+		<property name="smoker" value="false" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="status" value="DENIED"/>
+		<property name="property" ref="property1"/>
+		<property name="tenant" ref="tenant1"/>
+	</bean>
 
 	
 	
@@ -744,6 +794,32 @@
 		<property name="property" ref="property1" />
 	</bean>
 	
+	<bean id="audit2" class="domain.Audit">
+		<property name="writtenMoment" value="03/05/2014" />
+		<property name="text" value="Texto del audit2" />	
+		<property name="attachments">
+			<list>
+			<ref bean="attachment3"/>
+			</list>
+		</property>
+		<property name="draft" value="true" />
+		<property name="auditor" ref="auditor2" />
+		<property name="property" ref="property2" />
+	</bean>
+	
+	<bean id="audit3" class="domain.Audit">
+		<property name="writtenMoment" value="06/05/2013" />
+		<property name="text" value="Texto del audit3" />	
+		<property name="attachments">
+			<list>
+			<ref bean="attachment4"/>
+			</list>
+		</property>
+		<property name="draft" value="false" />
+		<property name="auditor" ref="auditor3" />
+		<property name="property" ref="property3" />
+	</bean>
+	
 	<!-- Attachment -->
 	<bean id="attachment1" class="domain.Attachment">
 		<property name="url" value="https://drive.google.com/open?id=0BzTuIoHicDzXR2c3TUk5NmVLQm8"/>
@@ -754,21 +830,32 @@
 		<property name="url" value="https://drive.google.com/open?id=0B8_hNQq2jdcoTDNZeEpSUnA2SXc"/>
 		<property name="audit" ref="audit1"/>
 	</bean>
+	
+	<bean id="attachment3" class="domain.Attachment">
+		<property name="url" value="https://drive.google.com/open?id=1iu4L-CzLtCSg6zJexWEaocqhrGsNE86sqw4YGSIK7ug"/>
+		<property name="audit" ref="audit2"/>
+	</bean>
+	
+	<bean id="attachment4" class="domain.Attachment">
+		<property name="url" value="https://drive.google.com/open?id=0BzTuIoHicDzXMlZPV2RYQW9pb2s"/>
+		<property name="audit" ref="audit3"/>
+	</bean>
+	
 	<!-- Invoice -->
 	
 	<bean id="invoice1" class="domain.Invoice">
 		<property name="issuedMoment" value="05/05/2016 10:56" />
 		<property name="vatNumber" value="ES78451578" />		
-		<property name="information" value="Factura 28" />
-		<property name="detail" value="Tienes que pagar 40 euros" />
-		<property name="amountDue" value="40.0" />
+		<property name="information" value="Factura 150" />
+		<property name="detail" value="Tienes que pagar 150 euros" />
+		<property name="amountDue" value="150.0" />
 		
 	</bean>
 	
 	<bean id="invoice2" class="domain.Invoice">
 		<property name="issuedMoment" value="05/05/2016 10:56" />
 		<property name="vatNumber" value="ES78451578" />		
-		<property name="information" value="Factura 28" />
+		<property name="information" value="Factura 40" />
 		<property name="detail" value="Tienes que pagar 40 euros" />
 		<property name="amountDue" value="40.0" />
 		
@@ -778,8 +865,8 @@
 		<property name="issuedMoment" value="05/05/2016 10:56" />
 		<property name="vatNumber" value="ES78451578" />	
 		<property name="information" value="Factura 65" />
-		<property name="detail" value="Tienes que pagar 50 euros" />
-		<property name="amountDue" value="40.0" />
+		<property name="detail" value="Tienes que pagar 65 euros" />
+		<property name="amountDue" value="65.0" />
 
 	</bean>
 	<!-- Comment -->
@@ -791,4 +878,32 @@
 		<property name="commentable" ref="tenant1"/>
 		<property name="commentator" ref="lessor1"/>
 	</bean>
+	
+		<bean id="comment2" class="domain.Comment">
+		<property name="title" value="title2"/>
+		<property name="postedMoment" value="07/05/2016"/>
+		<property name="text" value="text2"/>
+		<property name="stars" value="3"/>
+		<property name="commentable" ref="tenant1"/>
+		<property name="commentator" ref="lessor2"/>
+	</bean>
+	
+		<bean id="comment3" class="domain.Comment">
+		<property name="title" value="title3"/>
+		<property name="postedMoment" value="10/05/2016"/>
+		<property name="text" value="text3"/>
+		<property name="stars" value="5"/>
+		<property name="commentable" ref="lessor1"/>
+		<property name="commentator" ref="tenant1"/>
+	</bean>
+	
+		<bean id="comment4" class="domain.Comment">
+		<property name="title" value="title4"/>
+		<property name="postedMoment" value="03/05/2016"/>
+		<property name="text" value="text4"/>
+		<property name="stars" value="2"/>
+		<property name="commentable" ref="lessor2"/>
+		<property name="commentator" ref="tenant1"/>
+	</bean>
+	
 </beans>
