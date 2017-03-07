@@ -225,11 +225,13 @@ public class TenantService {
 		Collection<Tenant> result = new ArrayList<Tenant>();
 		Map<Tenant, Double> maxMinRatio = map();
 		Collection<Double> aux = maxMinRatio.values();
-		Double max = Collections.max(aux);
-		Collection<Tenant> tenants = maxMinRatio.keySet();
-		for (Tenant t : tenants) {
-			if (max == maxMinRatio.get(t)) {
-				result.add(t);
+		if (!aux.isEmpty()) {
+			Double max = Collections.max(aux);
+			Collection<Tenant> tenants = maxMinRatio.keySet();
+			for (Tenant t : tenants) {
+				if (max == maxMinRatio.get(t)) {
+					result.add(t);
+				}
 			}
 		}
 
@@ -240,13 +242,15 @@ public class TenantService {
 		Collection<Tenant> result = new ArrayList<Tenant>();
 		Map<Tenant, Double> maxMinRatio = map();
 		Collection<Double> aux = maxMinRatio.values();
-		Double min = Collections.min(aux);
-		Collection<Tenant> tenants = maxMinRatio.keySet();
-		for (Tenant t : tenants) {
-			if (min == maxMinRatio.get(t)) {
-				result.add(t);
-			}
+		if (!aux.isEmpty()) {
+			Double min = Collections.min(aux);
+			Collection<Tenant> tenants = maxMinRatio.keySet();
+			for (Tenant t : tenants) {
+				if (min == maxMinRatio.get(t)) {
+					result.add(t);
+				}
 
+			}
 		}
 		return result;
 	}

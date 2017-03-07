@@ -308,12 +308,12 @@ public class LessorService {
 
 		return result;
 	}
-	
-	public Lessor encryptCreditCard(Lessor lessor){
+
+	public Lessor encryptCreditCard(Lessor lessor) {
 		Lessor result = new Lessor();
 		CreditCard caux = new CreditCard();
 		String aux;
-		
+
 		result.setId(lessor.getId());
 		result.setUserAccount(lessor.getUserAccount());
 		result.setComments(lessor.getcomments());
@@ -324,19 +324,18 @@ public class LessorService {
 		result.setPhone(lessor.getPhone());
 		result.setPicture(lessor.getPicture());
 		result.setSocialIdentities(lessor.getSocialIdentities());
-		
+
 		caux.setBrandName(lessor.getCreditCard().getBrandName());
 		caux.setCvv(lessor.getCreditCard().getCvv());
 		caux.setExpirationMonth(lessor.getCreditCard().getExpirationMonth());
 		caux.setExpirationYear(lessor.getCreditCard().getExpirationYear());
 		caux.setHolderName(lessor.getCreditCard().getHolderName());
-		aux = "************"+lessor.getCreditCard().getNumber().substring(12);
+		aux = "************" + lessor.getCreditCard().getNumber().substring(12);
 		caux.setNumber(aux);
 		result.setCreditCard(caux);
-		
+
 		return result;
 	}
-
 
 	public Map<Lessor, Double> map() {
 		Map<Lessor, Double> map = new HashMap<Lessor, Double>();
@@ -350,11 +349,13 @@ public class LessorService {
 		Collection<Lessor> result = new ArrayList<Lessor>();
 		Map<Lessor, Double> maxMinRatio = map();
 		Collection<Double> aux = maxMinRatio.values();
-		Double max = Collections.max(aux);
-		Collection<Lessor> lessors = maxMinRatio.keySet();
-		for (Lessor l : lessors) {
-			if (max == maxMinRatio.get(l)) {
-				result.add(l);
+		if (!aux.isEmpty()) {
+			Double max = Collections.max(aux);
+			Collection<Lessor> lessors = maxMinRatio.keySet();
+			for (Lessor l : lessors) {
+				if (max == maxMinRatio.get(l)) {
+					result.add(l);
+				}
 			}
 		}
 
@@ -365,13 +366,15 @@ public class LessorService {
 		Collection<Lessor> result = new ArrayList<Lessor>();
 		Map<Lessor, Double> maxMinRatio = map();
 		Collection<Double> aux = maxMinRatio.values();
-		Double min = Collections.min(aux);
-		Collection<Lessor> lessors = maxMinRatio.keySet();
-		for (Lessor l : lessors) {
-			if (min == maxMinRatio.get(l)) {
-				result.add(l);
-			}
+		if (!aux.isEmpty()) {
+			Double min = Collections.min(aux);
+			Collection<Lessor> lessors = maxMinRatio.keySet();
+			for (Lessor l : lessors) {
+				if (min == maxMinRatio.get(l)) {
+					result.add(l);
+				}
 
+			}
 		}
 		return result;
 	}
