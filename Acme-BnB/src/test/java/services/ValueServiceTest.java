@@ -48,8 +48,8 @@ public class ValueServiceTest extends AbstractTest{
 		super.authenticate("lessor1");
 		value = valueService.create();
 		value.setText("Texto");
-		value.setAttribute(attributeService.findOne(30));
-		value.setProperty(propertyService.findOne(35));
+		value.setAttribute(attributeService.findOne(32));
+		value.setProperty(propertyService.findOne(37));
 		saved = valueService.save(value);
 		values = valueService.findAll();
 		super.authenticate(null);
@@ -62,8 +62,8 @@ public class ValueServiceTest extends AbstractTest{
 		Collection<Value> values;
 		super.authenticate("lessor1");
 		value = valueService.create();
-		value.setAttribute(attributeService.findOne(30));
-		value.setProperty(propertyService.findOne(35));
+		value.setAttribute(attributeService.findOne(32));
+		value.setProperty(propertyService.findOne(37));
 		value.setText("Texto");
 		saved = valueService.save(value);
 		valueService.delete(saved);
@@ -74,14 +74,11 @@ public class ValueServiceTest extends AbstractTest{
 	
 	@Test
 	public void testFindOne(){
-		Value value, saved, found;
+		Value value;
 		super.authenticate("lessor1");
-		value = valueService.create();
-		value.setText("Texto");
-		saved = valueService.save(value);
-		found = valueService.findOne(saved.getId());
+		value = valueService.findOne(41);
 		super.authenticate(null);
-		Assert.isTrue(found.equals(saved));
+		Assert.notNull(value);
 	}
 	
 	@Test

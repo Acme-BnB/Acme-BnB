@@ -33,7 +33,7 @@ public class AttachmentServiceTest extends AbstractTest{
 	@Test
 	public void testCreate(){
 		super.authenticate("auditor1");
-		Audit a=auditService.findOne(51);
+		Audit a=auditService.findOne(59);
 		Attachment at=attachmentService.create(a);
 		Assert.notNull(at);
 		super.authenticate(null);
@@ -46,13 +46,13 @@ public class AttachmentServiceTest extends AbstractTest{
 	}
 	@Test
 	public void testFindOne(){
-		Attachment at=attachmentService.findOne(53);
+		Attachment at=attachmentService.findOne(55);
 		Assert.notNull(at);
 	}
 	@Test
 	public void testSave(){
 		super.authenticate("auditor1");
-		Audit a=auditService.findOne(51);
+		Audit a=auditService.findOne(57);
 		Attachment at=attachmentService.create(a);
 		attachmentService.save(at);
 		Assert.notNull(at);
@@ -61,7 +61,7 @@ public class AttachmentServiceTest extends AbstractTest{
 	@Test
 	public void testDelete(){
 		super.authenticate("auditor1");
-		Attachment at=attachmentService.findOne(53);
+		Attachment at=attachmentService.findOne(55);
 		attachmentService.delete(at);
 	}
 	

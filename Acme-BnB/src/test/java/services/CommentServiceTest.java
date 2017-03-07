@@ -1,7 +1,5 @@
 package services;
 
-import java.util.Collection;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,27 +36,17 @@ public class CommentServiceTest extends AbstractTest{
 	public void testSave(){
 		Comment comment, saved, commentG;
 		super.authenticate("admin");
-		comment = commentService.findOne(57);
+		comment = commentService.findOne(67);
 		comment.setTitle("titulo");
 		saved = commentService.save(comment);
-		commentG = commentService.findOne(57);
+		commentG = commentService.findOne(67);
 		Assert.isTrue(saved.equals(commentG));
 	}
 
 	@Test
-	public void testDelete(){
-		Comment comment;
-		Collection<Comment> comments;
-		comment = commentService.findOne(57);;
-		commentService.delete(comment);
-		comments = commentService.findAll();
-		Assert.isTrue(!comments.contains(comment));
-	}
-	
-	@Test
 	public void testFindOne(){
 		Comment found;
-		found = commentService.findOne(57);
+		found = commentService.findOne(67);
 		Assert.notNull(found);
 	}
 	
