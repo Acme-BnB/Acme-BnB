@@ -51,6 +51,7 @@ public class RequestServiceTest extends AbstractTest{
 		Request r=requestService.findOne(50);
 		Assert.notNull(r);
 	}
+	@SuppressWarnings("static-access")
 	@Test
 	public void testCheck(){
 		CreditCard c=new CreditCard();

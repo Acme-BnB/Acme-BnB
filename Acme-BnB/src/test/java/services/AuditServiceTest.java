@@ -47,7 +47,7 @@ public class AuditServiceTest extends AbstractTest {
 
 	@Test
 	public void testFindOne() {
-		Audit audit = auditService.findOne(51);
+		Audit audit = auditService.findOne(54);
 		Assert.notNull(audit);
 	}
 
@@ -55,7 +55,7 @@ public class AuditServiceTest extends AbstractTest {
 	public void testSave() {
 		Audit audit;
 		super.authenticate("auditor1");
-		audit = auditService.findOne(51);
+		audit = auditService.findOne(54);
 		Assert.notNull(audit);
 		audit.setText("Esto es un test de save");
 		auditService.save(audit);

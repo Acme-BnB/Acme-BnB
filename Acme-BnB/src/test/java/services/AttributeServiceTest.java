@@ -45,13 +45,13 @@ public class AttributeServiceTest extends AbstractTest {
 
 	@Test
 	public void testFindOne() {
-		Attribute at = attributeService.findOne(30);
+		Attribute at = attributeService.findOne(32);
 		Assert.notNull(at);
 	}
 
 	@Test
 	public void testSave() {
-		Attribute at = attributeService.findOne(30);
+		Attribute at = attributeService.findOne(32);
 		Assert.notNull(at);
 		at.setName("Manolo");
 		attributeService.save2(at);
