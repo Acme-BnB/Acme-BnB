@@ -79,16 +79,5 @@ public class AdministratorServiceTest extends AbstractTest {
 			Assert.isTrue(!all2.contains(admin));
 		}
 
-		@Test
-		public void testFindByPrincipal(){
-			super.authenticate("admin");
-			
-			Administrator principal = administratorService.findOne(18);
-			
-			Administrator admin = administratorService.findByPrincipal();
-			Assert.isTrue(principal.equals(admin));
-			
-			super.authenticate(null);
-		}
 		
 }
