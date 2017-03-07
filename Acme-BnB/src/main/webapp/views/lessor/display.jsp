@@ -97,6 +97,10 @@
 	<spring:message code="lessor.comment.text" var="textHeader"/>
 	<display:column title="${textHeader }" property="text"/>
 	
+	<spring:message code="lessor.comment.commentator" var="commentatorHeader"/>
+	<display:column title="${commentatorHeader }">
+			<jstl:out value="${row.commentator.name}"/>
+	</display:column>
 	<spring:message code="lessor.comment.stars" var="starsHeader"/>
 	<display:column title="${starsHeader }" property="stars"/>
 </display:table>

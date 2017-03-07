@@ -68,6 +68,10 @@
 	<spring:message code="tenant.comment.text" var="textHeader"/>
 	<display:column title="${textHeader }" property="text"/>
 	
+	<spring:message code="tenant.comment.commentator" var="commentatorHeader"/>
+	<display:column title="${commentatorHeader }">
+		<jstl:out value="${row.commentator.name}"/>
+	</display:column>
 	<spring:message code="tenant.comment.stars" var="starsHeader"/>
 	<display:column title="${starsHeader }" property="stars"/>
 </display:table>
